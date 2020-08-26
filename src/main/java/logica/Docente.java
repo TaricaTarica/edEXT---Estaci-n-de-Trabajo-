@@ -17,6 +17,7 @@ public class Docente extends Usuario {
 	}
 	public void setInstituto(Instituto instituto) {
 		this.instituto = instituto;
+		
 	}
 
 	//operaciones

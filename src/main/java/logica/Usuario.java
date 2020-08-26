@@ -56,7 +56,4 @@ public abstract class Usuario {
 	
 	//public abstract DtUsuario getinfoUsuario();	
 	
-	
-	
-	
 }
