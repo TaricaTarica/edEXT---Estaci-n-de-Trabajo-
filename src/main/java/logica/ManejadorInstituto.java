@@ -27,4 +27,12 @@ public class ManejadorInstituto {
 		}
 		return aretornar;
 	}
+	public boolean existeInstituto(String nombre) {
+		boolean retorno = false;
+		for(Instituto i: institutos) {
+			if(i.getNombre().equals(nombre))
+				retorno = true;
+		}
+		return retorno;
+	}
 }
