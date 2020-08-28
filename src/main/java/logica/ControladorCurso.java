@@ -2,6 +2,7 @@ package logica;
 
 import java.util.Date;
 
+import excepciones.InstitutoRepetido_Exception;
 import interfaces.IControladorCurso;
 
 public class ControladorCurso implements IControladorCurso {
@@ -24,13 +25,13 @@ public class ControladorCurso implements IControladorCurso {
 	
 	/*Alta Instituto*/
 	@Override
-	public void ingresarInstituto(String nombreInstituto) {
-		this.nombreInstituto = nombreInstituto;
-	}
-	@Override
-	public void AltaInstituto() {
-		Instituto i = new Instituto(this.nombreInstituto);
+	public void AltaInstituto(String nombreInstituto) throws InstitutoRepetido_Exception {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto i = mI.buscarInstituto(nombreInstituto);
+		if (i != null) {
+			throw new InstitutoRepetido_Exception("¡El instituto " + nombreInstituto + " ya está registrado!");
+		}
+		i = new Instituto(nombreInstituto);
 		mI.agregarInstituto(i);
 	}
 	

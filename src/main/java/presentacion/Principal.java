@@ -9,9 +9,11 @@ import javax.swing.JMenuItem;
 
 import interfaces.Fabrica;
 import interfaces.IControladorUsuario;
+import interfaces.IControladorCurso;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 public class Principal {
 
@@ -41,18 +43,21 @@ public class Principal {
 		initialize();
 		
 		Fabrica fabrica = Fabrica.getInstancia();
-		IControladorUsuario icon = fabrica.getIControladorUsuario();
+		IControladorUsuario iconUsr = fabrica.getIControladorUsuario();
+		IControladorCurso iconCur = fabrica.getIControladorCurso();
+		
+		Dimension desktopSize = frame.getSize();
+		Dimension jInternalFrameSize;
 		
 		// SOLAMENTE IMPORTE LA FABRICA Y LA INTERFAZ, E INSTANCIE EL CONTROLADOR
 		// PERO NO IMPLEMENTE NADA DE LOGICA, NI RELACIONANDO LA PRESENTACION CON LA LOGICA
 		// POR ESO LA ALERTA DE QUE "icon" SE INSTANCIA PERO NO SE UTILIZA
 		
-		altaInstitutoInternalFrame = new AltaInstituto();
-		altaInstitutoInternalFrame.setLocation(60, 60);
-		altaInstitutoInternalFrame.setSize(584, 300);
-		
+		altaInstitutoInternalFrame = new AltaInstituto(iconCur);
+		jInternalFrameSize = altaInstitutoInternalFrame.getSize();
+		altaInstitutoInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
 		altaInstitutoInternalFrame.setVisible(false);
-		
 		frame.getContentPane().add(altaInstitutoInternalFrame);
 		altaInstitutoInternalFrame.getContentPane().setLayout(null);
 	}
@@ -86,13 +91,13 @@ public class Principal {
 		JMenuItem mntmAltaCurso = new JMenuItem("Alta de Curso");
 		mnAltas.add(mntmAltaCurso);
 		
-		JMenuItem mntmAltaEdicionCurso = new JMenuItem("Alta de Edici髇 de Curso");
+		JMenuItem mntmAltaEdicionCurso = new JMenuItem("Alta de Edici贸n de Curso");
 		mnAltas.add(mntmAltaEdicionCurso);
 		
-		JMenuItem mntmAltaProgFormacion = new JMenuItem("Alta de Prog. de Formaci髇");
+		JMenuItem mntmAltaProgFormacion = new JMenuItem("Alta de Prog. de Formaci贸n");
 		mnAltas.add(mntmAltaProgFormacion);
 		
-		JMenuItem mntmAgregarCursoProgFormacion = new JMenuItem("Agregar Curso a Prog. de Formaci髇");
+		JMenuItem mntmAgregarCursoProgFormacion = new JMenuItem("Agregar Curso a Prog. de Formaci贸n");
 		mnAltas.add(mntmAgregarCursoProgFormacion);
 		
 		JMenu mnModificar = new JMenu("Modificar");
@@ -110,16 +115,16 @@ public class Principal {
 		JMenuItem mntmConsultaCurso = new JMenuItem("Consulta de Curso");
 		mnConsultas.add(mntmConsultaCurso);
 		
-		JMenuItem mntmConsultaEdicionCurso = new JMenuItem("Consulta de Edici髇 de Curso");
+		JMenuItem mntmConsultaEdicionCurso = new JMenuItem("Consulta de Edici贸n de Curso");
 		mnConsultas.add(mntmConsultaEdicionCurso);
 		
-		JMenuItem mntmConsultaProgFormacion = new JMenuItem("Consulta de Prog. de Formaci髇");
+		JMenuItem mntmConsultaProgFormacion = new JMenuItem("Consulta de Prog. de Formaci贸n");
 		mnConsultas.add(mntmConsultaProgFormacion);
 		
 		JMenu mnInscripciones = new JMenu("Inscripciones");
 		menuBar.add(mnInscripciones);
 		
-		JMenuItem mntmInscripcionEdicionCurso = new JMenuItem("Inscripci髇 a Edici髇 de Curso");
+		JMenuItem mntmInscripcionEdicionCurso = new JMenuItem("Inscripci贸n a Edici贸n de Curso");
 		mnInscripciones.add(mntmInscripcionEdicionCurso);
 	}
 }
