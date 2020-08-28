@@ -16,6 +16,7 @@ public class ControladorUsuario implements IControladorUsuario {
 	/*IR AGREGANDO LAS OPERACIONES A MEDIDA QUE SE REQUIERAN/IMPLEMENTEN*/
 	
 	/*AltaUsuario*/
+	@Override
 	public void ingresarUsuario(String nickname, String nombre, String apellido, String correo, Date fNac) {
 		this.nickname = nickname;
 		this.nombre = nombre;
@@ -23,9 +24,11 @@ public class ControladorUsuario implements IControladorUsuario {
 		this.correo = correo;
 		this.fNac = fNac;
 	}
+	@Override
 	public void ingresarInstituto(String nombreInstituto) {
 		this.institutoDocente = nombreInstituto;
 	}
+	@Override
 	public void confirmarAlta() {
 		if(this.institutoDocente.isEmpty()) {
 			Estudiante e = new Estudiante(this.nickname,this.nombre,this.apellido,this.correo,this.fNac);

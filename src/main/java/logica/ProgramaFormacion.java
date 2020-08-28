@@ -9,17 +9,19 @@ public class ProgramaFormacion {
 	private String descripcion;
 	private Date fechaIni;
 	private Date fechaFin;
+	private Date fechaAlta;
 	
 	private List<Curso> cursos = new ArrayList<>();
 
 	//constructores
 	public ProgramaFormacion() {}
-	public ProgramaFormacion(String nombre, String descripcion, Date fechaIni, Date fechaFin) {
+	public ProgramaFormacion(String nombre, String descripcion, Date fechaIni, Date fechaFin, Date fechaAlta) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.fechaIni = fechaIni;
 		this.fechaFin = fechaFin;
+		this.fechaAlta = fechaAlta;
 	}
 	
 	//getters-setters

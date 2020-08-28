@@ -21,6 +21,29 @@ public class Instituto {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	public void setCurso(Curso c) {
+		this.cursos.add(c);
+	}
+	public List<Curso> getCursos(){
+		List<Curso> cursosRetorno = new ArrayList<>();
+		for(Curso c: this.cursos) {
+			cursosRetorno.add(c);
+		}
+		return cursosRetorno;
+	}
+	public Curso getCurso(String nombre) {
+		Curso retorno = new Curso();
+		for(Curso c: this.cursos) {
+			if(c.getNombre().equals(nombre)) {
+				retorno = c;
+			} 
+		}
+		return retorno;
+	}
+	public void setPreviaCurso(String nombreCurso, Curso previa) {
+		Curso c = this.getCurso(nombreCurso);
+		c.setPrevia(previa);
+	}
 
 	
 	

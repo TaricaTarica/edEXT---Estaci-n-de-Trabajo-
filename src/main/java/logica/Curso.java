@@ -72,7 +72,9 @@ public class Curso {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+	public void setPrevia(Curso c) {
+		this.previas.add(c);
+	}
 	
 	
 	
