@@ -1,5 +1,6 @@
 package datatypes;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class DtUsuario {
@@ -7,11 +8,11 @@ public class DtUsuario {
 	private String nombre;
 	private String apellido;
 	private String correo;
-	private Date fechaNac;
+	private LocalDate fechaNac;
 	
 	//constructores
 		public DtUsuario() {}
-		public DtUsuario(String nickname, String nombre, String apellido, String correo, Date fechaNac) {
+		public DtUsuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
 			super();
 			this.nickname = nickname;
 			this.nombre = nombre;
@@ -45,10 +46,10 @@ public class DtUsuario {
 		public void setCorreo(String correo) {
 			this.correo = correo;
 		}
-		public Date getfechaNac() {
+		public LocalDate getfechaNac() {
 			return fechaNac;
 		}
-		public void setFechaNac(Date fechaNac) {
+		public void setFechaNac(LocalDate fechaNac) {
 			this.fechaNac = fechaNac;
 		}
 }

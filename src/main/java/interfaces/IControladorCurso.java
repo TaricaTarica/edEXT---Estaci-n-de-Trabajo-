@@ -3,7 +3,6 @@ package interfaces;
 import java.util.Date;
 
 import excepciones.InstitutoRepetido_Exception;
-import logica.Curso;
 
 
 public interface IControladorCurso {

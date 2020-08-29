@@ -12,13 +12,13 @@ import interfaces.IControladorUsuario;
 import interfaces.IControladorCurso;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 public class Principal {
 
 	private JFrame frame;
 	private AltaInstituto altaInstitutoInternalFrame;
+	private AltaUsuario altaUsuarioInternalFrame;
 
 	/**
 	 * Launch the application.
@@ -53,6 +53,7 @@ public class Principal {
 		// PERO NO IMPLEMENTE NADA DE LOGICA, NI RELACIONANDO LA PRESENTACION CON LA LOGICA
 		// POR ESO LA ALERTA DE QUE "icon" SE INSTANCIA PERO NO SE UTILIZA
 		
+		/*FRAME ALTA INSTITUTO*/
 		altaInstitutoInternalFrame = new AltaInstituto(iconCur);
 		jInternalFrameSize = altaInstitutoInternalFrame.getSize();
 		altaInstitutoInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
@@ -60,6 +61,17 @@ public class Principal {
 		altaInstitutoInternalFrame.setVisible(false);
 		frame.getContentPane().add(altaInstitutoInternalFrame);
 		altaInstitutoInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME ALTA INSTITUTO*/
+		altaUsuarioInternalFrame = new AltaUsuario(iconUsr);
+		jInternalFrameSize = altaUsuarioInternalFrame.getSize();
+		altaUsuarioInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		altaUsuarioInternalFrame.setVisible(false);
+		frame.getContentPane().add(altaUsuarioInternalFrame);
+		altaUsuarioInternalFrame.getContentPane().setLayout(null);
+		
+		
 	}
 
 	/**
@@ -86,6 +98,12 @@ public class Principal {
 		mnAltas.add(mntmAltaInstituto);
 		
 		JMenuItem mntmAltaUsuario = new JMenuItem("Alta de Usuario");
+		mntmAltaUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				altaUsuarioInternalFrame.comboBoxInit();
+				altaUsuarioInternalFrame.setVisible(true);
+			}
+		});
 		mnAltas.add(mntmAltaUsuario);
 		
 		JMenuItem mntmAltaCurso = new JMenuItem("Alta de Curso");

@@ -1,23 +1,21 @@
 package datatypes;
 
-import java.util.Date;
-
-import logica.Instituto;
+import java.time.LocalDate;
 
 public class DtDocente extends DtUsuario {
-private Instituto instituto;
+private DtInstituto instituto;
 	
 	//constructores
 	public DtDocente() {}
-	public DtDocente(String nickname, String nombre, String apellido, String correo, Date fechaNac) {
+	public DtDocente(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
 		super(nickname, nombre, apellido, correo, fechaNac);
 	}
 	
 	//getters-setters
-	public Instituto getInstituto() {
+	public DtInstituto getInstituto() {
 		return this.instituto;
 	}
-	public void setInstituto(Instituto instituto) {
+	public void setInstituto(DtInstituto instituto) {
 		this.instituto = instituto;
 	}
 }

@@ -35,4 +35,11 @@ public class ManejadorInstituto {
 		}
 		return retorno;
 	}
+	public ArrayList<String> getNombreInstitutos(){
+		ArrayList<String> retorno = new ArrayList<>();
+		for(Instituto i: institutos) {
+			retorno.add(i.getNombre());
+		}
+		return retorno;
+	}
 }

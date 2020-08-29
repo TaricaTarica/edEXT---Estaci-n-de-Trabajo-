@@ -1,49 +1,54 @@
 package logica;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 import interfaces.IControladorUsuario;
+import datatypes.DtDocente;
+import datatypes.DtEstudiante;
+import datatypes.DtUsuario;
+import excepciones.UsuarioRepetido_Exception;
 
 public class ControladorUsuario implements IControladorUsuario {
-	private String nickname;
-	private String nombre; 
-	private String apellido; 
-	private String correo;
-	private Date fNac;
-	private String institutoDocente;
 	
 	public ControladorUsuario() {}
+	private String nombreInstituto;
 	/*IR AGREGANDO LAS OPERACIONES A MEDIDA QUE SE REQUIERAN/IMPLEMENTEN*/
 	
 	/*AltaUsuario*/
 	@Override
-	public void ingresarUsuario(String nickname, String nombre, String apellido, String correo, Date fNac) {
-		this.nickname = nickname;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.correo = correo;
-		this.fNac = fNac;
+	public void ingresarInstitutoDocente(String nombreInstituto) {
+		this.nombreInstituto = nombreInstituto;
 	}
 	@Override
-	public void ingresarInstituto(String nombreInstituto) {
-		this.institutoDocente = nombreInstituto;
-	}
-	@Override
-	public void confirmarAlta() {
-		if(this.institutoDocente.isEmpty()) {
-			Estudiante e = new Estudiante(this.nickname,this.nombre,this.apellido,this.correo,this.fNac);
-			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-			mU.agregarUsuario(e);
-		}
-		else {
-			Docente d = new Docente(this.nickname,this.nombre,this.apellido,this.correo,this.fNac);
+	public void confirmarAlta(DtUsuario u) throws UsuarioRepetido_Exception {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario nuevoUsr = mU.buscarUsuario(u.getNickname(), u.getCorreo());
+		if(nuevoUsr != null)
+			throw new UsuarioRepetido_Exception("El nickname "+ u.getNickname() +" y el correo " + u.getCorreo() +" están registrados");
+		if(u instanceof DtEstudiante) 
+			nuevoUsr = new Estudiante(u.getNickname(),u.getCorreo(),u.getNombre(),u.getApellido(),u.getfechaNac());
+		if(u instanceof DtDocente) {
 			ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-			Instituto i = mI.buscarInstituto(institutoDocente);
-			d.setInstituto(i);
-			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-			mU.agregarUsuario(d);
+			Instituto institutoDocente = mI.buscarInstituto(this.nombreInstituto);
+			nuevoUsr = new Docente (u.getNickname(),u.getCorreo(),u.getNombre(),u.getApellido(),u.getfechaNac(), institutoDocente);
 		}
-		this.institutoDocente = "";
+		mU.agregarUsuario(nuevoUsr);
+		
+	}
+	
+	/*MULTIUSO*/
+	@Override
+	public String[] listarInstitutos(){
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		ArrayList<String> institutos;
+		institutos = mI.getNombreInstitutos();
+		String[] institutos_ret = new String[institutos.size()];
+        int i=0;
+        for(String ins: institutos) {
+        	institutos_ret[i]=ins;
+        	i++;
+        }
+        return institutos_ret;
 	}
 	
 	

@@ -1,7 +1,7 @@
 package logica;
 
-import java.util.Date;
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Estudiante extends Usuario {
@@ -9,7 +9,7 @@ public class Estudiante extends Usuario {
 	
 	//constructores
 	public Estudiante() {}
-	public Estudiante(String nickname, String nombre, String apellido, String correo, Date fechaNac) {
+	public Estudiante(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
 		super(nickname, nombre, apellido, correo, fechaNac);
 	}
 	

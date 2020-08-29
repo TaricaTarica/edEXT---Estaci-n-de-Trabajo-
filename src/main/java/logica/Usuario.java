@@ -1,17 +1,18 @@
 package logica;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public abstract class Usuario {
 	private String nickname;
 	private String nombre;
 	private String apellido;
 	private String correo;
-	private Date fechaNac;
+	private LocalDate fechaNac;
 	
 	//constructores
 	public Usuario() {}
-	public Usuario(String nickname, String nombre, String apellido, String correo, Date fechaNac) {
+	public Usuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
 		super();
 		this.nickname = nickname;
 		this.nombre = nombre;
@@ -45,10 +46,10 @@ public abstract class Usuario {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public Date getfechaNac() {
+	public LocalDate getfechaNac() {
 		return fechaNac;
 	}
-	public void setFechaNac(Date fechaNac) {
+	public void setFechaNac(LocalDate fechaNac) {
 		this.fechaNac = fechaNac;
 	}
 	

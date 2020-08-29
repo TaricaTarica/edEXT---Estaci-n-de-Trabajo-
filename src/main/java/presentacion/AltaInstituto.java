@@ -1,6 +1,5 @@
 package presentacion;
 
-import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
@@ -31,7 +30,7 @@ public class AltaInstituto extends JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setClosable(true);
+        setClosable(false);
 		setTitle("Alta de Instituto");
 		setBounds(100, 100, 450, 200); //acá modificas el tamaño de la ventana
 		getContentPane().setLayout(null);
