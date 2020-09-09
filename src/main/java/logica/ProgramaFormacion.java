@@ -1,27 +1,31 @@
 package logica;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
+
+import datatypes.DtCurso;
+import datatypes.DtProgramaFormacion;
+
 import java.util.ArrayList;
 
 public class ProgramaFormacion {
 	private String nombre;
 	private String descripcion;
-	private Date fechaIni;
-	private Date fechaFin;
-	private Date fechaAlta;
-	
+	private LocalDate fechaInicio;
+	private LocalDate fechaFin;
+	private LocalDate fechaAlta;
 	private List<Curso> cursos = new ArrayList<>();
 
 	//constructores
 	public ProgramaFormacion() {}
-	public ProgramaFormacion(String nombre, String descripcion, Date fechaIni, Date fechaFin, Date fechaAlta) {
+	public ProgramaFormacion(DtProgramaFormacion dpf) {
 		super();
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.fechaIni = fechaIni;
-		this.fechaFin = fechaFin;
-		this.fechaAlta = fechaAlta;
+		this.nombre =dpf.getNombre() ;
+		this.descripcion = dpf.getDescripcion();
+		this.fechaInicio = dpf.getFechaInicio();
+		this.fechaFin = dpf.getFechaFin();
+		this.fechaAlta = dpf.getFechaAlta();
 	}
 	
 	//getters-setters
@@ -37,16 +41,50 @@ public class ProgramaFormacion {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public Date getFechaIni() {
-		return fechaIni;
+	public LocalDate getFechaInicio() {
+		return fechaInicio;
 	}
-	public void setFechaIni(Date fechaIni) {
-		this.fechaIni = fechaIni;
+	public void setFechaIni(LocalDate fechaInicio) {
+		this.fechaInicio = fechaInicio;
 	}
-	public Date getFechaFin() {
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
-	public void setFechaFin(Date fechaFin) {
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+	public LocalDate getFechaAlta() {
+		return fechaAlta;
+	}
+	public void setFechaAlta(LocalDate fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}	
+	
+	// Metodos para cursos
+	public ArrayList<String> obtenerCursos(){
+		ArrayList<String> lista = new ArrayList<>();
+		for(Curso c:cursos) {
+			lista.add(c.getNombre());
+		}
+		return lista;
+	}
+	
+	public void agregarCurso(DtCurso dtc) {
+		Curso c = new Curso(dtc);
+		cursos.add(c);	
+	}
+	
+	public void setCurso(Curso c) {
+		this.cursos.add(c);
+	}
+	
+	public Curso getCurso(String nombreCurso) {
+		Curso retorno = new Curso();
+		for(Curso c: this.cursos) {
+			if(c.getNombre().equals(nombreCurso)) {
+				retorno = c;
+			} 
+		}
+		return retorno;
+	}
 }

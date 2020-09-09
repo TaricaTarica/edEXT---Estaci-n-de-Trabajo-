@@ -1,26 +1,26 @@
 package datatypes;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class DtCurso {
 	private String nombre;
 	private String descripcion;
 	private String duracion;
 	private int cantHoras;
-	private int creditos;
-	private Date fechaR;
+	private int cantCreditos;
+	private LocalDate fechaAlta; 
 	private String url;
 	
 	//constructores
 	public DtCurso() {}
-	public DtCurso(String nombre, String descripcion, String duracion, int cantHoras, int creditos, Date fechaR,
+	public DtCurso(String nombre, String descripcion, String duracion, int cantHoras, int cantCreditos, LocalDate fechaAlta,
 			String url) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.cantHoras = cantHoras;
-		this.creditos = creditos;
-		this.fechaR = fechaR;
+		this.cantCreditos = cantCreditos;
+		this.fechaAlta = fechaAlta;
 		this.url = url;
 	}
 	
@@ -49,17 +49,17 @@ public class DtCurso {
 	public void setCantHoras(int cantHoras) {
 		this.cantHoras = cantHoras;
 	}
-	public int getCreditos() {
-		return creditos;
+	public int getCantCreditos() {
+		return cantCreditos;
 	}
 	public void setCreditos(int creditos) {
-		this.creditos = creditos;
+		this.cantCreditos = creditos;
 	}
-	public Date getFechaR() {
-		return fechaR;
+	public LocalDate getFechaAlta() {
+		return fechaAlta;
 	}
-	public void setFechaR(Date fechaR) {
-		this.fechaR = fechaR;
+	public void setFechaAlta(LocalDate fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 	public String getUrl() {
 		return url;

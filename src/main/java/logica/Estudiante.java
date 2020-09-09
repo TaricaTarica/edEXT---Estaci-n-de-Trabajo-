@@ -20,8 +20,19 @@ public class Estudiante extends Usuario {
 	}
 	public DtEstudiante infoEstudiante(){
 		return DtEstudiante
+	}*/
+	
+	public void agregarInscripcion(LocalDate FechaIns,Edicion e){
+		InscripcionEd i = new InscripcionEd(FechaIns,e);
+		inscripcionesEd.add(i);	
 	}
-	public void agregarInscripcion(IscripcionEd ied){}
-*/	
+	public boolean BuscarInscripcion(Edicion ed) {;
+	boolean aretornar=false;
+	for(InscripcionEd i: inscripcionesEd) {
+		if (i.getEdicion().equals(ed))
+			aretornar=true;
+	}
+	return aretornar;
+	}
 	
 }

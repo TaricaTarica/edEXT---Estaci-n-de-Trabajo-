@@ -6,12 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import interfaces.Fabrica;
 import interfaces.IControladorUsuario;
 import interfaces.IControladorCurso;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 public class Principal {
@@ -19,6 +21,17 @@ public class Principal {
 	private JFrame frame;
 	private AltaInstituto altaInstitutoInternalFrame;
 	private AltaUsuario altaUsuarioInternalFrame;
+	private ConsultaCurso consultaCursoInternalFrame;
+	private AltaCurso altaCursoInternalFrame;
+	private AltadeEdiciondeCurso altadeEdiciondeCursoInternalFrame;
+	private CrearProgramadeFormacion CrearProgramadeFormacionInternalFrame;
+	private ConsultaUsuario ConsultaUsuarioInternalFrame;
+	private ConsultaProgramaFormacion ConsultaProgramaFormacionInternalFrame;
+	private InscripcionaEdicionaCurso InscripcionaEdicionaCursoInternalFrame;
+	private AgregarCursoProgFormacion agregarCursoProgFormacionInternalFrame;
+	private ConsultaEdicionCurso consultaEdicionCursoInternalFrame;
+	private ModificarUsuario modificarUsuarioInternalFrame;
+
 
 	/**
 	 * Launch the application.
@@ -29,6 +42,9 @@ public class Principal {
 				try {
 					Principal window = new Principal();
 					window.frame.setVisible(true);
+					JPanel p = new Fondo("/presentacion/edEXT_image2.jpg");
+					p.setLayout(new BorderLayout());
+					window.frame.add(p);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,8 +66,7 @@ public class Principal {
 		Dimension jInternalFrameSize;
 		
 		// SOLAMENTE IMPORTE LA FABRICA Y LA INTERFAZ, E INSTANCIE EL CONTROLADOR
-		// PERO NO IMPLEMENTE NADA DE LOGICA, NI RELACIONANDO LA PRESENTACION CON LA LOGICA
-		// POR ESO LA ALERTA DE QUE "icon" SE INSTANCIA PERO NO SE UTILIZA
+
 		
 		/*FRAME ALTA INSTITUTO*/
 		altaInstitutoInternalFrame = new AltaInstituto(iconCur);
@@ -62,7 +77,7 @@ public class Principal {
 		frame.getContentPane().add(altaInstitutoInternalFrame);
 		altaInstitutoInternalFrame.getContentPane().setLayout(null);
 		
-		/*FRAME ALTA INSTITUTO*/
+		/*FRAME ALTA USUARIO*/
 		altaUsuarioInternalFrame = new AltaUsuario(iconUsr);
 		jInternalFrameSize = altaUsuarioInternalFrame.getSize();
 		altaUsuarioInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
@@ -71,7 +86,96 @@ public class Principal {
 		frame.getContentPane().add(altaUsuarioInternalFrame);
 		altaUsuarioInternalFrame.getContentPane().setLayout(null);
 		
+		/*FRAME CONSULTA CURSO*/
+		consultaCursoInternalFrame = new ConsultaCurso(iconCur);
+		jInternalFrameSize = consultaCursoInternalFrame.getSize();
+		consultaCursoInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		consultaCursoInternalFrame.setVisible(false);
+		frame.getContentPane().add(consultaCursoInternalFrame);
+		consultaCursoInternalFrame.getContentPane().setLayout(null);
 		
+		/*FRAME ALTA CURSO*/
+		altaCursoInternalFrame = new AltaCurso(iconCur);
+		jInternalFrameSize = altaCursoInternalFrame.getSize();
+		altaCursoInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		altaCursoInternalFrame.setVisible(false);
+		frame.getContentPane().add(altaCursoInternalFrame);
+		altaCursoInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME ALTA DE EDICION DE CURSO*/
+		altadeEdiciondeCursoInternalFrame = new AltadeEdiciondeCurso(iconCur);
+		jInternalFrameSize = altadeEdiciondeCursoInternalFrame.getSize();
+		altadeEdiciondeCursoInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		altadeEdiciondeCursoInternalFrame.setVisible(false);
+		frame.getContentPane().add(altadeEdiciondeCursoInternalFrame);
+		altadeEdiciondeCursoInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME ALTA DE PROGRAMA DE FORMACION*/
+		CrearProgramadeFormacionInternalFrame = new CrearProgramadeFormacion(iconCur);
+		jInternalFrameSize = CrearProgramadeFormacionInternalFrame.getSize();
+		CrearProgramadeFormacionInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		CrearProgramadeFormacionInternalFrame.setVisible(false);
+		frame.getContentPane().add(CrearProgramadeFormacionInternalFrame);
+		CrearProgramadeFormacionInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME CONSULTA USUARIO*/
+		ConsultaUsuarioInternalFrame = new ConsultaUsuario(iconUsr);
+		jInternalFrameSize = ConsultaUsuarioInternalFrame.getSize();
+		ConsultaUsuarioInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		ConsultaUsuarioInternalFrame.setVisible(false);
+		frame.getContentPane().add(ConsultaUsuarioInternalFrame);
+		ConsultaUsuarioInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME CONSULTA PROGRAMA*/
+		ConsultaProgramaFormacionInternalFrame = new ConsultaProgramaFormacion(iconCur);
+		jInternalFrameSize = ConsultaProgramaFormacionInternalFrame.getSize();
+		ConsultaProgramaFormacionInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		ConsultaProgramaFormacionInternalFrame.setVisible(false);
+		frame.getContentPane().add(ConsultaProgramaFormacionInternalFrame);
+		ConsultaProgramaFormacionInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME INSCRIPCION A EDICION DE CURSO*/
+		InscripcionaEdicionaCursoInternalFrame = new InscripcionaEdicionaCurso(iconCur);
+		jInternalFrameSize = InscripcionaEdicionaCursoInternalFrame.getSize();
+		InscripcionaEdicionaCursoInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		InscripcionaEdicionaCursoInternalFrame.setVisible(false);
+		frame.getContentPane().add(InscripcionaEdicionaCursoInternalFrame);
+		InscripcionaEdicionaCursoInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME AGREGAR CURSO PROG FORMACION*/
+		agregarCursoProgFormacionInternalFrame = new AgregarCursoProgFormacion(iconCur);
+		jInternalFrameSize = agregarCursoProgFormacionInternalFrame.getSize();
+		agregarCursoProgFormacionInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		agregarCursoProgFormacionInternalFrame.setVisible(false);
+		frame.getContentPane().add(agregarCursoProgFormacionInternalFrame);
+		agregarCursoProgFormacionInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME consulta edicion curso*/
+		consultaEdicionCursoInternalFrame = new ConsultaEdicionCurso(iconCur);
+		jInternalFrameSize = consultaEdicionCursoInternalFrame.getSize();
+		consultaEdicionCursoInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		consultaEdicionCursoInternalFrame.setVisible(false);
+		frame.getContentPane().add(consultaEdicionCursoInternalFrame);
+		consultaEdicionCursoInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME MODIFICAR USUARIO*/
+		modificarUsuarioInternalFrame = new ModificarUsuario(iconUsr);
+		jInternalFrameSize = modificarUsuarioInternalFrame.getSize();
+		modificarUsuarioInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		modificarUsuarioInternalFrame.setVisible(false);
+		frame.getContentPane().add(modificarUsuarioInternalFrame);
+		modificarUsuarioInternalFrame.getContentPane().setLayout(null);
+
 	}
 
 	/**
@@ -81,7 +185,7 @@ public class Principal {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 771, 556);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		//frame.getContentPane().setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -107,42 +211,104 @@ public class Principal {
 		mnAltas.add(mntmAltaUsuario);
 		
 		JMenuItem mntmAltaCurso = new JMenuItem("Alta de Curso");
+		mntmAltaCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				altaCursoInternalFrame.comboBoxInit();
+				altaCursoInternalFrame.setVisible(true);
+			}
+		});
 		mnAltas.add(mntmAltaCurso);
 		
 		JMenuItem mntmAltaEdicionCurso = new JMenuItem("Alta de Edición de Curso");
+		mntmAltaEdicionCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				altadeEdiciondeCursoInternalFrame.setVisible(true);
+				altadeEdiciondeCursoInternalFrame.comboBoxInit();
+			}
+		});
 		mnAltas.add(mntmAltaEdicionCurso);
 		
 		JMenuItem mntmAltaProgFormacion = new JMenuItem("Alta de Prog. de Formación");
+		mntmAltaProgFormacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CrearProgramadeFormacionInternalFrame.setVisible(true);
+			}
+		});
 		mnAltas.add(mntmAltaProgFormacion);
 		
 		JMenuItem mntmAgregarCursoProgFormacion = new JMenuItem("Agregar Curso a Prog. de Formación");
+		mntmAgregarCursoProgFormacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				agregarCursoProgFormacionInternalFrame.comboBoxInit();
+				agregarCursoProgFormacionInternalFrame.setVisible(true);
+			}
+		});
 		mnAltas.add(mntmAgregarCursoProgFormacion);
 		
 		JMenu mnModificar = new JMenu("Modificar");
 		menuBar.add(mnModificar);
 		
 		JMenuItem mntmModificarDatosUsuarios = new JMenuItem("Modificar Datos de Usuarios");
+		mntmModificarDatosUsuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modificarUsuarioInternalFrame.comboBoxInit();
+				modificarUsuarioInternalFrame.setVisible(true);
+			}
+		});
 		mnModificar.add(mntmModificarDatosUsuarios);
 		
 		JMenu mnConsultas = new JMenu("Consultas");
 		menuBar.add(mnConsultas);
 		
 		JMenuItem mntmConsultaUsuario = new JMenuItem("Consulta de Usuario");
+		mntmConsultaUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConsultaUsuarioInternalFrame.setVisible(true);
+				ConsultaUsuarioInternalFrame.comboBoxInit();
+			}
+		});
 		mnConsultas.add(mntmConsultaUsuario);
 		
 		JMenuItem mntmConsultaCurso = new JMenuItem("Consulta de Curso");
+		mntmConsultaCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				consultaCursoInternalFrame.setVisible(true);
+				consultaCursoInternalFrame.comboBoxInitInstitutos();
+
+			}
+		});
 		mnConsultas.add(mntmConsultaCurso);
 		
 		JMenuItem mntmConsultaEdicionCurso = new JMenuItem("Consulta de Edición de Curso");
+		mntmConsultaEdicionCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				consultaEdicionCursoInternalFrame.comboBoxInstitutosInit();
+				consultaEdicionCursoInternalFrame.setVisible(true);
+			}
+		});
 		mnConsultas.add(mntmConsultaEdicionCurso);
 		
 		JMenuItem mntmConsultaProgFormacion = new JMenuItem("Consulta de Prog. de Formación");
+		mntmConsultaProgFormacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultaProgramaFormacionInternalFrame.setVisible(true);
+				ConsultaProgramaFormacionInternalFrame.comboBoxInitProgramas();
+
+			}
+		});
 		mnConsultas.add(mntmConsultaProgFormacion);
 		
 		JMenu mnInscripciones = new JMenu("Inscripciones");
 		menuBar.add(mnInscripciones);
 		
 		JMenuItem mntmInscripcionEdicionCurso = new JMenuItem("Inscripción a Edición de Curso");
+		mntmInscripcionEdicionCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				InscripcionaEdicionaCursoInternalFrame.setVisible(true);
+				InscripcionaEdicionaCursoInternalFrame.comboBoxInit();
+
+			}
+		});
 		mnInscripciones.add(mntmInscripcionEdicionCurso);
 	}
 }

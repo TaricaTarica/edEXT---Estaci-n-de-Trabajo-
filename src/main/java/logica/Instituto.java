@@ -1,5 +1,7 @@
 package logica;
 
+import datatypes.DtCurso;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -44,9 +46,30 @@ public class Instituto {
 		Curso c = this.getCurso(nombreCurso);
 		c.setPrevia(previa);
 	}
-
 	
+	// Metodos para cursos
+	public ArrayList<String> obtenerCursos(){
+		ArrayList<String> lista = new ArrayList<>();
+		for(Curso c:cursos) {
+			lista.add(c.getNombre());
+		}
+		return lista;
+	}
 	
+	public void agregarCurso(DtCurso dtc) {
+		Curso c = new Curso(dtc);
+		cursos.add(c);	
+	}
 	
+	public ArrayList<String> obtenerInstitutoCursos(){
+		//Retorna nombreInstituto-nombreCurso, por ejemplo BUCEO-BD2
+		ArrayList<String> lista = new ArrayList<>();
+		String nombreInstitutoCurso;
+		for (Curso c: cursos) {
+			nombreInstitutoCurso = this.nombre+" - "+c.getNombre();
+			lista.add(nombreInstitutoCurso);
+		}
+		return lista;
+	}
 	
 }

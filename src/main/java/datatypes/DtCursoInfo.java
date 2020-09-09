@@ -1,5 +1,6 @@
 package datatypes;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +11,7 @@ public class DtCursoInfo {
 	private String duracion;
 	private int cantHoras;
 	private int creditos;
-	private Date fechaR;
+	private LocalDate fechaAlta;
 	private String url;
 	
 	private List<DtProgramaFormacion> programas = new ArrayList<>();
@@ -18,14 +19,14 @@ public class DtCursoInfo {
 	
 	//constructores
 	public DtCursoInfo() {}
-	public DtCursoInfo(String nombre, String descripcion, String duracion, int cantHoras, int creditos, Date fechaR,
+	public DtCursoInfo(String nombre, String descripcion, String duracion, int cantHoras, int creditos, LocalDate fechaAlta,
 			String url) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.cantHoras = cantHoras;
 		this.creditos = creditos;
-		this.fechaR = fechaR;
+		this.fechaAlta = fechaAlta;
 		this.url = url;
 	}
 	
@@ -60,11 +61,11 @@ public class DtCursoInfo {
 	public void setCreditos(int creditos) {
 		this.creditos = creditos;
 	}
-	public Date getFechaR() {
-		return fechaR;
+	public LocalDate getFechaAlta() {
+		return fechaAlta;
 	}
-	public void setFechaR(Date fechaR) {
-		this.fechaR = fechaR;
+	public void setFechaAlta(LocalDate fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 	public String getUrl() {
 		return url;

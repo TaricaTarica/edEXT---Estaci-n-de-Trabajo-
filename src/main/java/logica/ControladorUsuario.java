@@ -1,5 +1,6 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import interfaces.IControladorUsuario;
@@ -24,16 +25,32 @@ public class ControladorUsuario implements IControladorUsuario {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario nuevoUsr = mU.buscarUsuario(u.getNickname(), u.getCorreo());
 		if(nuevoUsr != null)
-			throw new UsuarioRepetido_Exception("El nickname "+ u.getNickname() +" y el correo " + u.getCorreo() +" están registrados");
+			throw new UsuarioRepetido_Exception("El nickname "+ u.getNickname() +" y el correo " + u.getCorreo() +" estï¿½n registrados");
 		if(u instanceof DtEstudiante) 
-			nuevoUsr = new Estudiante(u.getNickname(),u.getCorreo(),u.getNombre(),u.getApellido(),u.getfechaNac());
+			nuevoUsr = new Estudiante(u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac());
 		if(u instanceof DtDocente) {
 			ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 			Instituto institutoDocente = mI.buscarInstituto(this.nombreInstituto);
-			nuevoUsr = new Docente (u.getNickname(),u.getCorreo(),u.getNombre(),u.getApellido(),u.getfechaNac(), institutoDocente);
+			nuevoUsr = new Docente (u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac(), institutoDocente);
 		}
 		mU.agregarUsuario(nuevoUsr);
 		
+	}
+	
+	/*Consulta Usuario*/
+	@Override
+	public DtUsuario ConsultaUsuario(String strUsuario) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usuario = mU.buscarUsuarioC(strUsuario);
+		String nickname = usuario.getNickname();
+		String nombre = usuario.getNombre();
+		String apellido = usuario.getApellido();
+		String correo = usuario.getCorreo();
+		LocalDate fechaNac = usuario.getfechaNac();
+		
+		DtUsuario retorno = new DtUsuario(nickname, nombre, apellido, correo, fechaNac);
+		
+		return retorno;
 	}
 	
 	/*MULTIUSO*/
@@ -51,5 +68,47 @@ public class ControladorUsuario implements IControladorUsuario {
         return institutos_ret;
 	}
 	
+	public String[] listarUsuarios(){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ArrayList<String> usuarios;
+		usuarios = mU.getNombreUsuarios();
+		String[] usuarios_ret = new String[usuarios.size()];
+        int u=0;
+        for(String usu: usuarios) {
+        	usuarios_ret[u]=usu;
+        	u++;
+        }
+        return usuarios_ret;
+	}
+	
+	@Override
+	public String getNombreUsuario(String nickname) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario2(nickname);
+		return usr.getNombre();
+	}
+	
+	@Override
+	public String getApellidoUsuario(String nickname) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario2(nickname);
+		return usr.getApellido();
+	}
+	
+	@Override
+	public LocalDate getFechaUsuario(String nickname) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario2(nickname);
+		return usr.getfechaNac();
+	}
+	
+	@Override
+	public void modificarUsuario(String nickname, String nombre, String apellido, LocalDate fechaN) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario2(nickname);
+		usr.setNombre(nombre);
+		usr.setApellido(apellido);
+		usr.setFechaNac(fechaN);
+	}
 	
 }

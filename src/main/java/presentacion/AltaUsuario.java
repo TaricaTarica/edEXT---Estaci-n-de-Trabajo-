@@ -27,12 +27,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class AltaUsuario extends JInternalFrame {
 	IControladorUsuario iconUsr;
 	private static final long serialVersionUID = 1L;
-	private JTextField textFieldDia;
-	private JTextField textFieldAnio;
 	private JTextField textFieldNickname;
 	private JTextField textFieldCorreo;
 	private JTextField textFieldNombre;
@@ -40,9 +39,9 @@ public class AltaUsuario extends JInternalFrame {
 	
 	private ButtonGroup grupoUsuarios;
 	private JComboBox<String> comboBoxInstitutos;
-	private JComboBox comboBoxMes;
 	private JRadioButton rdbtnDocente;
 	private JRadioButton rdbtnEstudiante;
+	private JDateChooser dateChooserFechaNac;
 
 	
 	public AltaUsuario(IControladorUsuario iconUsr) {
@@ -78,35 +77,8 @@ public class AltaUsuario extends JInternalFrame {
 		lblApellido.setBounds(10, 97, 46, 14);
 		getContentPane().add(lblApellido);
 		
-		JLabel lblDia = new JLabel("Dia");
-		lblDia.setBounds(20, 148, 46, 14);
-		getContentPane().add(lblDia);
-		
-		textFieldDia = new JTextField();
-		textFieldDia.setBounds(41, 145, 25, 20);
-		getContentPane().add(textFieldDia);
-		textFieldDia.setColumns(10);
-		
-		JLabel lblMes = new JLabel("Mes");
-		lblMes.setBounds(72, 148, 46, 14);
-		getContentPane().add(lblMes);
-		
-		comboBoxMes = new JComboBox();
-		comboBoxMes.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
-		comboBoxMes.setBounds(96, 145, 37, 20);
-		getContentPane().add(comboBoxMes);
-		
-		JLabel lblAnio = new JLabel("A\u00F1o");
-		lblAnio.setBounds(144, 148, 46, 14);
-		getContentPane().add(lblAnio);
-		
-		textFieldAnio = new JTextField();
-		textFieldAnio.setBounds(169, 145, 60, 20);
-		getContentPane().add(textFieldAnio);
-		textFieldAnio.setColumns(10);
-		
 		JLabel lblFechaNaciento = new JLabel("Fecha de Nacimiento");
-		lblFechaNaciento.setBounds(10, 122, 209, 14);
+		lblFechaNaciento.setBounds(10, 127, 209, 14);
 		getContentPane().add(lblFechaNaciento);
 		
 		textFieldNickname = new JTextField();
@@ -178,6 +150,10 @@ public class AltaUsuario extends JInternalFrame {
 		comboBoxInstitutos = new JComboBox<String>();
 		comboBoxInstitutos.setBounds(290, 50, 121, 20);
 		getContentPane().add(comboBoxInstitutos);
+		
+		dateChooserFechaNac = new JDateChooser();
+		dateChooserFechaNac.setBounds(62, 147, 157, 20);
+		getContentPane().add(dateChooserFechaNac);
 
 	}
 	public void comboBoxInit() {
@@ -189,65 +165,67 @@ public class AltaUsuario extends JInternalFrame {
 		setVisible(false);
 	}
 	public void ConfirmarAltaUsuario_ActionPerformed(ActionEvent e) {
+		
+		//OBTENGO TODOS LOS DATOS DE LA PRESENTACION
 		String nickname = this.textFieldNickname.getText();
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
-		String strdia = this.textFieldDia.getText();
-		String strmes = this.comboBoxMes.getSelectedItem().toString();
-		String stranio = this.textFieldAnio.getText();
+		
+		//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
+		Date fechaNacD = new Date();
+		fechaNacD = this.dateChooserFechaNac.getDate();
+		LocalDate fechaNac = fechaNacD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
+
+		
 		if (comprobarCampos()) {
-			String fecha = strdia+"/"+strmes+"/"+stranio;
-			LocalDate fechaN = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("d/M/yyyy"));
+			
 			DtUsuario usr = null;
+			
 			if (rdbtnDocente.isSelected()) {
 				String nInstituto = this.comboBoxInstitutos.getSelectedItem().toString();
 				iconUsr.ingresarInstitutoDocente(nInstituto);
-				usr = new DtDocente(nickname, correo, nombre, apellido, fechaN);
+				usr = new DtDocente(nickname, nombre, apellido, correo, fechaNac);
 			}else if(rdbtnEstudiante.isSelected()) {
-				usr = new DtEstudiante(nickname, correo, nombre, apellido, fechaN);
+				usr = new DtEstudiante(nickname, nombre, apellido, correo, fechaNac);
 			}
 			try {
 				iconUsr.confirmarAlta(usr);
-				JOptionPane.showMessageDialog(this, "Usuario creado con éxito", "Creacíon exitosa", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Usuario creado con ï¿½xito", "Creacï¿½on exitosa", JOptionPane.INFORMATION_MESSAGE);
 			}
 			catch(UsuarioRepetido_Exception ex){
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "Creación exitosa", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
 	
 	private void limpiarCampos() {
-		this.textFieldAnio.setText("");
+		//this.textFieldAnio.setText("");
 		this.textFieldApellido.setText("");
 		this.textFieldNombre.setText("");
 		this.textFieldCorreo.setText("");
 		this.textFieldNickname.setText("");
-		this.textFieldDia.setText("");
+		//this.textFieldDia.setText("");
 	}
 	private boolean comprobarCampos() {
 		String nickname = this.textFieldNickname.getText();
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
-		String strdia = this.textFieldDia.getText();
-		String strmes = this.comboBoxMes.getSelectedItem().toString();
-		String stranio = this.textFieldAnio.getText();
+
 		
-		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || strdia.isEmpty() || stranio.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "No pueden haber campos vacíos", "ERROR",
+		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "No pueden haber campos vacï¿½os", "ERROR",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if(!verificarCorreo(correo)) {
-			JOptionPane.showMessageDialog(this, "Debe ingresar un correo válido", "ERROR",
+			JOptionPane.showMessageDialog(this, "Debe ingresar un correo vï¿½lido", "ERROR",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if(!verificarFecha(strdia, stranio))
-			return false;
-		return true;
-				
+		
+		return true;		
 }
 	private boolean verificarCorreo(String correo) {
 		Pattern patt = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
@@ -259,37 +237,4 @@ public class AltaUsuario extends JInternalFrame {
 			return false;
 	}
 	
-	private boolean verificarFecha(String dia, String anio) {
-		try {
-            int d = Integer.parseInt(dia);
-            if(d < 1 || d > 31) {
-            	JOptionPane.showMessageDialog(this, "Día de nacimiento inválido", "ERROR",
-                        JOptionPane.ERROR_MESSAGE);
-            	return false;
-    		}
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El día debe ser un número", "ERROR",
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-		if (anio.length() != 4) {
-			JOptionPane.showMessageDialog(this, "El año debe tener 4 dígitos", "ERROR",
-                    JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		try {
-            int a = Integer.parseInt(anio);
-            if (a > (Year.now().getValue())) {
-            	JOptionPane.showMessageDialog(this, "El año ingresado no es válido", "ERROR",
-                        JOptionPane.ERROR_MESSAGE);
-            	return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El año debe ser un número", "ERROR",
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-		return true;
-		
-	}
 }

@@ -1,24 +1,25 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class InscripcionEd {
-	private Date fecha;
+	private LocalDate fecha;
 	private Edicion edicion;
 	
 	//constructores
 	public InscripcionEd() {}
-	public InscripcionEd(Date fecha, Edicion edicion) {
+	public InscripcionEd(LocalDate fecha, Edicion edicion) {
 
 		this.fecha = fecha;
 		this.edicion = edicion;
 	}
 	
 	//getters-setters
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 	public Edicion getEdicion() {

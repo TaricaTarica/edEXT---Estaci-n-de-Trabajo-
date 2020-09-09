@@ -1,26 +1,33 @@
 package datatypes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+//import java.util.ArrayList;
+import java.time.LocalDate;
+//import java.util.List;
 
-import logica.Curso;
+//import logica.Curso;
 
 public class DtProgramaFormacion {
 	private String nombre;
 	private String descripcion;
-	private Date fechaIni;
-	private Date fechaFin;
+	//private String fechaInicio;
+	private LocalDate fechaInicio;
+	//private String fechaFin;
+	private LocalDate fechaFin;
+	//private String fechaAlta;
+	private LocalDate fechaAlta;
+
+
 	
-	private List<Curso> cursos = new ArrayList<>();
+	//private List<Curso> cursos = new ArrayList<>();
 
 	//constructores
-	public DtProgramaFormacion() {}
-	public DtProgramaFormacion(String nombre, String descripcion, Date fechaIni, Date fechaFin) {
+	public DtProgramaFormacion(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, LocalDate fechaAlta) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.fechaIni = fechaIni;
+		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
+		this.fechaAlta = fechaAlta;
+
 	}
 	
 	//getters-setters
@@ -36,16 +43,22 @@ public class DtProgramaFormacion {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public Date getFechaIni() {
-		return fechaIni;
+	public LocalDate getFechaInicio() {
+		return fechaInicio;
 	}
-	public void setFechaIni(Date fechaIni) {
-		this.fechaIni = fechaIni;
+	public void setFechaIni(LocalDate fechaInicio) {
+		this.fechaInicio = fechaInicio;
 	}
-	public Date getFechaFin() {
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
-	public void setFechaFin(Date fechaFin) {
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+	public LocalDate getFechaAlta() {
+		return fechaAlta;
+	}
+	public void setFechaAlta(LocalDate fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 }

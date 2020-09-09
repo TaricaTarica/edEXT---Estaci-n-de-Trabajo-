@@ -3,6 +3,9 @@ package logica;
 import java.util.ArrayList;
 import java.util.List;
 
+import datatypes.DtProgramaFormacion;
+
+
 public class ManejadorProgramaFormacion {
 	private static ManejadorProgramaFormacion instancia = null;
 	private List<ProgramaFormacion> programas = new ArrayList<>();
@@ -15,16 +18,34 @@ public class ManejadorProgramaFormacion {
 		return instancia;
 	}
 
-	public void agregarProgramaFormacion(ProgramaFormacion programa) {
-		programas.add(programa);
+	public void agregarProgramaFormacion(DtProgramaFormacion pf) {
+		ProgramaFormacion p = new ProgramaFormacion(pf);
+		programas.add(p);
 	}
 	
-	public ProgramaFormacion buscarProgramaFormacion(String nombre) {
-		ProgramaFormacion aretornar = null;
-		for(ProgramaFormacion pf: programas) {
-			if (pf.getNombre().equals(nombre))
-				aretornar=pf;
+	public boolean existeProgramaFormacion(String pf) {
+		boolean aretornar = false;
+		for(ProgramaFormacion p: programas) {
+			if (p.getNombre().equals(pf))
+				aretornar=true;
 		}
 		return aretornar;
+	}
+	
+	public ProgramaFormacion buscarProgramaFormacion(String pf) {
+		ProgramaFormacion aretornar = null;
+		for(ProgramaFormacion p: programas) {
+			if (p.getNombre().equals(pf))
+				aretornar=p;
+		}
+		return aretornar;
+	}
+	
+	public ArrayList<String> getNombreProgramas(){
+		ArrayList<String> retorno = new ArrayList<>();
+		for(ProgramaFormacion i: programas) {
+			retorno.add(i.getNombre());
+		}
+		return retorno;
 	}
 }

@@ -42,4 +42,22 @@ public class ManejadorInstituto {
 		}
 		return retorno;
 	}
+	
+	/*public ArrayList<String> getNombreCursos(String strInstituto){
+		ArrayList<String> retorno = new ArrayList<>();
+
+		// ACA TENGO QUE PEDIRLE EL NOMBRE DE CADA CURSO al instituto
+		
+		//retorno = instituto.obterneCusso()
+		
+		
+		for(Instituto i: institutos) {
+			retorno.add(i.getCurso(strInstituto));
+		}
+		return retorno;
+	}*/
+	
+	public List<Instituto> getInstitutos(){
+		return this.institutos; //Tendr�a que hacer una copia?
+	}
 }
