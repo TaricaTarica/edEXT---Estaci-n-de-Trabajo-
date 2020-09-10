@@ -3,9 +3,14 @@ package logica;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import persistencia.Conexion;
+
 public class ManejadorInstituto {
 	private static ManejadorInstituto instancia = null;
-	private List<Instituto> institutos = new ArrayList<>();
+	//private List<Instituto> institutos = new ArrayList<>();
 	
 	private ManejadorInstituto() {}
 	
@@ -16,28 +21,41 @@ public class ManejadorInstituto {
 	}
 
 	public void agregarInstituto(Instituto instituto) {
-		institutos.add(instituto);
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		
+		em.persist(instituto);
+		
+		em.getTransaction().commit();
 	}
 	
 	public Instituto buscarInstituto(String nombre) {
-		Instituto aretornar = null;
-		for(Instituto i: institutos) {
-			if (i.getNombre().equals(nombre))
-				aretornar= i;
-		}
-		return aretornar;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Instituto instituto = em.find(Instituto.class, nombre);
+		return instituto;
 	}
 	public boolean existeInstituto(String nombre) {
-		boolean retorno = false;
-		for(Instituto i: institutos) {
-			if(i.getNombre().equals(nombre))
-				retorno = true;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Instituto instituto = em.find(Instituto.class, nombre);
+		if(instituto != null) {
+			return true;
 		}
-		return retorno;
+		return false;
 	}
 	public ArrayList<String> getNombreInstitutos(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+	
+		Query query = em.createQuery("select i from Instituto i");
+		List<Instituto> listInstitutos = (List<Instituto>) query.getResultList();
+		
 		ArrayList<String> retorno = new ArrayList<>();
-		for(Instituto i: institutos) {
+		for(Instituto i: listInstitutos) {
 			retorno.add(i.getNombre());
 		}
 		return retorno;
@@ -58,6 +76,11 @@ public class ManejadorInstituto {
 	}*/
 	
 	public List<Instituto> getInstitutos(){
-		return this.institutos; //Tendr�a que hacer una copia?
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+	
+		Query query = em.createQuery("select i from Instituto i");
+		List<Instituto> listInstitutos = (List<Instituto>) query.getResultList();
+		return listInstitutos;
 	}
 }

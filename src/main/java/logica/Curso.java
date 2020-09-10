@@ -2,12 +2,14 @@ package logica;
 
 import datatypes.DtCurso;
 import datatypes.DtEdicion;
+import persistencia.Conexion;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -110,7 +112,13 @@ public class Curso {
 	// Métodos para ediciones
 	public void agregarEdicion(DtEdicion dte) {
 		Edicion e = new Edicion(dte);
-		ediciones.add(e);	
+		ediciones.add(e);
+		
+		/*Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(e);
+		em.getTransaction().commit();*/
 	}
 	public boolean BuscarEdicion(String ed) {;
 		boolean aretornar=false;

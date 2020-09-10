@@ -3,7 +3,10 @@ package logica;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+
 import interfaces.IControladorUsuario;
+import persistencia.Conexion;
 import datatypes.DtDocente;
 import datatypes.DtEstudiante;
 import datatypes.DtUsuario;
@@ -109,6 +112,12 @@ public class ControladorUsuario implements IControladorUsuario {
 		usr.setNombre(nombre);
 		usr.setApellido(apellido);
 		usr.setFechaNac(fechaN);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(usr);
+		em.getTransaction().commit();
 	}
 	
 }

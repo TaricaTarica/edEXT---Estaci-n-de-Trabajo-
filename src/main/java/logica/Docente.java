@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import persistencia.Conexion;
 
 @Entity
 public class Docente extends Usuario {
@@ -36,6 +40,11 @@ public class Docente extends Usuario {
 	//Métodos para ediciones asociados
 	public void asociarEdicion(Edicion edicion){
 		this.edicionesAsociadas.add(edicion);
+		/*Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(edicion);
+		em.getTransaction().commit();*/
 	}
 	
 	public List<Edicion> obtenerEdicionesAsociados(){

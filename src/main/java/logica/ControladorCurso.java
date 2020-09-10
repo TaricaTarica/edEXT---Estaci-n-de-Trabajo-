@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import excepciones.InstitutoRepetido_Exception;
 import excepciones.EdicionRepatida_Exception;
 import excepciones.CrearProgramaFormacionRepetido_Exception;
@@ -15,7 +17,7 @@ import excepciones.ProgramaCursoRepetido_Exception;
 
 
 import interfaces.IControladorCurso;
-
+import persistencia.Conexion;
 import datatypes.DtCurso;
 import datatypes.DtEdicion;
 import datatypes.DtProgramaFormacion;
@@ -96,6 +98,12 @@ public class ControladorCurso implements IControladorCurso {
 		Instituto institutoCurso = mI.buscarInstituto(this.nombreInstituto);
 		Curso previa = institutoCurso.getCurso(nombrePrevia);
 		institutoCurso.setPreviaCurso(this.nombreCurso,previa);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(institutoCurso);
+		em.getTransaction().commit();
 	}
 	
 	@Override
@@ -112,7 +120,14 @@ public class ControladorCurso implements IControladorCurso {
 		if(instituto.existeCurso(c.getNombre())) {
 			throw new CursoRepetido_Exception("El curso"+ c.getNombre()+" ya está registrado") ;
 		}
+		
 		instituto.agregarCurso(c);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(instituto);
+		em.getTransaction().commit();
 	}
 	
 	public DtCursoInfo ConsultaCurso(String strInstituto, String strCurso) {
@@ -160,6 +175,13 @@ public class ControladorCurso implements IControladorCurso {
 			throw new EdicionRepatida_Exception("El nombre "+ e.getNombre()+" esta registrados");
 		}
 		curso.agregarEdicion(e);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(curso);
+		em.getTransaction().commit();
+		
 	}
 	
 	/*INSCRIPCION A EDICION DE CURSO*/
@@ -187,6 +209,13 @@ public class ControladorCurso implements IControladorCurso {
 		Edicion edicion = curso.getEdicion(strEdicion.getNombre());
 		docente.asociarEdicion(edicion);
 		edicion.setDocente(docente);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(edicion);
+		em.persist(docente);
+		em.getTransaction().commit();
 	}
 	
 	/*Agregar Curso Programa Formaciï¿½n*/
@@ -205,6 +234,12 @@ public class ControladorCurso implements IControladorCurso {
 		Instituto instituto = mI.buscarInstituto(nombreInstituto);
 		Curso curso = instituto.getCurso(nombreCurso);
 		programa.setCurso(curso);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(programa);
+		em.getTransaction().commit();
 	}
 
 	

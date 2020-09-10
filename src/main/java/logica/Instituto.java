@@ -1,11 +1,13 @@
 package logica;
 
 import datatypes.DtCurso;
+import persistencia.Conexion;
 
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -69,7 +71,13 @@ public class Instituto {
 	
 	public void agregarCurso(DtCurso dtc) {
 		Curso c = new Curso(dtc);
-		cursos.add(c);	
+		cursos.add(c);
+		
+		/*Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(c);
+		em.getTransaction().commit();*/
 	}
 	
 	public ArrayList<String> obtenerInstitutoCursos(){

@@ -6,11 +6,13 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import datatypes.DtEdicion;
+import persistencia.Conexion;
 
 @Entity
 public class Edicion {
@@ -85,6 +87,11 @@ public class Edicion {
 	}
 	public void setDocente(Docente docente) {
 		this.docentes.add(docente);
+		/*Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(docente);
+		em.getTransaction().commit();*/
 	}
 	
 	public String nombresDocentes() {
