@@ -180,42 +180,46 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 	}
 	
 	protected void ConfirmarAltadeEdiciondeCurso_ActionPerformed(ActionEvent e) {
-		//OBTENGO TODOS LOS DATOS DE LA PRESENTACION
-		String nombre = this.textFieldNombre.getText();
-		String cupo = this.textFieldCupo.getText();
-		int c = Integer.parseInt(cupo);
 		
-		//OBTENER LOS DOCENTES
-		List<String> docentes = (List<String>) this.listDocentes.getSelectedValuesList();
-		
-		//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
-		Date fechaIniD = new Date();
-		fechaIniD = this.dateChooserFechaInicio.getDate();
-		LocalDate fechaIni = fechaIniD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
-		
-		Date fechaFinD = new Date();
-		fechaFinD = this.dateChooserFechaFin.getDate();
-		LocalDate fechaFin = fechaFinD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
-		
-		Date fechaPubD = new Date();
-		fechaPubD = this.dateChooserFechaPub.getDate();
-		LocalDate fechaPub = fechaPubD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		
-		//CREACION DEL DT EDICION. INSTITUTO Y CURSO
-		DtEdicion edicion = new DtEdicion(nombre,fechaIni,fechaFin,c,fechaPub); //COMO TRABAJAR EL DTDOCENTE(LISTA DE DOCENTES)
-		String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
-		String curso = this.comboBoxCursos.getSelectedItem().toString();
-			try{
-				this.iconCur.AltadeEdiciondeCurso(edicion, instituto,curso);
-				JOptionPane.showMessageDialog(this, "Edicion a sido creada con ï¿½xito", "Creacï¿½on exitosa", JOptionPane.INFORMATION_MESSAGE);
-			}
-			catch(EdicionRepatida_Exception ex){
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			}
+		if (comprobarCampos()) {
+			//OBTENGO TODOS LOS DATOS DE LA PRESENTACION
+			String nombre = this.textFieldNombre.getText();
+			String cupo = this.textFieldCupo.getText();
+			int c = Integer.parseInt(cupo);
 			
-		for(String doc: docentes) {
-			this.iconCur.asociarEdicion(doc, edicion, instituto, curso);
+			//OBTENER LOS DOCENTES
+			List<String> docentes = (List<String>) this.listDocentes.getSelectedValuesList();
+			
+			//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
+			Date fechaIniD = new Date();
+			fechaIniD = this.dateChooserFechaInicio.getDate();
+			LocalDate fechaIni = fechaIniD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
+			
+			Date fechaFinD = new Date();
+			fechaFinD = this.dateChooserFechaFin.getDate();
+			LocalDate fechaFin = fechaFinD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			
+			Date fechaPubD = new Date();
+			fechaPubD = this.dateChooserFechaPub.getDate();
+			LocalDate fechaPub = fechaPubD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			
+			//CREACION DEL DT EDICION. INSTITUTO Y CURSO
+			DtEdicion edicion = new DtEdicion(nombre,fechaIni,fechaFin,c,fechaPub); //COMO TRABAJAR EL DTDOCENTE(LISTA DE DOCENTES)
+			String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
+			String curso = this.comboBoxCursos.getSelectedItem().toString();
+				try{
+					this.iconCur.AltadeEdiciondeCurso(edicion, instituto,curso);
+					JOptionPane.showMessageDialog(this, "Edicion a sido creada con ï¿½xito", "Creacï¿½on exitosa", JOptionPane.INFORMATION_MESSAGE);
+				}
+				catch(EdicionRepatida_Exception ex){
+					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			for(String doc: docentes) {
+				this.iconCur.asociarEdicion(doc, edicion, instituto, curso);
+			}
 		}
+		
 
 
 	}
@@ -225,10 +229,36 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 	}
 	private void limpiarCampos() {
 		this.textFieldNombre.setText("");
-		//this.textFieldFechaInicio.setText("");
-		//this.textFieldFechaFin.setText("");
 		this.textFieldCupo.setText("");
-		//this.textFieldFechaPub.setText("");
-		//this.textFieldDocente.setText("");
+		this.dateChooserFechaInicio.setCalendar(null);
+		this.dateChooserFechaFin.setCalendar(null);
+		this.dateChooserFechaPub.setCalendar(null);
 	}
+	private boolean comprobarCampos() {
+		int comboBoxCursos = this.comboBoxCursos.getItemCount();
+		int comboBoxInstitutos = this.comboBoxInstitutos.getItemCount();
+		String nombre = this.textFieldNombre.getText();
+		String cupo = this.textFieldCupo.getText();
+		List<String> docentes = this.listDocentes.getSelectedValuesList();
+		Date fechaIniD = this.dateChooserFechaInicio.getDate();
+		Date fechaFinD = this.dateChooserFechaFin.getDate();
+		Date fechaPubD = this.dateChooserFechaPub.getDate();
+		int c = 0;
+		if(nombre.isEmpty() || cupo.isEmpty() || docentes == null || fechaIniD == null || fechaFinD == null || fechaPubD == null || comboBoxCursos == 0 || comboBoxInstitutos == 0) {
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		try {
+			c = Integer.parseInt(cupo);
+			
+		}catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "El cupo debe ser un numero", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+		}
+		return true;
+				 
+	}
+
 }

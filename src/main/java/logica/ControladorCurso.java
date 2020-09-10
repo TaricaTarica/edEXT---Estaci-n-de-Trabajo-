@@ -8,6 +8,7 @@ import java.util.List;
 import excepciones.InstitutoRepetido_Exception;
 import excepciones.EdicionRepatida_Exception;
 import excepciones.CrearProgramaFormacionRepetido_Exception;
+import excepciones.CursoRepetido_Exception;
 import excepciones.InscripcionRepetida_Exception;
 import excepciones.ProgramaCursoRepetido_Exception;
 
@@ -65,7 +66,7 @@ public class ControladorCurso implements IControladorCurso {
 	public void AltaCrearProgramadeFormacion(DtProgramaFormacion pf)throws CrearProgramaFormacionRepetido_Exception {
 		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
 		if(mPF.existeProgramaFormacion(pf.getNombre())){
-			throw new CrearProgramaFormacionRepetido_Exception("El nombre "+ pf.getNombre()+" esta registrados");
+			throw new CrearProgramaFormacionRepetido_Exception("El nombre "+ pf.getNombre()+" está registrado") ;
 		}
 		mPF.agregarProgramaFormacion(pf);
 	}
@@ -105,9 +106,12 @@ public class ControladorCurso implements IControladorCurso {
 		institutoCurso.setCurso(c);
 	}*/
 	
-	public void AltaCurso(DtCurso c, String i) {
+	public void AltaCurso(DtCurso c, String i) throws CursoRepetido_Exception{
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto instituto = mI.buscarInstituto(i);
+		if(instituto.existeCurso(c.getNombre())) {
+			throw new CursoRepetido_Exception("El curso"+ c.getNombre()+" ya está registrado") ;
+		}
 		instituto.agregarCurso(c);
 	}
 	
@@ -160,7 +164,7 @@ public class ControladorCurso implements IControladorCurso {
 	
 	/*INSCRIPCION A EDICION DE CURSO*/
 	@Override
-	public void InscripcionaEdiciondeCurso(String i,LocalDate FechaIns,String nickname,String c,String e) throws InscripcionRepetida_Exception{
+	public void InscripcionaEdiciondeCurso(String i,Date FechaIns,String nickname,String c,String e) throws InscripcionRepetida_Exception{
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Estudiante est = mU.BuscarEstudiante(nickname);
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();

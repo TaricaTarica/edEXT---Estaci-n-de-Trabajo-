@@ -165,20 +165,18 @@ public class AltaUsuario extends JInternalFrame {
 		setVisible(false);
 	}
 	public void ConfirmarAltaUsuario_ActionPerformed(ActionEvent e) {
-		
-		//OBTENGO TODOS LOS DATOS DE LA PRESENTACION
-		String nickname = this.textFieldNickname.getText();
-		String correo = this.textFieldCorreo.getText();
-		String nombre = this.textFieldNombre.getText();
-		String apellido = this.textFieldApellido.getText();
-		
-		//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
-		Date fechaNacD = new Date();
-		fechaNacD = this.dateChooserFechaNac.getDate();
-		LocalDate fechaNac = fechaNacD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
-
-		
 		if (comprobarCampos()) {
+			//OBTENGO TODOS LOS DATOS DE LA PRESENTACION
+			String nickname = this.textFieldNickname.getText();
+			String correo = this.textFieldCorreo.getText();
+			String nombre = this.textFieldNombre.getText();
+			String apellido = this.textFieldApellido.getText();
+		
+			//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
+			Date fechaNacD = new Date();
+			fechaNacD = this.dateChooserFechaNac.getDate();
+			LocalDate fechaNac = fechaNacD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
+
 			
 			DtUsuario usr = null;
 			
@@ -208,13 +206,14 @@ public class AltaUsuario extends JInternalFrame {
 		//this.textFieldDia.setText("");
 	}
 	private boolean comprobarCampos() {
+		//int comboBoxInstitutos = this.comboBoxInstitutos.getItemCount();
 		String nickname = this.textFieldNickname.getText();
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
 
 		
-		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() /*|| comboBoxInstitutos == 0*/) {
 			JOptionPane.showMessageDialog(this, "No pueden haber campos vac�os", "ERROR",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;

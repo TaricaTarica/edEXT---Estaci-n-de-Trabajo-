@@ -2,6 +2,13 @@ package logica;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import java.util.ArrayList;
 
 import datatypes.DtCurso;
@@ -9,12 +16,15 @@ import datatypes.DtProgramaFormacion;
 
 import java.util.ArrayList;
 
+@Entity
 public class ProgramaFormacion {
+	@Id
 	private String nombre;
 	private String descripcion;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
 	private LocalDate fechaAlta;
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Curso> cursos = new ArrayList<>();
 
 	//constructores

@@ -120,6 +120,6 @@ public class ConsultaEdicionCurso extends JInternalFrame {
 			textPane.setText(arrayEdicion[0]+"\n"+arrayEdicion[1]+"\n"+arrayEdicion[2]+"\n"+arrayEdicion[3]+"\n"+arrayEdicion[4]+"\n"+arrayEdicion[5]);
 		//}
 	}
-
+	
 
 }

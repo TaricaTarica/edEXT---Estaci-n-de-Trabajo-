@@ -129,20 +129,21 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 
 	}
 	protected void AltaInscripcionaEdiciondeCurso_ActionPerformed(ActionEvent e) {
-		String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
-		String curso = this.comboBoxCursos.getSelectedItem().toString();
-		String edicion = this.comboBoxEdiciones.getSelectedItem().toString();
-		String estudiante = this.comboBoxEstudiantes.getSelectedItem().toString();
-		Date fechaIns = new Date();
-		fechaIns = this.dateChooserFechadeInscripcion.getDate();
-		LocalDate fechaPub = fechaIns.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		
-		try{
-			this.iconCur.InscripcionaEdiciondeCurso(instituto,fechaPub,estudiante,curso,edicion);
-			JOptionPane.showMessageDialog(this, "Edicion a sido creada con ï¿½xito", "Creacï¿½on exitosa", JOptionPane.INFORMATION_MESSAGE);
-		}
-		catch(InscripcionRepetida_Exception ex){
-			JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		if(comprobarCampos()) {
+			String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
+			String curso = this.comboBoxCursos.getSelectedItem().toString();
+			String edicion = this.comboBoxEdiciones.getSelectedItem().toString();
+			String estudiante = this.comboBoxEstudiantes.getSelectedItem().toString();
+			Date fechaIns = new Date();
+			fechaIns = this.dateChooserFechadeInscripcion.getDate();
+			
+			try{
+				this.iconCur.InscripcionaEdiciondeCurso(instituto,fechaIns,estudiante,curso,edicion);
+				JOptionPane.showMessageDialog(this, "Edicion a sido creada con ï¿½xito", "Creacï¿½on exitosa", JOptionPane.INFORMATION_MESSAGE);
+			}
+			catch(InscripcionRepetida_Exception ex){
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}	
 	}
 	public void comboBoxInit() {
@@ -170,12 +171,20 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 		setVisible(false);
 	}
 	private void limpiarCampos() {
-		//this.textFieldNombre.setText("");
-		//this.textFieldFechaInicio.setText("");
-		//this.textFieldFechaFin.setText("");
-		//this.textFieldCupo.setText("");
-		//this.textFieldFechaPub.setText("");
-		//this.textFieldDocente.setText("");
+		this.dateChooserFechadeInscripcion.setCalendar(null);
+	}
+	private boolean comprobarCampos() {
+		Date fechaIns = this.dateChooserFechadeInscripcion.getDate();
+		int comboBoxCursos = this.comboBoxCursos.getItemCount();
+		int comboBoxInstitutos = this.comboBoxInstitutos.getItemCount();
+		int comboBoxEdiciones = this.comboBoxEdiciones.getItemCount();
+		int comboBoxEstudiantes = this.comboBoxEstudiantes.getItemCount();
+		if (fechaIns == null || comboBoxCursos == 0 || comboBoxInstitutos == 0 || comboBoxEdiciones == 0 || comboBoxEstudiantes == 0) {
+			JOptionPane.showMessageDialog(this, "No pueden haber campos vacíos", "ERROR",
+	                JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 
 }

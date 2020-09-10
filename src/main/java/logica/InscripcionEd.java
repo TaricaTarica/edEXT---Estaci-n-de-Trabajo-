@@ -3,23 +3,47 @@ package logica;
 import java.time.LocalDate;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+
+import persistencia.InscripcionEdID;
+
+@Entity
+@IdClass(InscripcionEdID.class)
 public class InscripcionEd {
-	private LocalDate fecha;
+	@Id
+	@ManyToOne
+	@JoinColumn(
+			insertable=false,
+			updatable=false
+	)
+	private Estudiante estudiante; //hay que cargar esto en la alta inscripcion
+	@Id
+	@ManyToOne
+	@JoinColumn
 	private Edicion edicion;
 	
+	private Date fecha;
+	
 	//constructores
-	public InscripcionEd() {}
-	public InscripcionEd(LocalDate fecha, Edicion edicion) {
+	public InscripcionEd() {
+		super();
+	}
+	public InscripcionEd(Date fecha, Edicion edicion) {
 
 		this.fecha = fecha;
 		this.edicion = edicion;
 	}
 	
 	//getters-setters
-	public LocalDate getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 	public Edicion getEdicion() {

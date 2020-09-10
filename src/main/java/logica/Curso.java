@@ -5,9 +5,18 @@ import datatypes.DtEdicion;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import java.util.ArrayList;
 
+@Entity
 public class Curso {
+	@Id
 	private String nombre;
 	private String descripcion;
 	private String duracion;
@@ -16,8 +25,13 @@ public class Curso {
 	private LocalDate fechaAlta;
 	private String url;
 	
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Edicion> ediciones = new ArrayList<>();
+	
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Curso> previas = new ArrayList<>();
+	
+	
 	private ArrayList<String> programasAsociados = new ArrayList<>();
 	
 	//constructores

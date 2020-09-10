@@ -80,10 +80,11 @@ public class AgregarCursoProgFormacion extends JInternalFrame {
 	public void cancelarAgregarCursoProgFormacion_actionPerformed(ActionEvent e) {
 		setVisible(false);
 	}
-	public void confirmarAgregarCursoProgFormacion_actionPerformed(ActionEvent e) {
-		String programaFormacion = this.comboBoxProgFormacion.getSelectedItem().toString();
-		String InstitutoCurso = this.comboBoxCursos.getSelectedItem().toString();
+	public void confirmarAgregarCursoProgFormacion_actionPerformed(ActionEvent e) {	
 		if(comprobarCampos()) {
+			String programaFormacion = this.comboBoxProgFormacion.getSelectedItem().toString();
+			String InstitutoCurso = this.comboBoxCursos.getSelectedItem().toString();
+		
 			try {
 				iconCur.agregarCursoProgFormacion(programaFormacion, InstitutoCurso);
 				JOptionPane.showMessageDialog(this, "Curso agregado con éxito", "Agregación exitosa", JOptionPane.INFORMATION_MESSAGE);
@@ -95,11 +96,11 @@ public class AgregarCursoProgFormacion extends JInternalFrame {
 		
 	}
 	public boolean comprobarCampos() {
-		String programaFormacion = this.comboBoxProgFormacion.getSelectedItem().toString();
-		String InstitutoCurso = this.comboBoxCursos.getSelectedItem().toString();
-		if(programaFormacion.isEmpty() || InstitutoCurso.isEmpty()) {
+		int comboBoxProgFormacion = this.comboBoxProgFormacion.getItemCount();
+		int comboBoxCursos = this.comboBoxProgFormacion.getItemCount();
+		if(comboBoxCursos == 0 || comboBoxProgFormacion == 0) {
 			JOptionPane.showMessageDialog(this, "No pueden haber campos vacíos", "ERROR",
-            JOptionPane.ERROR_MESSAGE);
+		            JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;

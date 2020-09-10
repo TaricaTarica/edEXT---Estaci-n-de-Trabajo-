@@ -2,14 +2,25 @@ package logica;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Docente extends Usuario {
+	@ManyToOne
+	@JoinColumn
 	private Instituto instituto;
-	private ArrayList<Edicion> edicionesAsociadas = new ArrayList<>();
+	@ManyToMany(mappedBy = "docentes")
+	private List<Edicion> edicionesAsociadas = new ArrayList<>();
 
-	
 	//constructores
-	public Docente() {}
+	public Docente() {
+		super();
+	}
 	public Docente(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, Instituto instituto) {
 		super(nickname, nombre, apellido, correo, fechaNac);
 	}
@@ -27,7 +38,7 @@ public class Docente extends Usuario {
 		this.edicionesAsociadas.add(edicion);
 	}
 	
-	public ArrayList<Edicion> obtenerEdicionesAsociados(){
+	public List<Edicion> obtenerEdicionesAsociados(){
 		return this.edicionesAsociadas;
 	}
 

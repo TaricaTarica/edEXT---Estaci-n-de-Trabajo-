@@ -2,8 +2,15 @@ package logica;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
+@Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Usuario {
+	@Id
 	private String nickname;
 	private String nombre;
 	private String apellido;
@@ -11,7 +18,9 @@ public abstract class Usuario {
 	private LocalDate fechaNac;
 	
 	//constructores
-	public Usuario() {}
+	public Usuario() {
+		super();
+	}
 	public Usuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
 		super();
 		this.nickname = nickname;

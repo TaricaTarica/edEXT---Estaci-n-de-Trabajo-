@@ -8,7 +8,7 @@ import excepciones.InscripcionRepetida_Exception;
 import excepciones.InstitutoRepetido_Exception;
 import excepciones.ProgramaCursoRepetido_Exception;
 import excepciones.CrearProgramaFormacionRepetido_Exception;
-
+import excepciones.CursoRepetido_Exception;
 import datatypes.DtCurso;
 import datatypes.DtEdicion;
 import datatypes.DtProgramaFormacion;
@@ -30,7 +30,7 @@ public interface IControladorCurso {
 	public void ingresarPrevia(String NombrePrevia);
 	public void agregarPrevia(String nombrePrevia);
 	//public void AltaCurso();
-	public void AltaCurso(DtCurso c, String i);
+	public void AltaCurso(DtCurso c, String i) throws CursoRepetido_Exception;
 	
 	/*Agregar Curso Programa Formaci�n*/
 	public void agregarCursoProgFormacion(String programaFormacion, String curso) throws ProgramaCursoRepetido_Exception;
@@ -47,7 +47,7 @@ public interface IControladorCurso {
 	//public Edicion obtenerEdicion(); // FALTA IMPLEMENTAR EN EL CONTROLADOR
 	
 	/*Inscripcion a Edicion de Curso*/
-	public void InscripcionaEdiciondeCurso(String nombreInstituto,LocalDate fecha,String es,String c,String e) throws InscripcionRepetida_Exception;
+	public void InscripcionaEdiciondeCurso(String nombreInstituto, Date fecha,String es,String c,String e) throws InscripcionRepetida_Exception;
 	public void asociarEdicion(String strDocente, DtEdicion edicion, String strInstituto, String strCurso);
 	
 	/*MULTIUSO*/

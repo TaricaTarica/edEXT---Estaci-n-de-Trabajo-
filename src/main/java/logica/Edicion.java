@@ -4,16 +4,26 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import datatypes.DtEdicion;
 
-
+@Entity
 public class Edicion {
+	@Id
 	private String nombre;
 	private LocalDate fechaIni;
 	private LocalDate fechaFin;
 	private int cupo;
 	private LocalDate fechaPub;
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Docente> docentes = new ArrayList<>();
+	@OneToMany(mappedBy="edicion",cascade=CascadeType.ALL,orphanRemoval=true) 
+	private List<InscripcionEd> inscripciones = new ArrayList<>(); //hay que cargar esto en la alta inscripcion
 	
 	//constructores
 	

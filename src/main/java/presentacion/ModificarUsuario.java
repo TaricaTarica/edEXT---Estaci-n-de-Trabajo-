@@ -121,25 +121,28 @@ public class ModificarUsuario extends JInternalFrame {
 		this.dateChooserFechaNac.setDate(date);
 	}
 	public void confirmarModificarUsuario_actionPerformed(ActionEvent e) {
-		String nickname = this.comboBoxUsuario.getSelectedItem().toString();
-		String nombre = this.textFieldNombre.getText();
-		String apellido = this.textFieldApellido.getText();
-
-		//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
-		Date fechaNacD = new Date();
-		fechaNacD = this.dateChooserFechaNac.getDate();
-		LocalDate fechaNac = fechaNacD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
-
 		if(comprobarCampos()) {
+			String nickname = this.comboBoxUsuario.getSelectedItem().toString();
+			String nombre = this.textFieldNombre.getText();
+			String apellido = this.textFieldApellido.getText();
+
+			//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
+			Date fechaNacD = new Date();
+			fechaNacD = this.dateChooserFechaNac.getDate();
+			LocalDate fechaNac = fechaNacD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
+
+		
 
 			iconUsr.modificarUsuario(nickname, nombre, apellido, fechaNac);
 			JOptionPane.showMessageDialog(this, "Usuario modificado con �xito", "Modificaci�n exitosa", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	private boolean comprobarCampos() {
+		Date fechaNacD = this.dateChooserFechaNac.getDate();
+		int comboBoxUsuario = this.comboBoxUsuario.getItemCount();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
-		if(nombre.isEmpty() || apellido.isEmpty() || apellido.isEmpty()) {
+		if(nombre.isEmpty() || apellido.isEmpty() || apellido.isEmpty() || comboBoxUsuario == 0 || fechaNacD ==  null) {
 			JOptionPane.showMessageDialog(this, "No pueden haber campos vac�os", "ERROR",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;

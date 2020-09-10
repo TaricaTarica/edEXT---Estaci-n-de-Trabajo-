@@ -3,10 +3,21 @@ package logica;
 import datatypes.DtCurso;
 
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import java.util.ArrayList;
 
+@Entity
 public class Instituto {
+	@Id
 	private String nombre;
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Curso> cursos = new ArrayList<>();
 	
 	//constructores
@@ -70,6 +81,13 @@ public class Instituto {
 			lista.add(nombreInstitutoCurso);
 		}
 		return lista;
+	}
+	public boolean existeCurso(String nombreCurso) {
+		for(Curso c: this.cursos) {
+			if(c.getNombre().equals(nombreCurso))
+				return true;
+		}
+		return false;
 	}
 	
 }

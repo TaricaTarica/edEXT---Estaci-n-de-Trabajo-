@@ -1,5 +1,6 @@
 package presentacion;
 import datatypes.DtCurso;
+import excepciones.CursoRepetido_Exception;
 
 import java.awt.EventQueue;
 
@@ -140,8 +141,8 @@ public class AltaCurso extends JInternalFrame {
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
+			public void actionPerformed(ActionEvent e) {
+				CancelarAltaCurso_ActionPerformed(e);
 			}
 		});
 		btnCancelar.setBounds(335, 223, 89, 23);
@@ -164,23 +165,77 @@ public class AltaCurso extends JInternalFrame {
 		String descripcion = this.textFieldDescripcion.getText();
 		String duracion = this.textFieldDuracion.getText();
 		String cantHoras = this.textFieldCantHoras.getText();
-		int h = Integer.parseInt(cantHoras);
+		String url = this.textFieldUrl.getText();
+		if(comprobarCampos()){
+			int h = Integer.parseInt(cantHoras);
+			String cantCreditos = this.textFieldCantCreditos.getText();
+			int c = Integer.parseInt(cantCreditos);
+		
+			//OBTENGO LA FECHAS DATE Y LA CONVIERTO A LOCALDATE
+			Date fechaAltaD = new Date();
+			fechaAltaD = this.dateChooserFechaAlta.getDate();
+			LocalDate fechaAlta = fechaAltaD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
+
+		
+			DtCurso curso = new DtCurso(nombre, descripcion, duracion, h, c, fechaAlta, url);
+			
+			String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
+			
+			try {
+				iconCur.AltaCurso(curso, instituto);
+				JOptionPane.showMessageDialog(this, "Curso creado con exito", "Creacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+			}catch(CursoRepetido_Exception ex) {
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}
+		
+		
+	}
+	public boolean comprobarCampos() {
+		int comboBoxInstitutos = this.comboBoxInstitutos.getItemCount();
+		JDateChooser dateChooserFechaAlta = this.dateChooserFechaAlta;
+		Date fecha = dateChooserFechaAlta.getDate();
+		String nombre = this.textFieldNombre.getText();
+		String descripcion = this.textFieldDescripcion.getText();
+		String duracion = this.textFieldDuracion.getText();
+		String cantHoras = this.textFieldCantHoras.getText();
 		String cantCreditos = this.textFieldCantCreditos.getText();
-		int c = Integer.parseInt(cantCreditos);
-		String url = this.textFieldUrl.getText();		
-		
-		//OBTENGO LA FECHAS DATE Y LA CONVIERTO A LOCALDATE
-		Date fechaAltaD = new Date();
-		fechaAltaD = this.dateChooserFechaAlta.getDate();
-		LocalDate fechaAlta = fechaAltaD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
-
-
-		DtCurso curso = new DtCurso(nombre, descripcion, duracion, h, c, fechaAlta, url);
-		
-		String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
-		
-		iconCur.AltaCurso(curso, instituto);
-		JOptionPane.showMessageDialog(this, "Curso creado con exito", "Creacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-		
+		String url = this.textFieldUrl.getText();
+		if(comboBoxInstitutos == 0) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar Instituto", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (nombre.isEmpty() || descripcion.isEmpty() || duracion.isEmpty() || cantHoras.isEmpty() || cantCreditos.isEmpty() || url.isEmpty() || fecha == null) {
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		try {
+			int h = Integer.parseInt(cantHoras);
+		}catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "La cantidad de horas debe ser un numero", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+		}
+		try {
+			int c = Integer.parseInt(cantCreditos);
+		}catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "La cantidad de créditos debe ser un numero", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+		}
+		return true;
+	}
+	public void CancelarAltaCurso_ActionPerformed(ActionEvent e) {
+		this.dateChooserFechaAlta.setCalendar(null);
+		this.textFieldNombre.setText("");
+		this.textFieldDescripcion.setText("");
+		this.textFieldDuracion.setText("");
+		this.textFieldCantHoras.setText("");
+		this.textFieldCantCreditos.setText("");
+		this.textFieldUrl.setText("");
+		setVisible(false);
 	}
 }

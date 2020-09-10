@@ -109,7 +109,8 @@ public class CrearProgramadeFormacion extends JInternalFrame {
 		getContentPane().add(dateChooserFechaAlta);
 
 	}
-	protected void ConfirmarCrearProgramadeFormacion_ActionPerformed(ActionEvent e) {
+	protected void ConfirmarCrearProgramadeFormacion_ActionPerformed(ActionEvent e) {	
+		if(comprobarCampos()) {
 			//OBTENGO TODOS LOS DATOS DE LA PRESENTACION
 			String nombre = this.textFieldNombre.getText();
 			String Descripcion=this.textFieldDescripcion.getText();
@@ -138,6 +139,8 @@ public class CrearProgramadeFormacion extends JInternalFrame {
 			catch(CrearProgramaFormacionRepetido_Exception ex){
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
+		}
+			
 	}
 	protected void CancelarCrearProgramadeFormacion_actionPerformed(ActionEvent e) {
 		limpiarCampos();
@@ -146,8 +149,22 @@ public class CrearProgramadeFormacion extends JInternalFrame {
 	private void limpiarCampos() {
 		this.textFieldNombre.setText("");
 		this.textFieldDescripcion.setText("");
-		//this.textFieldFechaInicio.setText("");
-		//this.textFieldFechaFin.setText("");
-		//this.textFieldFechaAlta.setText("");
+		this.dateChooserFechaInicio.setCalendar(null);
+		this.dateChooserFechaFin.setCalendar(null);
+		this.dateChooserFechaAlta.setCalendar(null);
+		
+	}
+	private boolean comprobarCampos() {
+		String nombre = this.textFieldNombre.getText();
+		String Descripcion=this.textFieldDescripcion.getText();
+		Date fechaIniD = this.dateChooserFechaInicio.getDate();
+		Date fechaFinD = this.dateChooserFechaFin.getDate();
+		Date fechaAltaD = this.dateChooserFechaAlta.getDate();
+		if(nombre.isEmpty() || Descripcion.isEmpty() || fechaIniD == null || fechaFinD == null || fechaAltaD == null) {
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 }

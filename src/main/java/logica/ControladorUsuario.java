@@ -23,7 +23,7 @@ public class ControladorUsuario implements IControladorUsuario {
 	@Override
 	public void confirmarAlta(DtUsuario u) throws UsuarioRepetido_Exception {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario nuevoUsr = mU.buscarUsuario(u.getNickname(), u.getCorreo());
+		Usuario nuevoUsr = mU.buscarUsuario(u.getNickname());
 		if(nuevoUsr != null)
 			throw new UsuarioRepetido_Exception("El nickname "+ u.getNickname() +" y el correo " + u.getCorreo() +" est�n registrados");
 		if(u instanceof DtEstudiante) 
@@ -84,28 +84,28 @@ public class ControladorUsuario implements IControladorUsuario {
 	@Override
 	public String getNombreUsuario(String nickname) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario usr = mU.buscarUsuario2(nickname);
+		Usuario usr = mU.buscarUsuario(nickname);
 		return usr.getNombre();
 	}
 	
 	@Override
 	public String getApellidoUsuario(String nickname) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario usr = mU.buscarUsuario2(nickname);
+		Usuario usr = mU.buscarUsuario(nickname);
 		return usr.getApellido();
 	}
 	
 	@Override
 	public LocalDate getFechaUsuario(String nickname) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario usr = mU.buscarUsuario2(nickname);
+		Usuario usr = mU.buscarUsuario(nickname);
 		return usr.getfechaNac();
 	}
 	
 	@Override
 	public void modificarUsuario(String nickname, String nombre, String apellido, LocalDate fechaN) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario usr = mU.buscarUsuario2(nickname);
+		Usuario usr = mU.buscarUsuario(nickname);
 		usr.setNombre(nombre);
 		usr.setApellido(apellido);
 		usr.setFechaNac(fechaN);
