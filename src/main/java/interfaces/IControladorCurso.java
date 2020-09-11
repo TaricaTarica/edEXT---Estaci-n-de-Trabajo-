@@ -56,7 +56,7 @@ public interface IControladorCurso {
 	public String[] listarEdiciones(String strInstituto, String strCurso);
 	public String[] listarProgramas();
 	public String[] listarProgramasAux(String strInstituto, String strCurso);
-	public String[] listarDocentes();
+	public String[] listarDocentes(String Instituto);
 	public String[] listarEstudiantes();
 	
 	public String[] listarInstitutoCursos(); //Esta funci�n lista todos los cursos existentes en el sistema

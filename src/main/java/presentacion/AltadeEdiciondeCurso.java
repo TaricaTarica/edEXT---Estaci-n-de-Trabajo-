@@ -168,14 +168,14 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 	}
 	
 	public void listDocentesInit() {
-		String[] docentes = iconCur.listarDocentes();
+		String[] docentes = iconCur.listarDocentes(this.comboBoxInstitutos.getSelectedItem().toString());
+		this.listDocentes.setListData(new String[0]);
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
-
 		for(String doc: docentes) {
 			listModel.addElement(doc);
 		}		
 				
-		listDocentes.setModel(listModel);
+		this.listDocentes.setModel(listModel);
 		
 	}
 	
@@ -219,9 +219,6 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 				this.iconCur.asociarEdicion(doc, edicion, instituto, curso);
 			}
 		}
-		
-
-
 	}
 	protected void CancelarAltaInstituto_actionPerformed(ActionEvent e) {
 		limpiarCampos();

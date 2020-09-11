@@ -34,6 +34,7 @@ public class ConsultaCurso extends JInternalFrame {
 	private JComboBox<String> comboBoxInstitutos;
 	private JComboBox<String> comboBoxCursos;
 	private JComboBox<String> comboBoxEdiciones;
+	private JComboBox<String> comboBoxProgramas;
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNombre;
@@ -165,7 +166,7 @@ public class ConsultaCurso extends JInternalFrame {
 		lblPrevias.setBounds(237, 73, 46, 14);
 		getContentPane().add(lblPrevias);
 		
-		comboBoxEdiciones = new JComboBox();
+		comboBoxEdiciones = new JComboBox<String>();
 		comboBoxEdiciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// ACA LLAMO AL CU CONSULTA DE EDICION (NAREN)
@@ -174,7 +175,7 @@ public class ConsultaCurso extends JInternalFrame {
 		comboBoxEdiciones.setBounds(237, 169, 175, 20);
 		getContentPane().add(comboBoxEdiciones);
 		
-		JComboBox comboBoxProgramas = new JComboBox();
+		comboBoxProgramas = new JComboBox<String>();
 		comboBoxProgramas.setBounds(237, 213, 175, 20);
 		getContentPane().add(comboBoxProgramas);
 		
@@ -238,6 +239,6 @@ public class ConsultaCurso extends JInternalFrame {
 		String strInstituto = this.comboBoxInstitutos.getSelectedItem().toString();
 		String strCurso = this.comboBoxCursos.getSelectedItem().toString();
 		DefaultComboBoxModel<String> modelProgramas = new DefaultComboBoxModel<String>(iconCur.listarProgramasAux(strInstituto, strCurso));
-		comboBoxEdiciones.setModel(modelProgramas);
+		comboBoxProgramas.setModel(modelProgramas);
 	}
 }

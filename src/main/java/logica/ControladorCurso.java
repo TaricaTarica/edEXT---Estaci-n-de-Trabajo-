@@ -323,10 +323,10 @@ public class ControladorCurso implements IControladorCurso {
 	}
 	
 	@Override
-	public String[] listarDocentes(){
+	public String[] listarDocentes(String Instituto){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 
-		ArrayList<String> docentes = mU.getDocentes();
+		ArrayList<String> docentes = mU. getDocentesInstituto(Instituto);
 		String[] docentes_ret = new String[docentes.size()];
         int i=0;
         for(String doc: docentes) {

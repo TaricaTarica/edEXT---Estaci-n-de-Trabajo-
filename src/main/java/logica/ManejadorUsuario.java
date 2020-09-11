@@ -76,6 +76,22 @@ public class ManejadorUsuario {
 		}
 		return aRetornar;
 	}
+	public ArrayList<String> getDocentesInstituto(String Instituto){
+		//devuelve los docentes asociados a determinado instituto
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+	
+		Query query = em.createQuery("select d from Docente d");
+		
+		List<Docente> listDocentes = (List<Docente>) query.getResultList();
+		
+		ArrayList<String> aRetornar = new ArrayList<>();
+		for(Docente  d: listDocentes) {
+			if(d.getInstituto().getNombre().equals(Instituto))
+				aRetornar.add(new String(d.getNickname()));
+		}
+		return aRetornar;
+	}
 	
 	public ArrayList<String> getEstudiantes(){
 		Conexion conexion = Conexion.getInstancia();

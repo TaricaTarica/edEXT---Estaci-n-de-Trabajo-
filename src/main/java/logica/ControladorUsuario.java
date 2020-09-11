@@ -29,14 +29,18 @@ public class ControladorUsuario implements IControladorUsuario {
 		Usuario nuevoUsr = mU.buscarUsuario(u.getNickname());
 		if(nuevoUsr != null)
 			throw new UsuarioRepetido_Exception("El nickname "+ u.getNickname() +" y el correo " + u.getCorreo() +" est�n registrados");
-		if(u instanceof DtEstudiante) 
+		if(u instanceof DtEstudiante) {
 			nuevoUsr = new Estudiante(u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac());
+			mU.agregarUsuario(nuevoUsr);
+		}
 		if(u instanceof DtDocente) {
 			ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 			Instituto institutoDocente = mI.buscarInstituto(this.nombreInstituto);
-			nuevoUsr = new Docente (u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac(), institutoDocente);
+			Docente docente = new Docente (u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac());
+			docente.setInstituto(institutoDocente);
+			mU.agregarUsuario(docente);
 		}
-		mU.agregarUsuario(nuevoUsr);
+		
 		
 	}
 	
