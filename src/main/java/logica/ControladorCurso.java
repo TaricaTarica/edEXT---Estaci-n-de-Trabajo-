@@ -94,16 +94,17 @@ public class ControladorCurso implements IControladorCurso {
 	}
 	
 	@Override
-	public void agregarPrevia(String nombrePrevia) {
+	public void agregarPrevia(String nombrePrevia, String nombreInstituto, String nombreCurso) {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Instituto institutoCurso = mI.buscarInstituto(this.nombreInstituto);
+		Instituto institutoCurso = mI.buscarInstituto(nombreInstituto);
+		Curso curso = institutoCurso.getCurso(nombreCurso);
 		Curso previa = institutoCurso.getCurso(nombrePrevia);
-		institutoCurso.setPreviaCurso(this.nombreCurso,previa);
+		curso.setPrevia(previa);
 		
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
-		em.persist(institutoCurso);
+		em.persist(curso);
 		em.getTransaction().commit();
 	}
 	

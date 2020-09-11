@@ -9,6 +9,7 @@ import javax.swing.JInternalFrame;
 import interfaces.IControladorCurso;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,9 +20,13 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
+
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JList;
 
 public class AltaCurso extends JInternalFrame {
 
@@ -42,6 +47,7 @@ public class AltaCurso extends JInternalFrame {
 	private JLabel lblURL;
 	private JLabel lblFechaAlta;
 	private JDateChooser dateChooserFechaAlta;
+	private JList<String> listPrevias;
 
 
 	/**
@@ -56,76 +62,81 @@ public class AltaCurso extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		comboBoxInstitutos = new JComboBox<String>();
-		comboBoxInstitutos.setBounds(85, 32, 119, 20);
+		comboBoxInstitutos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listPreviasInit();
+			}
+		});
+		comboBoxInstitutos.setBounds(85, 11, 119, 20);
 		getContentPane().add(comboBoxInstitutos);
 		
 		JLabel lblInstitutos = new JLabel("Institutos");
-		lblInstitutos.setBounds(29, 35, 46, 14);
+		lblInstitutos.setBounds(29, 14, 46, 14);
 		getContentPane().add(lblInstitutos);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(85, 76, 119, 20);
+		textFieldNombre.setBounds(85, 55, 119, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		textFieldDescripcion = new JTextField();
-		textFieldDescripcion.setBounds(85, 117, 119, 20);
+		textFieldDescripcion.setBounds(85, 96, 119, 20);
 		getContentPane().add(textFieldDescripcion);
 		textFieldDescripcion.setColumns(10);
 		
 		textFieldDuracion = new JTextField();
-		textFieldDuracion.setBounds(85, 161, 119, 20);
+		textFieldDuracion.setBounds(85, 127, 119, 20);
 		getContentPane().add(textFieldDuracion);
 		textFieldDuracion.setColumns(10);
 		
 		textFieldCantHoras = new JTextField();
-		textFieldCantHoras.setBounds(85, 204, 119, 20);
+		textFieldCantHoras.setBounds(85, 158, 119, 20);
 		getContentPane().add(textFieldCantHoras);
 		textFieldCantHoras.setColumns(10);
 		
 		textFieldCantCreditos = new JTextField();
-		textFieldCantCreditos.setBounds(303, 76, 121, 20);
+		textFieldCantCreditos.setBounds(88, 189, 116, 20);
 		getContentPane().add(textFieldCantCreditos);
 		textFieldCantCreditos.setColumns(10);
 		
 		textFieldUrl = new JTextField();
-		textFieldUrl.setBounds(303, 117, 121, 20);
+		textFieldUrl.setBounds(292, 148, 121, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombre.setBounds(10, 79, 65, 14);
+		lblNombre.setBounds(10, 58, 65, 14);
 		getContentPane().add(lblNombre);
 		
-		lblDescripcion = new JLabel("Descripción");
+		lblDescripcion = new JLabel("Descripci\u00F3n");
 		lblDescripcion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDescripcion.setBounds(10, 120, 65, 14);
+		lblDescripcion.setBounds(10, 99, 65, 14);
 		getContentPane().add(lblDescripcion);
 		
-		lblDuracion = new JLabel("Duración");
+		lblDuracion = new JLabel("Duraci\u00F3n");
 		lblDuracion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDuracion.setBounds(10, 164, 65, 14);
+		lblDuracion.setBounds(10, 130, 65, 14);
 		getContentPane().add(lblDuracion);
 		
 		lblCantHoras = new JLabel("Cant. horas");
 		lblCantHoras.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCantHoras.setBounds(10, 207, 65, 14);
+		lblCantHoras.setBounds(10, 161, 65, 14);
 		getContentPane().add(lblCantHoras);
 		
-		lblCantCreditos = new JLabel("Cant. créditos");
+		lblCantCreditos = new JLabel("Cr\u00E9ditos");
 		lblCantCreditos.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCantCreditos.setBounds(225, 76, 68, 14);
+		lblCantCreditos.setBounds(10, 189, 74, 14);
 		getContentPane().add(lblCantCreditos);
 		
 		lblURL = new JLabel("URL");
 		lblURL.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblURL.setBounds(225, 117, 68, 14);
+		lblURL.setBounds(214, 148, 68, 14);
 		getContentPane().add(lblURL);
 		
 		lblFechaAlta = new JLabel("Fecha alta");
 		lblFechaAlta.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFechaAlta.setBounds(225, 161, 68, 14);
+		lblFechaAlta.setBounds(214, 192, 68, 14);
 		getContentPane().add(lblFechaAlta);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
@@ -149,8 +160,17 @@ public class AltaCurso extends JInternalFrame {
 		getContentPane().add(btnCancelar);
 		
 		dateChooserFechaAlta = new JDateChooser();
-		dateChooserFechaAlta.setBounds(303, 158, 121, 20);
+		dateChooserFechaAlta.setBounds(292, 189, 121, 20);
 		getContentPane().add(dateChooserFechaAlta);
+		
+		listPrevias = new JList<String>();
+		listPrevias.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		listPrevias.setBounds(248, 57, 165, 80);
+		getContentPane().add(listPrevias);
+			
+		JLabel lblPrevias = new JLabel("Previas");
+		lblPrevias.setBounds(225, 37, 46, 14);
+		getContentPane().add(lblPrevias);
 
 	}
 	
@@ -166,6 +186,10 @@ public class AltaCurso extends JInternalFrame {
 		String duracion = this.textFieldDuracion.getText();
 		String cantHoras = this.textFieldCantHoras.getText();
 		String url = this.textFieldUrl.getText();
+		
+		//OBTENER LAS PREVIAS
+		List<String> previas = (List<String>) this.listPrevias.getSelectedValuesList();
+		
 		if(comprobarCampos()){
 			int h = Integer.parseInt(cantHoras);
 			String cantCreditos = this.textFieldCantCreditos.getText();
@@ -186,6 +210,9 @@ public class AltaCurso extends JInternalFrame {
 				JOptionPane.showMessageDialog(this, "Curso creado con exito", "Creacion exitosa", JOptionPane.INFORMATION_MESSAGE);
 			}catch(CursoRepetido_Exception ex) {
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+			for(String p: previas) {
+				this.iconCur.agregarPrevia(p, instituto, curso.getNombre());
 			}
 			
 		}
@@ -237,5 +264,16 @@ public class AltaCurso extends JInternalFrame {
 		this.textFieldCantCreditos.setText("");
 		this.textFieldUrl.setText("");
 		setVisible(false);
+	}
+	public void listPreviasInit() {
+		String[] cursos = iconCur.listarCursos(this.comboBoxInstitutos.getSelectedItem().toString());
+		this.listPrevias.setListData(new String[0]);
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		for(String c: cursos) {
+			listModel.addElement(c);
+		}		
+				
+		this.listPrevias.setModel(listModel);
+		
 	}
 }

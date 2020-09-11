@@ -28,7 +28,7 @@ public interface IControladorCurso {
 	/*Alta Curso*/
 	public void IngresarCurso(String nInstituto, String nombre, String desc, String duracion, int horas, int creditos, Date fechaR, String url);
 	public void ingresarPrevia(String NombrePrevia);
-	public void agregarPrevia(String nombrePrevia);
+	public void agregarPrevia(String nombrePrevia, String nombreInstituto, String nombreCurso);
 	//public void AltaCurso();
 	public void AltaCurso(DtCurso c, String i) throws CursoRepetido_Exception;
 	
