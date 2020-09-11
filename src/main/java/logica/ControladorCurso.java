@@ -67,10 +67,11 @@ public class ControladorCurso implements IControladorCurso {
 	@Override
 	public void AltaCrearProgramadeFormacion(DtProgramaFormacion pf)throws CrearProgramaFormacionRepetido_Exception {
 		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
-		if(mPF.existeProgramaFormacion(pf.getNombre())){
-			throw new CrearProgramaFormacionRepetido_Exception("El nombre "+ pf.getNombre()+" está registrado") ;
+		ProgramaFormacion programa = new ProgramaFormacion(pf);
+		if(mPF.existeProgramaFormacion(programa.getNombre())){
+			throw new CrearProgramaFormacionRepetido_Exception("El nombre "+ programa.getNombre()+" está registrado") ;
 		}
-		mPF.agregarProgramaFormacion(pf);
+		mPF.agregarProgramaFormacion(programa);
 	}
 
 	

@@ -2,6 +2,7 @@ package logica;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -59,6 +60,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		
 		return retorno;
 	}
+	
 	
 	/*MULTIUSO*/
 	@Override
@@ -122,6 +124,38 @@ public class ControladorUsuario implements IControladorUsuario {
 		em.getTransaction().begin();
 		em.persist(usr);
 		em.getTransaction().commit();
+	}
+	@Override
+	public boolean esEstudiante(String strNickname) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(strNickname);
+		boolean es=false;
+		if(usr instanceof Estudiante) {
+			es=true;
+		}else if(usr instanceof Docente) {
+			es=false;
+		}
+		return es;
+	}
+	@Override
+	public String[] listarEdicionesD(String strDocente) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(strDocente);
+		List<Edicion> ediciones=((Docente) usr).obtenerEdicionesAsociados();
+		String[] ediciones_ret = new String[ediciones.size()];
+        int i=0;
+        for(Edicion ed: ediciones) {
+        	ediciones_ret[i]=ed.getNombre();
+        	i++;
+        }
+        return ediciones_ret;	 
+	}
+	@Override
+	public String[] listarEdicionesE(String strEstudiante) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(strEstudiante);
+		String[] ediciones_ret = ((Estudiante) usr).obtenerEdicionesE();
+        return ediciones_ret;	 
 	}
 	
 }

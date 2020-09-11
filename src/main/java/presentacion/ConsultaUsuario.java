@@ -27,8 +27,8 @@ public class ConsultaUsuario extends JInternalFrame {
 	
 	IControladorUsuario iconUsr;
 	private JComboBox<String> comboBoxUsuarios;
-
-	
+	private JComboBox<String> comboBoxEdiciones;
+	private JComboBox<String> comboBoxProgramas;
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNickname;
 	private JTextField textFieldNombre;
@@ -56,7 +56,6 @@ public class ConsultaUsuario extends JInternalFrame {
 		JLabel lblUsuarios = new JLabel("Usuarios");
 		lblUsuarios.setBounds(106, 26, 70, 15);
 		getContentPane().add(lblUsuarios);
-		
 		comboBoxUsuarios = new JComboBox<String>();
 		comboBoxUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -70,15 +69,22 @@ public class ConsultaUsuario extends JInternalFrame {
 		lblEdiciones.setBounds(238, 78, 160, 15);
 		getContentPane().add(lblEdiciones);
 		
-		JLabel lblProgramas = new JLabel("Programas de FormaciÃ³n");
+		
+		JLabel lblProgramas = new JLabel("Programas de Formación");
 		lblProgramas.setBounds(238, 130, 160, 15);
 		getContentPane().add(lblProgramas);
 		
-		JComboBox comboBoxEdiciones = new JComboBox();
+		comboBoxEdiciones = new JComboBox();
+		comboBoxEdiciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			}
+		});
 		comboBoxEdiciones.setBounds(238, 92, 160, 19);
 		getContentPane().add(comboBoxEdiciones);
 		
-		JComboBox comboBoxProgramas = new JComboBox();
+		comboBoxProgramas = new JComboBox();
 		comboBoxProgramas.setBounds(238, 144, 160, 19);
 		getContentPane().add(comboBoxProgramas);
 		
@@ -150,6 +156,20 @@ public class ConsultaUsuario extends JInternalFrame {
 		DefaultComboBoxModel<String> modelUsuarios = new DefaultComboBoxModel<String>(iconUsr.listarUsuarios());
 		comboBoxUsuarios.setModel(modelUsuarios);
 	}
+	public void comboBoxInitEdicionesE() {
+		String strEstudiante = this.comboBoxUsuarios.getSelectedItem().toString();
+		DefaultComboBoxModel<String> modelEdiciones = new DefaultComboBoxModel<String>(iconUsr.listarEdicionesE(strEstudiante));
+		comboBoxEdiciones.setModel(modelEdiciones);
+	}
+	public void comboBoxInitEdicionesD() {
+		String strDocente = this.comboBoxUsuarios.getSelectedItem().toString();
+		DefaultComboBoxModel<String> modelEdiciones = new DefaultComboBoxModel<String>(iconUsr.listarEdicionesD(strDocente));
+		comboBoxEdiciones.setModel(modelEdiciones);
+	}
+	public void comboBoxInitProgramas() {
+		DefaultComboBoxModel<String> modelProgramas = new DefaultComboBoxModel<String>();
+		comboBoxProgramas.setModel(modelProgramas);
+	}
 	
 	public void ConsultaUsuario_ActionPerformed(ActionEvent e) {
 		String strUsuario = this.comboBoxUsuarios.getSelectedItem().toString();
@@ -160,7 +180,14 @@ public class ConsultaUsuario extends JInternalFrame {
 		this.textFieldApellido.setText(dtu.getApellido());
 		this.textFieldCorreo.setText(dtu.getCorreo());
 		this.textFieldFechaNac.setText(dtu.getfechaNac().toString());
-				
+		
+		if(iconUsr.esEstudiante(dtu.getNickname())) {
+			comboBoxInitEdicionesE();
+			comboBoxInitProgramas();
+		}else{
+			comboBoxInitEdicionesD();
+
+		}
 			
 	}
 	protected void CancelarConsultaUsuario_actionPerformed(ActionEvent e) {

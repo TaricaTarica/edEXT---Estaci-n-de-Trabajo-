@@ -44,5 +44,14 @@ public class Estudiante extends Usuario {
 	}
 	return aretornar;
 	}
+	public String[] obtenerEdicionesE(){
+		String[] ediciones_ret = new String[this.inscripcionesEd.size()];
+        int i=0;
+        for( InscripcionEd ied: this.inscripcionesEd) {
+        	ediciones_ret[i]=ied.getEdicion().getNombre();
+        	i++;
+        }
+        return ediciones_ret;	
+	}
 	
 }

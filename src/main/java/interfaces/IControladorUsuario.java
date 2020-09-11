@@ -27,5 +27,8 @@ public interface IControladorUsuario {
 	/*MULTIUSO*/
 	public String[] listarInstitutos();
 	public String[] listarUsuarios();
+	boolean esEstudiante(String strNickname);
+	String[] listarEdicionesD(String strDocente);
+	String[] listarEdicionesE(String strEstudiante);
 
 }
