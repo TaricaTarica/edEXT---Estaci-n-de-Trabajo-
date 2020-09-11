@@ -37,7 +37,9 @@ public class Curso {
 	private ArrayList<String> programasAsociados = new ArrayList<>();
 	
 	//constructores
-	public Curso() {}
+	public Curso() {
+		super();
+	}
 	
 	//CONSTRUCTOR CON ATRIBUTOS
 	/*public Curso(String nombre, String descripcion, String duracion, int cantHoras, int cantCreditos, Date fechaAlta,

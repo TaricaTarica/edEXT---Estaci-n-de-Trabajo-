@@ -186,7 +186,6 @@ public class ConsultaUsuario extends JInternalFrame {
 			comboBoxInitProgramas();
 		}else{
 			comboBoxInitEdicionesD();
-
 		}
 			
 	}

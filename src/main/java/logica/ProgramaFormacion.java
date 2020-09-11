@@ -73,7 +73,7 @@ public class ProgramaFormacion {
 	// Metodos para cursos
 	public ArrayList<String> obtenerCursos(){
 		ArrayList<String> lista = new ArrayList<>();
-		for(Curso c:cursos) {
+		for(Curso c: cursos) {
 			lista.add(c.getNombre());
 		}
 		return lista;
@@ -90,11 +90,19 @@ public class ProgramaFormacion {
 	
 	public Curso getCurso(String nombreCurso) {
 		Curso retorno = new Curso();
-		for(Curso c: this.cursos) {
+		for(Curso c: cursos) {
 			if(c.getNombre().equals(nombreCurso)) {
 				retorno = c;
 			} 
 		}
 		return retorno;
+	}
+	public boolean existeCurso(String nombreCurso) {
+		for(Curso c: cursos) {
+			if(c.getNombre().equals(nombreCurso)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

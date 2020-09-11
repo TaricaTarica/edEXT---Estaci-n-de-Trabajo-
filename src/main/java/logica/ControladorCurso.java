@@ -197,7 +197,19 @@ public class ControladorCurso implements IControladorCurso {
 		if (est.BuscarInscripcion(edicion)) {
 			throw new InscripcionRepetida_Exception("La inscripcion ya esta registrada!");
 		}
-		est.agregarInscripcion(FechaIns, edicion);
+		InscripcionEd inscripcion = new InscripcionEd(FechaIns, edicion, est);
+		est.agregarInscripcion(inscripcion);
+		edicion.agregarInscripcion(inscripcion);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(est);
+		em.persist(edicion);
+		em.getTransaction().commit();
+		
+		
+		
 	}
 	
 	@Override
@@ -224,12 +236,14 @@ public class ControladorCurso implements IControladorCurso {
 	public void agregarCursoProgFormacion(String programaFormacion, String InstitutoCurso) throws ProgramaCursoRepetido_Exception {
 		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
 		ProgramaFormacion programa = mPF.buscarProgramaFormacion(programaFormacion);
+		
 		String[] partes = InstitutoCurso.split("-");
 		String nombreInstituto = partes[0];
 		String nombreCurso = partes[1];
-		Curso c = programa.getCurso(nombreCurso);
-		if (c != null) {
-			throw new ProgramaCursoRepetido_Exception("El curso "+ nombreCurso +" ya pertenece al Programa de Formaciï¿½n" + programaFormacion);
+		
+		//Curso c = programa.getCurso(nombreCurso);
+		if (programa.existeCurso(nombreCurso)) {
+			throw new ProgramaCursoRepetido_Exception("El curso "+ nombreCurso +" ya pertenece al Programa de Formación" + programaFormacion);
 		}
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto instituto = mI.buscarInstituto(nombreInstituto);
@@ -356,7 +370,11 @@ public class ControladorCurso implements IControladorCurso {
 		List<Instituto> institutos = mI.getInstitutos();
 		ArrayList<String> cursos = new ArrayList<>();
 		for(Instituto i: institutos) {
-			cursos = i.obtenerInstitutoCursos();
+			ArrayList<String> institutoCursos = i.obtenerInstitutoCursos();
+			for(String s: institutoCursos) {
+				cursos.add(s);
+			}
+			 
 		}
 		String [] retorno = new String[cursos.size()];
 		int x = 0;

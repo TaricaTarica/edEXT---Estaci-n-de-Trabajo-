@@ -85,7 +85,7 @@ public class Instituto {
 		ArrayList<String> lista = new ArrayList<>();
 		String nombreInstitutoCurso;
 		for (Curso c: cursos) {
-			nombreInstitutoCurso = this.nombre+" - "+c.getNombre();
+			nombreInstitutoCurso = this.nombre+"-"+c.getNombre();
 			lista.add(nombreInstitutoCurso);
 		}
 		return lista;

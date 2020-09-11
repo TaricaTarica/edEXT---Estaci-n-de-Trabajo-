@@ -32,9 +32,9 @@ public class Estudiante extends Usuario {
 		return DtEstudiante
 	}*/
 	
-	public void agregarInscripcion(Date FechaIns,Edicion e){
-		InscripcionEd i = new InscripcionEd(FechaIns,e);
-		inscripcionesEd.add(i);	
+	public void agregarInscripcion(InscripcionEd inscripcion){
+		
+		inscripcionesEd.add(inscripcion);	
 	}
 	public boolean BuscarInscripcion(Edicion ed) {;
 	boolean aretornar=false;

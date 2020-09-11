@@ -84,7 +84,6 @@ public class AgregarCursoProgFormacion extends JInternalFrame {
 		if(comprobarCampos()) {
 			String programaFormacion = this.comboBoxProgFormacion.getSelectedItem().toString();
 			String InstitutoCurso = this.comboBoxCursos.getSelectedItem().toString();
-		
 			try {
 				iconCur.agregarCursoProgFormacion(programaFormacion, InstitutoCurso);
 				JOptionPane.showMessageDialog(this, "Curso agregado con éxito", "Agregación exitosa", JOptionPane.INFORMATION_MESSAGE);

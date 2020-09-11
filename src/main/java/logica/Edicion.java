@@ -101,5 +101,9 @@ public class Edicion {
 		}
 		return retorno;
 	}
+	public void agregarInscripcion(InscripcionEd inscripcion){
+		
+		inscripciones.add(inscripcion);	
+	}
 
 }
