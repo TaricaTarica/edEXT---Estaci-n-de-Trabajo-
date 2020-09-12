@@ -64,6 +64,8 @@ public interface IControladorCurso {
 	public String[] ListarEdicionesCurso(String nombreInstituto, String nombreCurso);
 	public String[] AtributosEdicion(String nombreInstituto, String nombreCurso, String nombreEdicion);
 
+	public String[] listarPrevias(String nombreInstituto, String nombreCurso);
+
 
 
 	

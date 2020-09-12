@@ -3,6 +3,7 @@ package presentacion;
 import java.awt.EventQueue;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 
@@ -44,6 +45,7 @@ public class ConsultaCurso extends JInternalFrame {
 	private JTextField textFieldCantCreditos;
 	private JTextField textFieldUrl;
 	private JTextField textFieldFechaAlta;
+	private JList<String> listPrevias;
 	
 	
 	/**
@@ -81,6 +83,7 @@ public class ConsultaCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				//CUANDO SELECCIONA UN CURSO, SE CARGA LA INFO EN LOS CAMPOS
 				ConsultaCurso_ActionPerformed(e);
+				listPreviasInit();
 				comboBoxInitEdiciones();
 				comboBoxInitProgramas();
 			}
@@ -158,7 +161,7 @@ public class ConsultaCurso extends JInternalFrame {
 		lblUrl.setBounds(10, 228, 72, 14);
 		getContentPane().add(lblUrl);
 		
-		JList listPrevias = new JList();
+		listPrevias = new JList<String>();
 		listPrevias.setBounds(293, 70, 119, 76);
 		getContentPane().add(listPrevias);
 		
@@ -240,5 +243,15 @@ public class ConsultaCurso extends JInternalFrame {
 		String strCurso = this.comboBoxCursos.getSelectedItem().toString();
 		DefaultComboBoxModel<String> modelProgramas = new DefaultComboBoxModel<String>(iconCur.listarProgramasAux(strInstituto, strCurso));
 		comboBoxProgramas.setModel(modelProgramas);
+	}
+	public void listPreviasInit() {
+		String[] previas = iconCur.listarPrevias(this.comboBoxInstitutos.getSelectedItem().toString(),this.comboBoxCursos.getSelectedItem().toString());
+		this.listPrevias.setListData(new String[0]);
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		for(String p: previas) {
+			listModel.addElement(p);
+		}		
+				
+		this.listPrevias.setModel(listModel);
 	}
 }

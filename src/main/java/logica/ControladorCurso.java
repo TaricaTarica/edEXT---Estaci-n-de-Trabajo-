@@ -428,6 +428,19 @@ public class ControladorCurso implements IControladorCurso {
 			atributos_ed_curso_ret[5] = "Docentes: " + edicion.nombresDocentes();
 			return atributos_ed_curso_ret;
 	}
+	public String[] listarPrevias(String nombreInstituto, String nombreCurso) {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto instituto = mI.buscarInstituto(nombreInstituto);
+		Curso curso = instituto.getCurso(nombreCurso);
+		ArrayList<String> previas = curso.obtenerPrevias();		
+		String[] previas_ret = new String[previas.size()];
+        int i=0;
+        for(String p: previas) {
+        	previas_ret[i] = p;
+        	i++;
+        }
+        return previas_ret;
+	}
 
 
 }

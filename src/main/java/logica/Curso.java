@@ -30,7 +30,7 @@ public class Curso {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Edicion> ediciones = new ArrayList<>();
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL) //antes había onetomany
 	private List<Curso> previas = new ArrayList<>();
 	
 	
@@ -164,6 +164,14 @@ public class Curso {
 			edicionesRetorno.add(c);
 		}
 		return edicionesRetorno;
+	}
+
+	public ArrayList<String> obtenerPrevias() {
+		ArrayList<String> lista = new ArrayList<>();
+		for(Curso p:previas) {
+			lista.add(p.getNombre());
+		}
+		return lista;
 	}
 	
 }
