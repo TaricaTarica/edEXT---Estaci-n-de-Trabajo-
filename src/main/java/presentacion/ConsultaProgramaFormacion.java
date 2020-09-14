@@ -8,16 +8,22 @@ import interfaces.IControladorCurso;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import datatypes.DtCursoInfo;
 import datatypes.DtProgramaFormacion;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.ScrollPane;
 
 public class ConsultaProgramaFormacion extends JInternalFrame {
 
@@ -30,6 +36,9 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 	private JTextField textFieldFechaFin;
 	private JTextField textFieldFechaAlta;
 	private JComboBox<String> comboBoxProgramas;
+	private JList<String> listCursosP;
+	private JScrollPane scrollPaneCursos;
+
 
 
 	/**
@@ -47,6 +56,7 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		comboBoxProgramas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConsultaPrograma_ActionPerformed(e);
+				listCursosInit();
 			}
 		});
 		comboBoxProgramas.setBounds(209, 22, 174, 20);
@@ -102,22 +112,29 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		lblFechaAlta.setBounds(32, 192, 79, 14);
 		getContentPane().add(lblFechaAlta);
 		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				limpiarCampos();
 				setVisible(false);
 			}
 		});
-		btnAceptar.setBounds(252, 225, 89, 23);
-		getContentPane().add(btnAceptar);
+		btnSalir.setBounds(168, 236, 89, 23);
+		getContentPane().add(btnSalir);
 		
-		JList listCursos = new JList();
-		listCursos.setBounds(280, 127, 103, 82);
-		getContentPane().add(listCursos);
+
+		listCursosP = new JList<String>();
+		listCursosP.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		listCursosP.setBounds(280, 127, 103, 82);
+		//getContentPane().add(listCursosP);
 		
 		JLabel lblCursos = new JLabel("Cursos");
 		lblCursos.setBounds(224, 130, 46, 14);
 		getContentPane().add(lblCursos);
+		
+		scrollPaneCursos = new JScrollPane();
+		scrollPaneCursos.setBounds(270, 127, 113, 82);
+		getContentPane().add(scrollPaneCursos);
 
 	}
 	
@@ -139,8 +156,27 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		this.textFieldFechaInicio.setText(dtpf.getFechaInicio().toString());
 		this.textFieldFechaFin.setText(dtpf.getFechaFin().toString());
 		this.textFieldFechaAlta.setText(dtpf.getFechaAlta().toString());
+	}
+	public void listCursosInit() {
+		String[] cursos = iconCur.listarCursosP(this.comboBoxProgramas.getSelectedItem().toString());
+		this.listCursosP.setListData(new String[0]);
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		for(String c: cursos) {
+			listModel.addElement(c);
+		}		
+				
+		this.listCursosP.setModel(listModel);
+		scrollPaneCursos.getViewport().setView(listCursosP);
+	}
+	public void limpiarCampos() {
+		this.textFieldNombre.setText("");
+		this.textFieldDescripcion.setText("");
+		this.textFieldFechaInicio.setText("");
+		this.textFieldFechaFin.setText("");
+		this.textFieldFechaAlta.setText("");
+		this.listCursosP.setListData(new String[0]);
+		this.scrollPaneCursos.getViewport().setView(this.listCursosP);
 		
-
 	}
 	
 }

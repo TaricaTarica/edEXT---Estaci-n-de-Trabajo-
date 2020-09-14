@@ -22,6 +22,7 @@ import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class InscripcionaEdicionaCurso extends JInternalFrame {
 	
@@ -51,23 +52,28 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		JLabel lblInstitutos = new JLabel("Institutos");
-		lblInstitutos.setBounds(40, 26, 70, 15);
+		lblInstitutos.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblInstitutos.setBounds(40, 26, 120, 15);
 		getContentPane().add(lblInstitutos);
 		
 		JLabel lblCursos = new JLabel("Cursos");
-		lblCursos.setBounds(40, 53, 70, 15);
+		lblCursos.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCursos.setBounds(40, 53, 120, 15);
 		getContentPane().add(lblCursos);
 		
 		JLabel lblEdiciones = new JLabel("Ediciones");
-		lblEdiciones.setBounds(40, 80, 70, 29);
+		lblEdiciones.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEdiciones.setBounds(40, 80, 120, 29);
 		getContentPane().add(lblEdiciones);
 		
 		JLabel lblEstudiantes = new JLabel("Estudiantes");
-		lblEstudiantes.setBounds(40, 126, 70, 15);
+		lblEstudiantes.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEstudiantes.setBounds(40, 126, 120, 15);
 		getContentPane().add(lblEstudiantes);
 		
 		JLabel lblFecha = new JLabel("Fecha de Inscripcion");
-		lblFecha.setBounds(40, 165, 70, 15);
+		lblFecha.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFecha.setBounds(40, 165, 120, 15);
 		getContentPane().add(lblFecha);
 		
 		comboBoxInstitutos = new JComboBox<String>();
@@ -112,10 +118,9 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AltaInscripcionaEdiciondeCurso_ActionPerformed(e);
-				setVisible(false);
 			}
 		});
-		btnAceptar.setBounds(68, 216, 117, 25);
+		btnAceptar.setBounds(103, 216, 117, 25);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -124,7 +129,7 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 				CancelarInscripcionaEdiciondeCurso_actionPerformed(e); //La funciï¿½n estï¿½ definida abajo
 			}
 		});
-		btnCancelar.setBounds(239, 216, 117, 25);
+		btnCancelar.setBounds(230, 216, 117, 25);
 		getContentPane().add(btnCancelar);
 
 	}
@@ -139,7 +144,7 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 			
 			try{
 				this.iconCur.InscripcionaEdiciondeCurso(instituto,fechaIns,estudiante,curso,edicion);
-				JOptionPane.showMessageDialog(this, "Edicion a sido creada con ï¿½xito", "Creacï¿½on exitosa", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Inscripcion creada con exito", "Inscripcion exitosa", JOptionPane.INFORMATION_MESSAGE);
 			}
 			catch(InscripcionRepetida_Exception ex){
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -180,7 +185,7 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 		int comboBoxEdiciones = this.comboBoxEdiciones.getItemCount();
 		int comboBoxEstudiantes = this.comboBoxEstudiantes.getItemCount();
 		if (fechaIns == null || comboBoxCursos == 0 || comboBoxInstitutos == 0 || comboBoxEdiciones == 0 || comboBoxEstudiantes == 0) {
-			JOptionPane.showMessageDialog(this, "No pueden haber campos vacíos", "ERROR",
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Error",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

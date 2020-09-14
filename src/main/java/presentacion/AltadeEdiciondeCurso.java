@@ -10,6 +10,7 @@ import java.util.*;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -30,6 +31,9 @@ import excepciones.EdicionRepatida_Exception;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
+import java.awt.ScrollPane;
+import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 
 public class AltadeEdiciondeCurso extends JInternalFrame {
@@ -44,6 +48,7 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 	private JDateChooser dateChooserFechaFin;
 	private JDateChooser dateChooserFechaPub;
 	private JList<String> listDocentes;
+	private JScrollPane scrollPaneDocentes;
 	
 
 	private static final long serialVersionUID = 1L;
@@ -58,7 +63,7 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
         setMaximizable(true);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setClosable(false);
-		setTitle("Alta de Edicion de Curso");
+		setTitle("Alta de EdiciÃ³n de Curso");
 		
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
@@ -71,53 +76,61 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 				listDocentesInit();
 			}
 		});
-		comboBoxInstitutos.setBounds(106, 22, 70, 15);
+		comboBoxInstitutos.setBounds(91, 26, 114, 20);
 		getContentPane().add(comboBoxInstitutos);
 	
 		JLabel lblInstituto = new JLabel("Institutos");
-		lblInstituto.setBounds(26, 22, 70, 15);
+		lblInstituto.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblInstituto.setBounds(0, 29, 79, 15);
 		getContentPane().add(lblInstituto);
 		
 		comboBoxCursos = new JComboBox<String>();
-		comboBoxCursos.setBounds(106, 49, 70, 15);
+		comboBoxCursos.setBounds(91, 53, 114, 20);
 		getContentPane().add(comboBoxCursos);
 		
 		JLabel lblCurso = new JLabel("Cursos");
-		lblCurso.setBounds(26, 49, 70, 15);
+		lblCurso.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCurso.setBounds(0, 56, 79, 15);
 		getContentPane().add(lblCurso);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(80, 89, 114, 19);
+		textFieldNombre.setBounds(91, 93, 114, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		textFieldCupo = new JTextField();
-		textFieldCupo.setBounds(80, 183, 114, 19);
+		textFieldCupo.setBounds(91, 187, 114, 20);
 		getContentPane().add(textFieldCupo);
 		textFieldCupo.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(12, 91, 70, 15);
+		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNombre.setBounds(0, 96, 79, 15);
 		getContentPane().add(lblNombre);
 		
-		JLabel lblFechaInicio = new JLabel("FechaInicio");
-		lblFechaInicio.setBounds(12, 119, 70, 15);
+		JLabel lblFechaInicio = new JLabel("Fecha inicio");
+		lblFechaInicio.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFechaInicio.setBounds(0, 124, 79, 15);
 		getContentPane().add(lblFechaInicio);
 		
-		JLabel lblFechafin = new JLabel("FechaFin");
-		lblFechafin.setBounds(12, 150, 70, 15);
+		JLabel lblFechafin = new JLabel("Fecha fin");
+		lblFechafin.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFechafin.setBounds(0, 159, 79, 15);
 		getContentPane().add(lblFechafin);
 		
 		JLabel lblCupo = new JLabel("Cupo");
-		lblCupo.setBounds(12, 185, 70, 15);
+		lblCupo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCupo.setBounds(0, 190, 79, 15);
 		getContentPane().add(lblCupo);
 		
-		JLabel lblFechapub = new JLabel("FechaPub");
-		lblFechapub.setBounds(12, 216, 70, 15);
+		JLabel lblFechapub = new JLabel("Fecha pub.");
+		lblFechapub.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFechapub.setBounds(0, 224, 79, 15);
 		getContentPane().add(lblFechapub);
 		
-		JLabel lblDocente = new JLabel("Docente");
-		lblDocente.setBounds(209, 22, 70, 15);
+		JLabel lblDocente = new JLabel("Docentes");
+		lblDocente.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDocente.setBounds(225, 29, 57, 15);
 		getContentPane().add(lblDocente);
 		
 		JButton btnAceptar = new JButton("Aceptar");
@@ -126,7 +139,7 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 				ConfirmarAltadeEdiciondeCurso_ActionPerformed(e);
 			}
 		});
-		btnAceptar.setBounds(288, 145, 117, 25);
+		btnAceptar.setBounds(288, 179, 114, 25);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -135,25 +148,29 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 				CancelarAltaInstituto_actionPerformed(e); //La funciï¿½n estï¿½ definida abajo
 			}
 		});
-		btnCancelar.setBounds(288, 180, 117, 25);
+		btnCancelar.setBounds(288, 214, 114, 25);
 		getContentPane().add(btnCancelar);
 		
 		dateChooserFechaInicio = new JDateChooser();
-		dateChooserFechaInicio.setBounds(80, 119, 114, 20);
+		dateChooserFechaInicio.setBounds(91, 123, 114, 20);
 		getContentPane().add(dateChooserFechaInicio);
 		
 		dateChooserFechaFin = new JDateChooser();
-		dateChooserFechaFin.setBounds(80, 150, 114, 20);
+		dateChooserFechaFin.setBounds(91, 154, 114, 20);
 		getContentPane().add(dateChooserFechaFin);
 		
 		dateChooserFechaPub = new JDateChooser();
-		dateChooserFechaPub.setBounds(80, 215, 114, 20);
+		dateChooserFechaPub.setBounds(91, 219, 114, 20);
 		getContentPane().add(dateChooserFechaPub);
 		
 		listDocentes = new JList<String>();
 		listDocentes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		listDocentes.setBounds(288, 21, 117, 87);
-		getContentPane().add(listDocentes);
+		//getContentPane().add(listDocentes);
+		
+		scrollPaneDocentes = new JScrollPane();
+		scrollPaneDocentes.setBounds(288, 26, 114, 113);
+		getContentPane().add(scrollPaneDocentes);
 
 	}
 	public void comboBoxInit() {
@@ -176,6 +193,9 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 		}		
 				
 		this.listDocentes.setModel(listModel);
+		
+		scrollPaneDocentes.getViewport().setView(listDocentes);
+
 		
 	}
 	
@@ -209,7 +229,9 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 			String curso = this.comboBoxCursos.getSelectedItem().toString();
 				try{
 					this.iconCur.AltadeEdiciondeCurso(edicion, instituto,curso);
-					JOptionPane.showMessageDialog(this, "Edicion a sido creada con ï¿½xito", "Creacï¿½on exitosa", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Edicion creada con exito", "Alta exitosa", JOptionPane.INFORMATION_MESSAGE);
+					limpiarCampos();
+					this.listDocentes.clearSelection();
 				}
 				catch(EdicionRepatida_Exception ex){
 					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -230,6 +252,7 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 		this.dateChooserFechaInicio.setCalendar(null);
 		this.dateChooserFechaFin.setCalendar(null);
 		this.dateChooserFechaPub.setCalendar(null);
+		this.listDocentes.clearSelection();
 	}
 	private boolean comprobarCampos() {
 		int comboBoxCursos = this.comboBoxCursos.getItemCount();
@@ -242,7 +265,7 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 		Date fechaPubD = this.dateChooserFechaPub.getDate();
 		int c = 0;
 		if(nombre.isEmpty() || cupo.isEmpty() || docentes == null || fechaIniD == null || fechaFinD == null || fechaPubD == null || comboBoxCursos == 0 || comboBoxInstitutos == 0) {
-			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "ERROR",
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Error",
                     JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -250,12 +273,11 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 			c = Integer.parseInt(cupo);
 			
 		}catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "El cupo debe ser un numero", "ERROR",
+			JOptionPane.showMessageDialog(this, "El cupo debe ser un numero", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		return true;
 				 
 	}
-
 }

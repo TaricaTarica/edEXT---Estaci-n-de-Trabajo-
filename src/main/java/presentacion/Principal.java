@@ -65,8 +65,6 @@ public class Principal {
 		Dimension desktopSize = frame.getSize();
 		Dimension jInternalFrameSize;
 		
-		// SOLAMENTE IMPORTE LA FABRICA Y LA INTERFAZ, E INSTANCIE EL CONTROLADOR
-
 		
 		/*FRAME ALTA INSTITUTO*/
 		altaInstitutoInternalFrame = new AltaInstituto(iconCur);
@@ -158,7 +156,7 @@ public class Principal {
 		frame.getContentPane().add(agregarCursoProgFormacionInternalFrame);
 		agregarCursoProgFormacionInternalFrame.getContentPane().setLayout(null);
 		
-		/*FRAME consulta edicion curso*/
+		/*FRAME CONSULTA EDICION CURSO*/
 		consultaEdicionCursoInternalFrame = new ConsultaEdicionCurso(iconCur);
 		jInternalFrameSize = consultaEdicionCursoInternalFrame.getSize();
 		consultaEdicionCursoInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
@@ -205,6 +203,7 @@ public class Principal {
 		mntmAltaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				altaUsuarioInternalFrame.comboBoxInit();
+				altaUsuarioInternalFrame.deshabilitarCombobox();
 				altaUsuarioInternalFrame.setVisible(true);
 			}
 		});

@@ -28,6 +28,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.SwingConstants;
 
 public class AltaUsuario extends JInternalFrame {
 	IControladorUsuario iconUsr;
@@ -58,47 +59,52 @@ public class AltaUsuario extends JInternalFrame {
 		
 		JLabel lblInstituto = new JLabel("Instituto");
 		lblInstituto.setEnabled(false);
-		lblInstituto.setBounds(233, 50, 46, 14);
+		lblInstituto.setBounds(229, 58, 46, 14);
 		getContentPane().add(lblInstituto);
 		
-		JLabel lblNick = new JLabel("Nick");
-		lblNick.setBounds(10, 24, 46, 14);
-		getContentPane().add(lblNick);
+		JLabel lblNickname = new JLabel("Nickname");
+		lblNickname.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNickname.setBounds(10, 30, 62, 14);
+		getContentPane().add(lblNickname);
 		
 		JLabel lblCorreo = new JLabel("Correo");
-		lblCorreo.setBounds(10, 47, 46, 14);
+		lblCorreo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCorreo.setBounds(10, 58, 62, 14);
 		getContentPane().add(lblCorreo);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(10, 72, 46, 14);
+		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNombre.setBounds(10, 88, 62, 14);
 		getContentPane().add(lblNombre);
 		
 		JLabel lblApellido = new JLabel("Apellido");
-		lblApellido.setBounds(10, 97, 46, 14);
+		lblApellido.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblApellido.setBounds(10, 118, 62, 14);
 		getContentPane().add(lblApellido);
 		
-		JLabel lblFechaNaciento = new JLabel("Fecha de Nacimiento");
-		lblFechaNaciento.setBounds(10, 127, 209, 14);
+		JLabel lblFechaNaciento = new JLabel("Fecha Nac.");
+		lblFechaNaciento.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFechaNaciento.setBounds(10, 147, 62, 14);
 		getContentPane().add(lblFechaNaciento);
 		
 		textFieldNickname = new JTextField();
-		textFieldNickname.setBounds(62, 21, 157, 20);
+		textFieldNickname.setBounds(80, 30, 139, 20);
 		getContentPane().add(textFieldNickname);
 		textFieldNickname.setColumns(10);
 		
 		textFieldCorreo = new JTextField();
 		textFieldCorreo.setText("");
-		textFieldCorreo.setBounds(62, 44, 157, 20);
+		textFieldCorreo.setBounds(80, 58, 139, 20);
 		getContentPane().add(textFieldCorreo);
 		textFieldCorreo.setColumns(10);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(62, 69, 157, 20);
+		textFieldNombre.setBounds(80, 85, 139, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		textFieldApellido = new JTextField();
-		textFieldApellido.setBounds(61, 94, 158, 20);
+		textFieldApellido.setBounds(79, 116, 140, 20);
 		getContentPane().add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
@@ -109,7 +115,7 @@ public class AltaUsuario extends JInternalFrame {
 				ConfirmarAltaUsuario_ActionPerformed(e);
 			}
 		});
-		btnConfirmar.setBounds(300, 118, 99, 23);
+		btnConfirmar.setBounds(283, 116, 99, 23);
 		getContentPane().add(btnConfirmar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -118,7 +124,7 @@ public class AltaUsuario extends JInternalFrame {
 				CancelarAltaUsuario_ActionPerformed(e);
 			}
 		});
-		btnCancelar.setBounds(300, 152, 99, 23);
+		btnCancelar.setBounds(283, 150, 99, 23);
 		getContentPane().add(btnCancelar);
 		
 		grupoUsuarios = new ButtonGroup();
@@ -131,7 +137,7 @@ public class AltaUsuario extends JInternalFrame {
 			}
 		});
 		rdbtnEstudiante.setSelected(true);
-		rdbtnEstudiante.setBounds(233, 15, 77, 23);
+		rdbtnEstudiante.setBounds(239, 29, 94, 23);
 		getContentPane().add(rdbtnEstudiante);
 		
 		rdbtnDocente = new JRadioButton("Docente");
@@ -141,18 +147,18 @@ public class AltaUsuario extends JInternalFrame {
 				lblInstituto.setEnabled(true);
 			}
 		});
-		rdbtnDocente.setBounds(312, 15, 71, 23);
+		rdbtnDocente.setBounds(335, 29, 93, 23);
 		getContentPane().add(rdbtnDocente);
 		
 		grupoUsuarios.add(rdbtnDocente);
 		grupoUsuarios.add(rdbtnEstudiante);
 		
 		comboBoxInstitutos = new JComboBox<String>();
-		comboBoxInstitutos.setBounds(290, 50, 121, 20);
+		comboBoxInstitutos.setBounds(285, 58, 121, 20);
 		getContentPane().add(comboBoxInstitutos);
 		
 		dateChooserFechaNac = new JDateChooser();
-		dateChooserFechaNac.setBounds(62, 147, 157, 20);
+		dateChooserFechaNac.setBounds(80, 146, 139, 20);
 		getContentPane().add(dateChooserFechaNac);
 
 	}
@@ -189,7 +195,8 @@ public class AltaUsuario extends JInternalFrame {
 			}
 			try {
 				iconUsr.confirmarAlta(usr);
-				JOptionPane.showMessageDialog(this, "Usuario creado con �xito", "Creac�on exitosa", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Usuario creado con exito", "Alta exitosa", JOptionPane.INFORMATION_MESSAGE);
+				limpiarCampos();
 			}
 			catch(UsuarioRepetido_Exception ex){
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -198,12 +205,11 @@ public class AltaUsuario extends JInternalFrame {
 	}
 	
 	private void limpiarCampos() {
-		//this.textFieldAnio.setText("");
 		this.textFieldApellido.setText("");
 		this.textFieldNombre.setText("");
 		this.textFieldCorreo.setText("");
 		this.textFieldNickname.setText("");
-		//this.textFieldDia.setText("");
+		this.dateChooserFechaNac.setCalendar(null);
 	}
 	private boolean comprobarCampos() {
 		//int comboBoxInstitutos = this.comboBoxInstitutos.getItemCount();
@@ -214,12 +220,12 @@ public class AltaUsuario extends JInternalFrame {
 
 		
 		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() /*|| comboBoxInstitutos == 0*/) {
-			JOptionPane.showMessageDialog(this, "No pueden haber campos vac�os", "ERROR",
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Error",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if(!verificarCorreo(correo)) {
-			JOptionPane.showMessageDialog(this, "Debe ingresar un correo v�lido", "ERROR",
+			JOptionPane.showMessageDialog(this, "Debe ingresar un correo valido", "Error",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -235,5 +241,10 @@ public class AltaUsuario extends JInternalFrame {
 		else 
 			return false;
 	}
+	
+	public void deshabilitarCombobox() {
+		comboBoxInstitutos.setEnabled(false);
+	}
+
 	
 }

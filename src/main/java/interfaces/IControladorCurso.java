@@ -38,6 +38,9 @@ public interface IControladorCurso {
 	
 	/*Consulta Curso*/
 	public DtCursoInfo ConsultaCurso(String strInstituto, String strCurso);
+	public String[] AtributosPrograma(String nombrePrograma);
+	public String[] listarPrevias(String nombreInstituto, String nombreCurso);
+
 	
 	/*Consulta Programa*/
 	public DtProgramaFormacion ConsultaProgramaFormacion(String strPrograma);
@@ -63,8 +66,8 @@ public interface IControladorCurso {
 	public String[] listarProgFormacion();
 	public String[] ListarEdicionesCurso(String nombreInstituto, String nombreCurso);
 	public String[] AtributosEdicion(String nombreInstituto, String nombreCurso, String nombreEdicion);
+	public String[] listarCursosP(String strPrograma);
 
-	public String[] listarPrevias(String nombreInstituto, String nombreCurso);
 
 
 

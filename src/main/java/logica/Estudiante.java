@@ -53,5 +53,12 @@ public class Estudiante extends Usuario {
         }
         return ediciones_ret;	
 	}
+	public List<Edicion> obtenerEdicionesEd(){
+		List<Edicion> ediciones = new ArrayList<>();
+        for( InscripcionEd ied:inscripcionesEd) {
+        	ediciones.add(ied.getEdicion());
+        }
+        return ediciones;	
+	}
 	
 }

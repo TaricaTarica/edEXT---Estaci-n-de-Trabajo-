@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -23,11 +24,14 @@ import datatypes.DtCursoInfo;
 import javax.swing.JSpinner;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.JSeparator;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.ScrollPane;
 
 public class ConsultaCurso extends JInternalFrame {
 	
@@ -45,7 +49,11 @@ public class ConsultaCurso extends JInternalFrame {
 	private JTextField textFieldCantCreditos;
 	private JTextField textFieldUrl;
 	private JTextField textFieldFechaAlta;
+	private JTextPane textPane;
 	private JList<String> listPrevias;
+	private JScrollPane scrollPanePrevias;
+
+
 	
 	
 	/**
@@ -56,149 +64,166 @@ public class ConsultaCurso extends JInternalFrame {
 		this.iconCur = iconCur;
 		
 		setTitle("Consulta de Curso");
-		setBounds(100, 100, 450, 337);
-		getContentPane().setLayout(null);
+		setBounds(100, 100, 448, 404);
 		
 		comboBoxInstitutos = new JComboBox<String>();
+		comboBoxInstitutos.setBounds(90, 26, 131, 20);
 		comboBoxInstitutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comboBoxInitCursos();
 			}
 		});
-		comboBoxInstitutos.setBounds(90, 26, 131, 20);
+		getContentPane().setLayout(null);
 		getContentPane().add(comboBoxInstitutos);
 		
 		JLabel lblInstituto = new JLabel("Instituto");
+		lblInstituto.setBounds(34, 29, 46, 14);
 		lblInstituto.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblInstituto.setBounds(22, 29, 46, 14);
 		getContentPane().add(lblInstituto);
 		
 		JLabel lblCurso = new JLabel("Curso");
-		lblCurso.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCurso.setBounds(237, 29, 46, 14);
+		lblCurso.setBounds(34, 62, 46, 14);
+		lblCurso.setHorizontalAlignment(SwingConstants.RIGHT);
 		getContentPane().add(lblCurso);
 		
 		comboBoxCursos = new JComboBox<String>();
+		comboBoxCursos.setBounds(90, 59, 131, 20);
 		comboBoxCursos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//CUANDO SELECCIONA UN CURSO, SE CARGA LA INFO EN LOS CAMPOS
 				ConsultaCurso_ActionPerformed(e);
-				listPreviasInit();
 				comboBoxInitEdiciones();
 				comboBoxInitProgramas();
+				listPreviasInit();
 			}
 		});
-		comboBoxCursos.setBounds(293, 26, 119, 20);
 		getContentPane().add(comboBoxCursos);
 		
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.setBounds(320, 323, 89, 23);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				limpiarCampos();
+				limpiarTextPane(textPane);
 				setVisible(false);
 			}
 		});
-		btnSalir.setBounds(293, 253, 89, 23);
 		getContentPane().add(btnSalir);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.setBounds(92, 101, 131, 20);
 		textFieldNombre.setBackground(Color.WHITE);
-		textFieldNombre.setBounds(90, 70, 131, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setBounds(10, 104, 72, 14);
 		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombre.setBounds(10, 73, 72, 14);
 		getContentPane().add(lblNombre);
 		
 		textFieldDescripcion = new JTextField();
-		textFieldDescripcion.setBounds(90, 101, 131, 20);
+		textFieldDescripcion.setBounds(92, 133, 131, 20);
 		getContentPane().add(textFieldDescripcion);
 		textFieldDescripcion.setColumns(10);
 		
 		JLabel lblDescripcion = new JLabel("Descripcion");
+		lblDescripcion.setBounds(10, 136, 72, 14);
 		lblDescripcion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDescripcion.setBounds(10, 104, 72, 14);
 		getContentPane().add(lblDescripcion);
 		
 		textFieldDuracion = new JTextField();
-		textFieldDuracion.setBounds(90, 132, 131, 20);
+		textFieldDuracion.setBounds(92, 165, 131, 20);
 		getContentPane().add(textFieldDuracion);
 		textFieldDuracion.setColumns(10);
 		
 		JLabel lblDuracion = new JLabel("Duración");
+		lblDuracion.setBounds(10, 168, 72, 14);
 		lblDuracion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDuracion.setBounds(10, 135, 72, 14);
 		getContentPane().add(lblDuracion);
 		
 		textFieldCantHoras = new JTextField();
-		textFieldCantHoras.setBounds(90, 163, 131, 20);
+		textFieldCantHoras.setBounds(92, 197, 131, 20);
 		getContentPane().add(textFieldCantHoras);
 		textFieldCantHoras.setColumns(10);
 		
 		textFieldCantCreditos = new JTextField();
-		textFieldCantCreditos.setBounds(90, 194, 131, 20);
+		textFieldCantCreditos.setBounds(92, 229, 131, 20);
 		getContentPane().add(textFieldCantCreditos);
 		textFieldCantCreditos.setColumns(10);
 		
 		textFieldUrl = new JTextField();
-		textFieldUrl.setBounds(90, 225, 131, 20);
+		textFieldUrl.setBounds(92, 261, 131, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
 		
 		JLabel lblCantHoras = new JLabel("Cant. horas");
+		lblCantHoras.setBounds(10, 200, 72, 14);
 		lblCantHoras.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCantHoras.setBounds(10, 166, 72, 14);
 		getContentPane().add(lblCantHoras);
 		
 		JLabel lblCantCreditos = new JLabel("Cant. créditos");
+		lblCantCreditos.setBounds(10, 232, 72, 14);
 		lblCantCreditos.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCantCreditos.setBounds(10, 197, 72, 14);
 		getContentPane().add(lblCantCreditos);
 		
 		JLabel lblUrl = new JLabel("URL");
+		lblUrl.setBounds(10, 264, 72, 14);
 		lblUrl.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUrl.setBounds(10, 228, 72, 14);
 		getContentPane().add(lblUrl);
 		
 		listPrevias = new JList<String>();
-		listPrevias.setBounds(293, 70, 119, 76);
-		getContentPane().add(listPrevias);
+		listPrevias.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		listPrevias.setBounds(304, 28, 105, 76);
+		//getContentPane().add(listPrevias);
 		
 		JLabel lblPrevias = new JLabel("Previas");
-		lblPrevias.setBounds(237, 73, 46, 14);
+		lblPrevias.setBounds(239, 29, 46, 14);
 		getContentPane().add(lblPrevias);
 		
 		comboBoxEdiciones = new JComboBox<String>();
 		comboBoxEdiciones.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// ACA LLAMO AL CU CONSULTA DE EDICION (NAREN)
+			public void actionPerformed(ActionEvent arg0) {
+				infoEdicion(arg0);
 			}
 		});
-		comboBoxEdiciones.setBounds(237, 169, 175, 20);
+		comboBoxEdiciones.setBounds(239, 138, 170, 20);
 		getContentPane().add(comboBoxEdiciones);
 		
+		
 		comboBoxProgramas = new JComboBox<String>();
-		comboBoxProgramas.setBounds(237, 213, 175, 20);
+		comboBoxProgramas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				infoPrograma(arg0);
+			}
+		});
+		comboBoxProgramas.setBounds(239, 183, 170, 20);
 		getContentPane().add(comboBoxProgramas);
 		
 		JLabel lblEdiciones = new JLabel("Ediciones de Curso");
-		lblEdiciones.setBounds(237, 155, 175, 14);
+		lblEdiciones.setBounds(239, 123, 176, 14);
 		getContentPane().add(lblEdiciones);
 		
 		JLabel lblNewLabel = new JLabel("Prog. de Formacion");
-		lblNewLabel.setBounds(237, 200, 119, 14);
+		lblNewLabel.setBounds(239, 169, 119, 14);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblFechaAlta = new JLabel("Fecha alta");
+		lblFechaAlta.setBounds(20, 295, 60, 14);
 		lblFechaAlta.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFechaAlta.setBounds(22, 259, 60, 14);
 		getContentPane().add(lblFechaAlta);
 		
 		textFieldFechaAlta = new JTextField();
-		textFieldFechaAlta.setBounds(90, 256, 131, 20);
+		textFieldFechaAlta.setBounds(92, 292, 131, 20);
 		getContentPane().add(textFieldFechaAlta);
 		textFieldFechaAlta.setColumns(10);
+		
+		textPane = new JTextPane();
+		textPane.setBounds(240, 215, 169, 97);
+		getContentPane().add(textPane);
+		
+		scrollPanePrevias = new JScrollPane();
+		scrollPanePrevias.setBounds(291, 29, 118, 76);
+		getContentPane().add(scrollPanePrevias);
 		
 	}
 	
@@ -244,14 +269,49 @@ public class ConsultaCurso extends JInternalFrame {
 		DefaultComboBoxModel<String> modelProgramas = new DefaultComboBoxModel<String>(iconCur.listarProgramasAux(strInstituto, strCurso));
 		comboBoxProgramas.setModel(modelProgramas);
 	}
-	public void listPreviasInit() {
-		String[] previas = iconCur.listarPrevias(this.comboBoxInstitutos.getSelectedItem().toString(),this.comboBoxCursos.getSelectedItem().toString());
-		this.listPrevias.setListData(new String[0]);
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		for(String p: previas) {
-			listModel.addElement(p);
-		}		
-				
-		this.listPrevias.setModel(listModel);
-	}
+	// Printea la edicion de curso en el JTextPane
+	
+		public void infoEdicion(ActionEvent arg0) {
+			String nombreInstituto = comboBoxInstitutos.getSelectedItem().toString();
+			String nombreCurso = comboBoxCursos.getSelectedItem().toString();
+			String nombreEdicion = comboBoxEdiciones.getSelectedItem().toString();
+			printEdicion(textPane, iconCur.AtributosEdicion(nombreInstituto, nombreCurso, nombreEdicion));
+		}
+		
+		public void printEdicion(JTextPane textPane, String[] arrayEdicion) {
+			textPane.setText(arrayEdicion[0]+"\n"+arrayEdicion[1]+"\n"+arrayEdicion[2]+"\n"+arrayEdicion[3]+"\n"+arrayEdicion[4]+"\n"+arrayEdicion[5]);
+		}
+		public void infoPrograma(ActionEvent arg0) {
+			String nombrePrograma = comboBoxProgramas.getSelectedItem().toString();
+			printPrograma(textPane, iconCur.AtributosPrograma(nombrePrograma));
+		}
+		
+		public void printPrograma(JTextPane textPane, String[] arrayPrograma) {
+			textPane.setText(arrayPrograma[0]+"\n"+arrayPrograma[1]+"\n"+arrayPrograma[2]+"\n"+arrayPrograma[3]+"\n"+arrayPrograma[4]);
+		}
+		public void limpiarTextPane(JTextPane textPane) {
+			textPane.setText("");
+		}
+		public void listPreviasInit() {
+			String[] previas = iconCur.listarPrevias(this.comboBoxInstitutos.getSelectedItem().toString(), this.comboBoxCursos.getSelectedItem().toString());
+			this.listPrevias.setListData(new String[0]);
+			DefaultListModel<String> listModel = new DefaultListModel<String>();
+			for(String p: previas) {
+				listModel.addElement(p);
+			}		
+					
+			this.listPrevias.setModel(listModel);
+			scrollPanePrevias.getViewport().setView(listPrevias);
+			
+		}
+		public void limpiarCampos() {
+			this.textFieldNombre.setText("");
+			this.textFieldDescripcion.setText("");
+			this.textFieldDuracion.setText("");
+			this.textFieldCantHoras.setText("");
+			this.textFieldCantCreditos.setText("");
+			this.textFieldUrl.setText("");
+			this.textFieldFechaAlta.setText("");
+		}
+			
 }

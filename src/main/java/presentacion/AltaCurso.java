@@ -13,6 +13,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -27,6 +28,9 @@ import javax.swing.ListSelectionModel;
 
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JList;
+import java.awt.ScrollPane;
+import java.awt.Scrollbar;
+import java.awt.TextArea;
 
 public class AltaCurso extends JInternalFrame {
 
@@ -48,6 +52,7 @@ public class AltaCurso extends JInternalFrame {
 	private JLabel lblFechaAlta;
 	private JDateChooser dateChooserFechaAlta;
 	private JList<String> listPrevias;
+	private JScrollPane scrollPanePrevias;
 
 
 	/**
@@ -67,84 +72,83 @@ public class AltaCurso extends JInternalFrame {
 				listPreviasInit();
 			}
 		});
-		comboBoxInstitutos.setBounds(85, 11, 119, 20);
+		comboBoxInstitutos.setBounds(96, 31, 119, 20);
 		getContentPane().add(comboBoxInstitutos);
 		
 		JLabel lblInstitutos = new JLabel("Institutos");
-		lblInstitutos.setBounds(29, 14, 46, 14);
+		lblInstitutos.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblInstitutos.setBounds(29, 34, 56, 14);
 		getContentPane().add(lblInstitutos);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(85, 55, 119, 20);
+		textFieldNombre.setBounds(96, 65, 119, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		textFieldDescripcion = new JTextField();
-		textFieldDescripcion.setBounds(85, 96, 119, 20);
+		textFieldDescripcion.setBounds(96, 96, 119, 20);
 		getContentPane().add(textFieldDescripcion);
 		textFieldDescripcion.setColumns(10);
 		
 		textFieldDuracion = new JTextField();
-		textFieldDuracion.setBounds(85, 127, 119, 20);
+		textFieldDuracion.setBounds(96, 127, 119, 20);
 		getContentPane().add(textFieldDuracion);
 		textFieldDuracion.setColumns(10);
 		
 		textFieldCantHoras = new JTextField();
-		textFieldCantHoras.setBounds(85, 158, 119, 20);
+		textFieldCantHoras.setBounds(96, 158, 119, 20);
 		getContentPane().add(textFieldCantHoras);
 		textFieldCantHoras.setColumns(10);
 		
 		textFieldCantCreditos = new JTextField();
-		textFieldCantCreditos.setBounds(88, 189, 116, 20);
+		textFieldCantCreditos.setBounds(96, 189, 119, 20);
 		getContentPane().add(textFieldCantCreditos);
 		textFieldCantCreditos.setColumns(10);
 		
 		textFieldUrl = new JTextField();
-		textFieldUrl.setBounds(292, 148, 121, 20);
+		textFieldUrl.setBounds(225, 139, 199, 20);
 		getContentPane().add(textFieldUrl);
 		textFieldUrl.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNombre.setBounds(10, 58, 65, 14);
+		lblNombre.setBounds(10, 68, 75, 14);
 		getContentPane().add(lblNombre);
 		
 		lblDescripcion = new JLabel("Descripci\u00F3n");
 		lblDescripcion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDescripcion.setBounds(10, 99, 65, 14);
+		lblDescripcion.setBounds(10, 99, 75, 14);
 		getContentPane().add(lblDescripcion);
 		
 		lblDuracion = new JLabel("Duraci\u00F3n");
 		lblDuracion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDuracion.setBounds(10, 130, 65, 14);
+		lblDuracion.setBounds(10, 130, 75, 14);
 		getContentPane().add(lblDuracion);
 		
 		lblCantHoras = new JLabel("Cant. horas");
 		lblCantHoras.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCantHoras.setBounds(10, 161, 65, 14);
+		lblCantHoras.setBounds(10, 161, 75, 14);
 		getContentPane().add(lblCantHoras);
 		
 		lblCantCreditos = new JLabel("Cr\u00E9ditos");
 		lblCantCreditos.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCantCreditos.setBounds(10, 189, 74, 14);
+		lblCantCreditos.setBounds(10, 189, 75, 14);
 		getContentPane().add(lblCantCreditos);
 		
 		lblURL = new JLabel("URL");
-		lblURL.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblURL.setBounds(214, 148, 68, 14);
+		lblURL.setHorizontalAlignment(SwingConstants.LEFT);
+		lblURL.setBounds(225, 124, 44, 14);
 		getContentPane().add(lblURL);
 		
 		lblFechaAlta = new JLabel("Fecha alta");
-		lblFechaAlta.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFechaAlta.setBounds(214, 192, 68, 14);
+		lblFechaAlta.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFechaAlta.setBounds(225, 176, 65, 14);
 		getContentPane().add(lblFechaAlta);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// ACTION PERFORMED DE CONFIRMAR ALTA CURSO
 				ConfirmarAltaCurso_ActionPerformed(e);
-				
 			}
 		});
 		btnConfirmar.setBounds(225, 223, 89, 23);
@@ -160,17 +164,24 @@ public class AltaCurso extends JInternalFrame {
 		getContentPane().add(btnCancelar);
 		
 		dateChooserFechaAlta = new JDateChooser();
-		dateChooserFechaAlta.setBounds(292, 189, 121, 20);
+		dateChooserFechaAlta.setBounds(292, 173, 132, 20);
 		getContentPane().add(dateChooserFechaAlta);
 		
 		listPrevias = new JList<String>();
 		listPrevias.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		listPrevias.setBounds(248, 57, 165, 80);
-		getContentPane().add(listPrevias);
+		listPrevias.setBounds(303, 31, 121, 80);
+		//getContentPane().add(listPrevias);
 			
 		JLabel lblPrevias = new JLabel("Previas");
-		lblPrevias.setBounds(225, 37, 46, 14);
+		lblPrevias.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPrevias.setBounds(225, 34, 57, 14);
 		getContentPane().add(lblPrevias);
+		
+		scrollPanePrevias = new JScrollPane();
+		scrollPanePrevias.setBounds(292, 31, 132, 100);
+		getContentPane().add(scrollPanePrevias);
+	
+		
 
 	}
 	
@@ -207,16 +218,16 @@ public class AltaCurso extends JInternalFrame {
 			
 			try {
 				iconCur.AltaCurso(curso, instituto);
-				JOptionPane.showMessageDialog(this, "Curso creado con exito", "Creacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Curso creado con exito", "Alta exitosa", JOptionPane.INFORMATION_MESSAGE);
+				limpiarCampos();
 			}catch(CursoRepetido_Exception ex) {
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			for(String p: previas) {
 				this.iconCur.agregarPrevia(p, instituto, curso.getNombre());
 			}
 			
 		}
-		
 		
 	}
 	public boolean comprobarCampos() {
@@ -230,32 +241,51 @@ public class AltaCurso extends JInternalFrame {
 		String cantCreditos = this.textFieldCantCreditos.getText();
 		String url = this.textFieldUrl.getText();
 		if(comboBoxInstitutos == 0) {
-			JOptionPane.showMessageDialog(this, "Debe seleccionar Instituto", "ERROR",
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un instituto", "Error",
                     JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (nombre.isEmpty() || descripcion.isEmpty() || duracion.isEmpty() || cantHoras.isEmpty() || cantCreditos.isEmpty() || url.isEmpty() || fecha == null) {
-			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "ERROR",
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Error",
                     JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		try {
 			int h = Integer.parseInt(cantHoras);
 		}catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "La cantidad de horas debe ser un numero", "ERROR",
+			JOptionPane.showMessageDialog(this, "La cantidad de horas debe ser un numero", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		try {
 			int c = Integer.parseInt(cantCreditos);
 		}catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "La cantidad de créditos debe ser un numero", "ERROR",
+			JOptionPane.showMessageDialog(this, "La cantidad de creditos debe ser un numero", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		return true;
 	}
 	public void CancelarAltaCurso_ActionPerformed(ActionEvent e) {
+		limpiarCampos();
+		setVisible(false);
+	}
+	public void listPreviasInit() {
+		String[] cursos = iconCur.listarCursos(this.comboBoxInstitutos.getSelectedItem().toString());
+		
+		this.listPrevias.setListData(new String[0]);
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		for(String c: cursos) {
+			listModel.addElement(c);
+		}		
+	
+		this.listPrevias.setModel(listModel);
+		
+		scrollPanePrevias.getViewport().setView(listPrevias);
+
+	}
+	
+	public void limpiarCampos() {
 		this.dateChooserFechaAlta.setCalendar(null);
 		this.textFieldNombre.setText("");
 		this.textFieldDescripcion.setText("");
@@ -263,17 +293,6 @@ public class AltaCurso extends JInternalFrame {
 		this.textFieldCantHoras.setText("");
 		this.textFieldCantCreditos.setText("");
 		this.textFieldUrl.setText("");
-		setVisible(false);
-	}
-	public void listPreviasInit() {
-		String[] cursos = iconCur.listarCursos(this.comboBoxInstitutos.getSelectedItem().toString());
-		this.listPrevias.setListData(new String[0]);
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		for(String c: cursos) {
-			listModel.addElement(c);
-		}		
-				
-		this.listPrevias.setModel(listModel);
-		
+		this.listPrevias.clearSelection();
 	}
 }

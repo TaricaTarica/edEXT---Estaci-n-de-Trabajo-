@@ -48,7 +48,7 @@ public class ControladorCurso implements IControladorCurso {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.buscarInstituto(nombreInstituto);
 		if (i != null) {
-			throw new InstitutoRepetido_Exception("ï¿½El instituto " + nombreInstituto + " ya estï¿½ registrado!");
+			throw new InstitutoRepetido_Exception("El instituto " + nombreInstituto + " ya esta registrado");
 		}
 		i = new Instituto(nombreInstituto);
 		mI.agregarInstituto(i);
@@ -69,7 +69,7 @@ public class ControladorCurso implements IControladorCurso {
 		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
 		ProgramaFormacion programa = new ProgramaFormacion(pf);
 		if(mPF.existeProgramaFormacion(programa.getNombre())){
-			throw new CrearProgramaFormacionRepetido_Exception("El nombre "+ programa.getNombre()+" está registrado") ;
+			throw new CrearProgramaFormacionRepetido_Exception("El nombre "+ programa.getNombre()+" ya esta registrado") ;
 		}
 		mPF.agregarProgramaFormacion(programa);
 	}
@@ -105,6 +105,7 @@ public class ControladorCurso implements IControladorCurso {
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
 		em.persist(curso);
+		em.persist(previa);
 		em.getTransaction().commit();
 	}
 	
@@ -120,7 +121,7 @@ public class ControladorCurso implements IControladorCurso {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto instituto = mI.buscarInstituto(i);
 		if(instituto.existeCurso(c.getNombre())) {
-			throw new CursoRepetido_Exception("El curso"+ c.getNombre()+" ya está registrado") ;
+			throw new CursoRepetido_Exception("El curso "+ c.getNombre()+" ya esta registrado") ;
 		}
 		
 		instituto.agregarCurso(c);
@@ -174,7 +175,7 @@ public class ControladorCurso implements IControladorCurso {
 		Instituto instituto = mI.buscarInstituto(i);
 		Curso curso = instituto.getCurso(c);
 		if(curso.BuscarEdicion(e.getNombre())){
-			throw new EdicionRepatida_Exception("El nombre "+ e.getNombre()+" esta registrados");
+			throw new EdicionRepatida_Exception("El nombre "+ e.getNombre()+" ya esta registrado");
 		}
 		curso.agregarEdicion(e);
 		
@@ -196,7 +197,7 @@ public class ControladorCurso implements IControladorCurso {
 		Curso curso = instituto.getCurso(c);
 		Edicion edicion=curso.getEdicion(e);
 		if (est.BuscarInscripcion(edicion)) {
-			throw new InscripcionRepetida_Exception("La inscripcion ya esta registrada!");
+			throw new InscripcionRepetida_Exception("La inscripcion ya esta registrada");
 		}
 		InscripcionEd inscripcion = new InscripcionEd(FechaIns, edicion, est);
 		est.agregarInscripcion(inscripcion);
@@ -244,11 +245,12 @@ public class ControladorCurso implements IControladorCurso {
 		
 		//Curso c = programa.getCurso(nombreCurso);
 		if (programa.existeCurso(nombreCurso)) {
-			throw new ProgramaCursoRepetido_Exception("El curso "+ nombreCurso +" ya pertenece al Programa de Formación" + programaFormacion);
+			throw new ProgramaCursoRepetido_Exception("El curso "+ nombreCurso +" ya pertenece al Programa de Formacion " + programaFormacion);
 		}
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto instituto = mI.buscarInstituto(nombreInstituto);
 		Curso curso = instituto.getCurso(nombreCurso);
+		curso.asociarPrograma(programa.getNombre());
 		programa.setCurso(curso);
 		
 		Conexion conexion = Conexion.getInstancia();
@@ -326,7 +328,6 @@ public class ControladorCurso implements IControladorCurso {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto instituto = mI.buscarInstituto(strInstituto);
 		Curso curso = instituto.getCurso(strCurso);
-
 		ArrayList<String> programas;
 		programas = curso.obtenerProgramasAsociados();		
 		String[] programas_ret = new String[programas.size()];
@@ -386,7 +387,7 @@ public class ControladorCurso implements IControladorCurso {
 		return retorno;
 	}
 	@Override
-	public String [] listarProgFormacion() {
+	public String[] listarProgFormacion() {
 		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
 		ArrayList<String> programas = mPF.getNombreProgramas();
 		String [] retorno = new String[programas.size()];
@@ -422,25 +423,53 @@ public class ControladorCurso implements IControladorCurso {
 		String[] atributos_ed_curso_ret = new String[6];
 			atributos_ed_curso_ret[0] = "Nombre: " + edicion.getNombre();
 			atributos_ed_curso_ret[1] = "Fecha de inicio: " + edicion.getFechaIni();
-			atributos_ed_curso_ret[2] = "Fecha de finalizacion: " + edicion.getFechaFin();
+			atributos_ed_curso_ret[2] = "Fecha de fin: " + edicion.getFechaFin();
 			atributos_ed_curso_ret[3] = "Cupo: " + edicion.getCupo();
 			atributos_ed_curso_ret[4] = "Fecha de publicacion: " + edicion.getFechaPub();
 			atributos_ed_curso_ret[5] = "Docentes: " + edicion.nombresDocentes();
 			return atributos_ed_curso_ret;
 	}
-	public String[] listarPrevias(String nombreInstituto, String nombreCurso) {
+	@Override
+	public String[] AtributosPrograma(String nombrePrograma) {
+		ManejadorProgramaFormacion mpf = ManejadorProgramaFormacion.getInstancia();
+		ProgramaFormacion programa = mpf.buscarProgramaFormacion(nombrePrograma);
+		String[] atributos_pf_curso_ret = new String[5];
+		atributos_pf_curso_ret[0] = "Nombre: " + programa.getNombre();
+		atributos_pf_curso_ret[1] = "Descripcion: " + programa.getDescripcion();
+		atributos_pf_curso_ret[2] = "Fecha de inicio: " + programa.getFechaInicio();
+	    atributos_pf_curso_ret[3] = "Fecha de fin: "+ programa.getFechaFin();
+		atributos_pf_curso_ret[4] = "Fecha de Alta: " + programa.getFechaAlta();
+		return atributos_pf_curso_ret;
+	}
+	@Override
+	public String[] listarCursosP(String strPrograma){
+		ManejadorProgramaFormacion mP = ManejadorProgramaFormacion.getInstancia();
+		ProgramaFormacion programa= mP.buscarProgramaFormacion(strPrograma);
+		ArrayList<String> cursosP;
+		cursosP = programa.obtenerCursos();
+		String[] cursosP_ret = new String[cursosP.size()];
+        int i=0;
+        for(String cur: cursosP) {
+        	cursosP_ret[i]=cur;
+        	i++;
+        }
+        return cursosP_ret;
+	}
+	@Override
+	public String[] listarPrevias(String nombreInstituto, String nombreCurso){
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto instituto = mI.buscarInstituto(nombreInstituto);
 		Curso curso = instituto.getCurso(nombreCurso);
-		ArrayList<String> previas = curso.obtenerPrevias();		
+		ArrayList<String> previas;
+		previas = curso.obtenerPrevias();
 		String[] previas_ret = new String[previas.size()];
         int i=0;
         for(String p: previas) {
-        	previas_ret[i] = p;
+        	previas_ret[i]=p;
         	i++;
         }
-        return previas_ret;
+        return previas_ret;		
 	}
 
-
+	
 }

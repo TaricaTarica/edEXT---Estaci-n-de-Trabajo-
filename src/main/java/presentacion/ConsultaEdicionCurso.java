@@ -56,17 +56,19 @@ public class ConsultaEdicionCurso extends JInternalFrame {
 		getContentPane().add(lblEdicionDeCurso);
 
 		textPane = new JTextPane();
-		textPane.setBounds(32, 161, 257, 98);
+		textPane.setBounds(32, 150, 257, 98);
 		getContentPane().add(textPane);
 
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				limpiarEdicion(textPane);
 				setVisible(false);
+				
 			}
 		});
-		btnCancelar.setBounds(319, 236, 89, 23);
-		getContentPane().add(btnCancelar);
+		btnSalir.setBounds(318, 220, 89, 23);
+		getContentPane().add(btnSalir);
 
 		JLabel lblCurso = new JLabel("Curso");
 		lblCurso.setBounds(32, 78, 46, 14);
@@ -118,6 +120,12 @@ public class ConsultaEdicionCurso extends JInternalFrame {
 		//textPane.setDocument(new PlainDocument()); // Se crea un nuevo documento para limpiar el texto
 		//for (int i = 0; i < 6; i++) {
 			textPane.setText(arrayEdicion[0]+"\n"+arrayEdicion[1]+"\n"+arrayEdicion[2]+"\n"+arrayEdicion[3]+"\n"+arrayEdicion[4]+"\n"+arrayEdicion[5]);
+		//}
+	}
+	public void limpiarEdicion(JTextPane textPane) {
+		//textPane.setDocument(new PlainDocument()); // Se crea un nuevo documento para limpiar el texto
+		//for (int i = 0; i < 6; i++) {
+			textPane.setText("");
 		//}
 	}
 	

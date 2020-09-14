@@ -30,5 +30,8 @@ public interface IControladorUsuario {
 	boolean esEstudiante(String strNickname);
 	String[] listarEdicionesD(String strDocente);
 	String[] listarEdicionesE(String strEstudiante);
+	public String[] AtributosEdicion(String nombreUsuario,String nombreEdicion);
+
+	
 
 }

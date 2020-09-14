@@ -90,7 +90,7 @@ public class CrearProgramadeFormacion extends JInternalFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CancelarCrearProgramadeFormacion_actionPerformed(e); //La funciï¿½n estï¿½ definida abajo
+				CancelarCrearProgramadeFormacion_actionPerformed(e);
 			}
 		});
 		btnCancelar.setBounds(222, 212, 117, 25);
@@ -133,11 +133,12 @@ public class CrearProgramadeFormacion extends JInternalFrame {
 			DtProgramaFormacion pf = new DtProgramaFormacion(nombre,Descripcion,fechaIni,fechaFin,fechaAlta); 
 			try {
 				this.iconCur.AltaCrearProgramadeFormacion(pf);
-				JOptionPane.showMessageDialog(this, "El Programa se ha creado con ï¿½xito", "Alta exitosa",
+				JOptionPane.showMessageDialog(this, "Programa creado con exito", "Alta exitosa",
                         JOptionPane.INFORMATION_MESSAGE);
+				limpiarCampos();
 			}
 			catch(CrearProgramaFormacionRepetido_Exception ex){
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 			
@@ -161,7 +162,7 @@ public class CrearProgramadeFormacion extends JInternalFrame {
 		Date fechaFinD = this.dateChooserFechaFin.getDate();
 		Date fechaAltaD = this.dateChooserFechaAlta.getDate();
 		if(nombre.isEmpty() || Descripcion.isEmpty() || fechaIniD == null || fechaFinD == null || fechaAltaD == null) {
-			JOptionPane.showMessageDialog(this, "No puede haber campos vacíos", "ERROR",
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Error",
                     JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

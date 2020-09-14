@@ -19,6 +19,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.SwingConstants;
 
 public class ModificarUsuario extends JInternalFrame {
 	IControladorUsuario iconUsr;
@@ -42,7 +43,8 @@ public class ModificarUsuario extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		JLabel lblUsuario = new JLabel("Usuario");
-		lblUsuario.setBounds(30, 23, 46, 14);
+		lblUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblUsuario.setBounds(109, 31, 46, 14);
 		getContentPane().add(lblUsuario);
 		
 		comboBoxUsuario = new JComboBox<String>();
@@ -51,33 +53,32 @@ public class ModificarUsuario extends JInternalFrame {
 				seleccionarUsuario_actionPerformed(e);
 			}
 		});
-		comboBoxUsuario.setBounds(86, 20, 180, 20);
+		comboBoxUsuario.setBounds(165, 25, 173, 20);
 		getContentPane().add(comboBoxUsuario);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(78, 68, 46, 14);
+		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNombre.setBounds(109, 74, 46, 14);
 		getContentPane().add(lblNombre);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(158, 65, 125, 20);
+		textFieldNombre.setBounds(165, 68, 173, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		JLabel lblApellido = new JLabel("Apellido");
-		lblApellido.setBounds(78, 93, 46, 14);
+		lblApellido.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblApellido.setBounds(109, 102, 46, 14);
 		getContentPane().add(lblApellido);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(18, 11, 273, 37);
-		getContentPane().add(panel);
-		
 		textFieldApellido = new JTextField();
-		textFieldApellido.setBounds(158, 90, 125, 20);
+		textFieldApellido.setBounds(165, 96, 173, 20);
 		getContentPane().add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		JLabel lblFecha = new JLabel("Fecha de Nacimiento");
-		lblFecha.setBounds(43, 135, 105, 14);
+		lblFecha.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFecha.setBounds(51, 130, 105, 14);
 		getContentPane().add(lblFecha);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
@@ -86,7 +87,7 @@ public class ModificarUsuario extends JInternalFrame {
 				confirmarModificarUsuario_actionPerformed(e);
 			}
 		});
-		btnConfirmar.setBounds(301, 180, 111, 23);
+		btnConfirmar.setBounds(109, 172, 111, 23);
 		getContentPane().add(btnConfirmar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -95,11 +96,11 @@ public class ModificarUsuario extends JInternalFrame {
 				cancelarModificacion_actionPerformed(e);
 			}
 		});
-		btnCancelar.setBounds(202, 180, 89, 23);
+		btnCancelar.setBounds(230, 172, 111, 23);
 		getContentPane().add(btnCancelar);
 		
 		dateChooserFechaNac = new JDateChooser();
-		dateChooserFechaNac.setBounds(158, 129, 125, 20);
+		dateChooserFechaNac.setBounds(166, 124, 173, 20);
 		getContentPane().add(dateChooserFechaNac);
 		
 
@@ -134,7 +135,7 @@ public class ModificarUsuario extends JInternalFrame {
 		
 
 			iconUsr.modificarUsuario(nickname, nombre, apellido, fechaNac);
-			JOptionPane.showMessageDialog(this, "Usuario modificado con �xito", "Modificaci�n exitosa", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Usuario modificado con exito", "Modificacion exitosa", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	private boolean comprobarCampos() {
@@ -143,7 +144,7 @@ public class ModificarUsuario extends JInternalFrame {
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
 		if(nombre.isEmpty() || apellido.isEmpty() || apellido.isEmpty() || comboBoxUsuario == 0 || fechaNacD ==  null) {
-			JOptionPane.showMessageDialog(this, "No pueden haber campos vac�os", "ERROR",
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Error",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

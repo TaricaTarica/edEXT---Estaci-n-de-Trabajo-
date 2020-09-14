@@ -24,7 +24,7 @@ public class ProgramaFormacion {
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
 	private LocalDate fechaAlta;
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Curso> cursos = new ArrayList<>();
 
 	//constructores

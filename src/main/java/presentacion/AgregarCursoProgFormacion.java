@@ -15,6 +15,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class AgregarCursoProgFormacion extends JInternalFrame {
 	
@@ -32,11 +33,12 @@ public class AgregarCursoProgFormacion extends JInternalFrame {
         setMaximizable(true);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setClosable(false);
-		setTitle("Agregar Curso a Programa de Formación");
-		setBounds(100, 100, 450, 180); //acá modificas el tamaño de la ventana
+		setTitle("Agregar Curso a Programa de FormaciÃ³n");
+		setBounds(100, 100, 450, 180); //acï¿½ modificas el tamaï¿½o de la ventana
 		getContentPane().setLayout(null);
 		
-		JLabel lblProgFormacion = new JLabel("Programa de Formaci\u00F3n");
+		JLabel lblProgFormacion = new JLabel("Programa de FormaciÃ³n");
+		lblProgFormacion.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblProgFormacion.setBounds(25, 27, 122, 14);
 		getContentPane().add(lblProgFormacion);
 		
@@ -45,7 +47,8 @@ public class AgregarCursoProgFormacion extends JInternalFrame {
 		getContentPane().add(comboBoxProgFormacion);
 		
 		JLabel lblCurso = new JLabel("Curso");
-		lblCurso.setBounds(67, 62, 46, 14);
+		lblCurso.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCurso.setBounds(67, 62, 80, 14);
 		getContentPane().add(lblCurso);
 		
 		comboBoxCursos = new JComboBox<String>();
@@ -58,7 +61,7 @@ public class AgregarCursoProgFormacion extends JInternalFrame {
 				confirmarAgregarCursoProgFormacion_actionPerformed(e);
 			}
 		});
-		btnConfirmar.setBounds(289, 95, 122, 23);
+		btnConfirmar.setBounds(85, 101, 122, 23);
 		getContentPane().add(btnConfirmar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -67,7 +70,7 @@ public class AgregarCursoProgFormacion extends JInternalFrame {
 				cancelarAgregarCursoProgFormacion_actionPerformed(e);
 			}
 		});
-		btnCancelar.setBounds(157, 95, 122, 23);
+		btnCancelar.setBounds(217, 101, 122, 23);
 		getContentPane().add(btnCancelar);
 
 	}
@@ -86,10 +89,10 @@ public class AgregarCursoProgFormacion extends JInternalFrame {
 			String InstitutoCurso = this.comboBoxCursos.getSelectedItem().toString();
 			try {
 				iconCur.agregarCursoProgFormacion(programaFormacion, InstitutoCurso);
-				JOptionPane.showMessageDialog(this, "Curso agregado con éxito", "Agregación exitosa", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Curso agregado con exito", "Agregado exitosamente", JOptionPane.INFORMATION_MESSAGE);
 			}
 			catch(ProgramaCursoRepetido_Exception ex) {
-				JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 		
@@ -98,7 +101,7 @@ public class AgregarCursoProgFormacion extends JInternalFrame {
 		int comboBoxProgFormacion = this.comboBoxProgFormacion.getItemCount();
 		int comboBoxCursos = this.comboBoxProgFormacion.getItemCount();
 		if(comboBoxCursos == 0 || comboBoxProgFormacion == 0) {
-			JOptionPane.showMessageDialog(this, "No pueden haber campos vacíos", "ERROR",
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Error",
 		            JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

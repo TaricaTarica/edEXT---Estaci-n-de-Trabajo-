@@ -29,7 +29,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario nuevoUsr = mU.buscarUsuario(u.getNickname());
 		if(nuevoUsr != null)
-			throw new UsuarioRepetido_Exception("El nickname "+ u.getNickname() +" y el correo " + u.getCorreo() +" est�n registrados");
+			throw new UsuarioRepetido_Exception("El nickname "+ u.getNickname() +" y/o el correo " + u.getCorreo() +" ya estan registrados");
 		if(u instanceof DtEstudiante) {
 			nuevoUsr = new Estudiante(u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac());
 			mU.agregarUsuario(nuevoUsr);
@@ -157,5 +157,44 @@ public class ControladorUsuario implements IControladorUsuario {
 		String[] ediciones_ret = ((Estudiante) usr).obtenerEdicionesE();
         return ediciones_ret;	 
 	}
-	
+	@Override
+	public String[] AtributosEdicion(String nombreUsuario, String nombreEdicion) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usuario = mU.buscarUsuario(nombreUsuario);
+		String[] atributos_ed_curso_ret = new String[6];
+		if(esEstudiante(usuario.getNickname())) {
+			 List<Edicion> ediciones = new ArrayList<>();
+			ediciones=((Estudiante) usuario).obtenerEdicionesEd();
+			Edicion aretornar=null;			
+			for(Edicion ed: ediciones) {
+				if (ed.getNombre().equals(nombreEdicion)) {
+					aretornar=ed;
+				}
+					
+			}
+				atributos_ed_curso_ret[0] = "Nombre: " + aretornar.getNombre();
+				atributos_ed_curso_ret[1] = "Fecha de inicio: " + aretornar.getFechaIni();
+				atributos_ed_curso_ret[2] = "Fecha de fin: " + aretornar.getFechaFin();
+				atributos_ed_curso_ret[3] = "Cupo: " + aretornar.getCupo();
+				atributos_ed_curso_ret[4] = "Fecha de publicacion: " + aretornar.getFechaPub();
+				atributos_ed_curso_ret[5] = "Docentes: " + aretornar.nombresDocentes();
+		}else{
+			List<Edicion> ediciones = new ArrayList<>();
+			ediciones=((Docente) usuario).obtenerEdicionesAsociados()	;
+			Edicion aretornar=null;			
+			for(Edicion ed: ediciones) {
+				if (ed.getNombre().equals(nombreEdicion)) {
+					aretornar=ed;
+				}
+					
+			}
+				atributos_ed_curso_ret[0] = "Nombre: " + aretornar.getNombre();
+				atributos_ed_curso_ret[1] = "Fecha de inicio: " + aretornar.getFechaIni();
+				atributos_ed_curso_ret[2] = "Fecha de fin: " + aretornar.getFechaFin();
+				atributos_ed_curso_ret[3] = "Cupo: " + aretornar.getCupo();
+				atributos_ed_curso_ret[4] = "Fecha de publicacion: " + aretornar.getFechaPub();
+				atributos_ed_curso_ret[5] = "Docentes: " + aretornar.nombresDocentes();
+		}
+		return atributos_ed_curso_ret;		
+	}
 }
