@@ -16,18 +16,20 @@ public abstract class Usuario {
 	private String apellido;
 	private String correo;
 	private LocalDate fechaNac;
+	private String contrasenia;
 	
 	//constructores
 	public Usuario() {
 		super();
 	}
-	public Usuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
+	public Usuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String contrasenia) {
 		super();
 		this.nickname = nickname;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = correo;
 		this.fechaNac = fechaNac;
+		this.contrasenia = contrasenia;
 	}
 	
 	//getters-setters
@@ -60,6 +62,12 @@ public abstract class Usuario {
 	}
 	public void setFechaNac(LocalDate fechaNac) {
 		this.fechaNac = fechaNac;
+	}
+	public String getContrasenia() {
+		return contrasenia;
+	}
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
 	}
 	
 	//operaciones

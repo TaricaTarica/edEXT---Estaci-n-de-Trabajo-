@@ -7,8 +7,8 @@ private DtInstituto instituto;
 	
 	//constructores
 	public DtDocente() {}
-	public DtDocente(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
-		super(nickname, nombre, apellido, correo, fechaNac);
+	public DtDocente(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String contrasenia) {
+		super(nickname, nombre, apellido, correo, fechaNac, contrasenia);
 	}
 	
 	//getters-setters

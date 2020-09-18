@@ -43,6 +43,10 @@ public class AltaUsuario extends JInternalFrame {
 	private JRadioButton rdbtnDocente;
 	private JRadioButton rdbtnEstudiante;
 	private JDateChooser dateChooserFechaNac;
+	private JLabel lblContrasea;
+	private JTextField textFieldContrasenia;
+	private JLabel lblConfcontra;
+	private JTextField textFieldConfirmarContrasenia;
 
 	
 	public AltaUsuario(IControladorUsuario iconUsr) {
@@ -54,7 +58,7 @@ public class AltaUsuario extends JInternalFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setClosable(false);
 		setTitle("Alta de Usuario");
-		setBounds(100, 100, 450, 230);
+		setBounds(100, 100, 450, 280);
 		getContentPane().setLayout(null);
 		
 		JLabel lblInstituto = new JLabel("Instituto");
@@ -160,6 +164,24 @@ public class AltaUsuario extends JInternalFrame {
 		dateChooserFechaNac = new JDateChooser();
 		dateChooserFechaNac.setBounds(80, 146, 139, 20);
 		getContentPane().add(dateChooserFechaNac);
+		
+		lblContrasea = new JLabel("Contrase\u00F1a");
+		lblContrasea.setBounds(10, 180, 94, 14);
+		getContentPane().add(lblContrasea);
+		
+		textFieldContrasenia = new JTextField();
+		textFieldContrasenia.setBounds(80, 177, 139, 20);
+		getContentPane().add(textFieldContrasenia);
+		textFieldContrasenia.setColumns(10);
+		
+		lblConfcontra = new JLabel("Conf.Contra.");
+		lblConfcontra.setBounds(10, 205, 78, 14);
+		getContentPane().add(lblConfcontra);
+		
+		textFieldConfirmarContrasenia = new JTextField();
+		textFieldConfirmarContrasenia.setBounds(80, 202, 139, 20);
+		getContentPane().add(textFieldConfirmarContrasenia);
+		textFieldConfirmarContrasenia.setColumns(10);
 
 	}
 	public void comboBoxInit() {
@@ -177,21 +199,21 @@ public class AltaUsuario extends JInternalFrame {
 			String correo = this.textFieldCorreo.getText();
 			String nombre = this.textFieldNombre.getText();
 			String apellido = this.textFieldApellido.getText();
+			String contrasenia = this.textFieldContrasenia.getText();
 		
 			//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
 			Date fechaNacD = new Date();
 			fechaNacD = this.dateChooserFechaNac.getDate();
 			LocalDate fechaNac = fechaNacD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
-
 			
 			DtUsuario usr = null;
 			
 			if (rdbtnDocente.isSelected()) {
 				String nInstituto = this.comboBoxInstitutos.getSelectedItem().toString();
 				iconUsr.ingresarInstitutoDocente(nInstituto);
-				usr = new DtDocente(nickname, nombre, apellido, correo, fechaNac);
+				usr = new DtDocente(nickname, nombre, apellido, correo, fechaNac, contrasenia);
 			}else if(rdbtnEstudiante.isSelected()) {
-				usr = new DtEstudiante(nickname, nombre, apellido, correo, fechaNac);
+				usr = new DtEstudiante(nickname, nombre, apellido, correo, fechaNac, contrasenia);
 			}
 			try {
 				iconUsr.confirmarAlta(usr);
@@ -210,6 +232,8 @@ public class AltaUsuario extends JInternalFrame {
 		this.textFieldCorreo.setText("");
 		this.textFieldNickname.setText("");
 		this.dateChooserFechaNac.setCalendar(null);
+		this.textFieldContrasenia.setText("");
+		this.textFieldConfirmarContrasenia.setText("");
 	}
 	private boolean comprobarCampos() {
 		//int comboBoxInstitutos = this.comboBoxInstitutos.getItemCount();
@@ -217,9 +241,12 @@ public class AltaUsuario extends JInternalFrame {
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
+		String contrasenia = this.textFieldContrasenia.getText();
+		String confirmarContrasenia = this.textFieldConfirmarContrasenia.getText();
 
 		
-		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() /*|| comboBoxInstitutos == 0*/) {
+		
+		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || contrasenia.isEmpty() || confirmarContrasenia.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Error",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -229,9 +256,12 @@ public class AltaUsuario extends JInternalFrame {
 	                JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
+		if(!contrasenia.equals(confirmarContrasenia)) {
+			return false;
+		}
 		
 		return true;		
-}
+	}
 	private boolean verificarCorreo(String correo) {
 		Pattern patt = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
 		Matcher matcher = patt.matcher(correo);

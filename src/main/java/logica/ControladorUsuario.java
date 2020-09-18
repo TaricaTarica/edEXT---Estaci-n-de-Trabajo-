@@ -31,13 +31,13 @@ public class ControladorUsuario implements IControladorUsuario {
 		if(nuevoUsr != null)
 			throw new UsuarioRepetido_Exception("El nickname "+ u.getNickname() +" y/o el correo " + u.getCorreo() +" ya estan registrados");
 		if(u instanceof DtEstudiante) {
-			nuevoUsr = new Estudiante(u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac());
+			nuevoUsr = new Estudiante(u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac(), u.getContrasenia());
 			mU.agregarUsuario(nuevoUsr);
 		}
 		if(u instanceof DtDocente) {
 			ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 			Instituto institutoDocente = mI.buscarInstituto(this.nombreInstituto);
-			Docente docente = new Docente (u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac());
+			Docente docente = new Docente (u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac(), u.getContrasenia());
 			docente.setInstituto(institutoDocente);
 			mU.agregarUsuario(docente);
 		}
@@ -55,8 +55,9 @@ public class ControladorUsuario implements IControladorUsuario {
 		String apellido = usuario.getApellido();
 		String correo = usuario.getCorreo();
 		LocalDate fechaNac = usuario.getfechaNac();
+		String contrasenia = usuario.getContrasenia();
 		
-		DtUsuario retorno = new DtUsuario(nickname, nombre, apellido, correo, fechaNac);
+		DtUsuario retorno = new DtUsuario(nickname, nombre, apellido, correo, fechaNac, contrasenia);
 		
 		return retorno;
 	}

@@ -25,8 +25,8 @@ public class Docente extends Usuario {
 	public Docente() {
 		super();
 	}
-	public Docente(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
-		super(nickname, nombre, apellido, correo, fechaNac);
+	public Docente(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String contrasenia) {
+		super(nickname, nombre, apellido, correo, fechaNac, contrasenia);
 	}
 	
 	//getters-setters

@@ -22,8 +22,8 @@ public class Estudiante extends Usuario {
 	public Estudiante() {
 		super();
 	}
-	public Estudiante(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
-		super(nickname, nombre, apellido, correo, fechaNac);
+	public Estudiante(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String contrasenia) {
+		super(nickname, nombre, apellido, correo, fechaNac, contrasenia);
 	}
 	
 	//operaciones

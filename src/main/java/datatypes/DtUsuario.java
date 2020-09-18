@@ -9,16 +9,18 @@ public class DtUsuario {
 	private String apellido;
 	private String correo;
 	private LocalDate fechaNac;
+	private String contrasenia;
 	
 	//constructores
 		public DtUsuario() {}
-		public DtUsuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac) {
+		public DtUsuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String contrasenia) {
 			super();
 			this.nickname = nickname;
 			this.nombre = nombre;
 			this.apellido = apellido;
 			this.correo = correo;
 			this.fechaNac = fechaNac;
+			this.contrasenia = contrasenia;
 		}
 		
 		//getters-setters
@@ -52,4 +54,11 @@ public class DtUsuario {
 		public void setFechaNac(LocalDate fechaNac) {
 			this.fechaNac = fechaNac;
 		}
+		public String getContrasenia() {
+			return contrasenia;
+		}
+		public void setContrasenia(String contrasenia) {
+			this.contrasenia = contrasenia;
+		}
+		
 }
