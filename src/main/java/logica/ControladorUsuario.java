@@ -158,6 +158,13 @@ public class ControladorUsuario implements IControladorUsuario {
         return ediciones_ret;	 
 	}
 	@Override
+	public String[] listarProgramasE(String strEstudiante) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(strEstudiante);
+		String[] programas_ret = ((Estudiante) usr).obtenerProgramasE();
+        return programas_ret;	 
+	}
+	@Override
 	public String[] AtributosEdicion(String nombreUsuario, String nombreEdicion) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario usuario = mU.buscarUsuario(nombreUsuario);
@@ -196,5 +203,17 @@ public class ControladorUsuario implements IControladorUsuario {
 				atributos_ed_curso_ret[5] = "Docentes: " + aretornar.nombresDocentes();
 		}
 		return atributos_ed_curso_ret;		
+	}
+	@Override
+	public String[] AtributosPrograma(String nombrePrograma) {
+		ManejadorProgramaFormacion mpf = ManejadorProgramaFormacion.getInstancia();
+		ProgramaFormacion programa = mpf.buscarProgramaFormacion(nombrePrograma);
+		String[] atributos_pf_curso_ret = new String[5];
+		atributos_pf_curso_ret[0] = "Nombre: " + programa.getNombre();
+		atributos_pf_curso_ret[1] = "Descripcion: " + programa.getDescripcion();
+		atributos_pf_curso_ret[2] = "Fecha de inicio: " + programa.getFechaInicio();
+	    atributos_pf_curso_ret[3] = "Fecha de fin: "+ programa.getFechaFin();
+		atributos_pf_curso_ret[4] = "Fecha de Alta: " + programa.getFechaAlta();
+		return atributos_pf_curso_ret;
 	}
 }

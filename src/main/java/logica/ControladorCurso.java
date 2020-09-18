@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 
 import excepciones.InstitutoRepetido_Exception;
 import excepciones.EdicionRepatida_Exception;
+import excepciones.InscripcionRepetidaPF_Exception;
+import excepciones.CategoriaRepetida_Exception;
 import excepciones.CrearProgramaFormacionRepetido_Exception;
 import excepciones.CursoRepetido_Exception;
 import excepciones.InscripcionRepetida_Exception;
@@ -233,6 +235,28 @@ public class ControladorCurso implements IControladorCurso {
 		em.getTransaction().commit();
 	}
 	
+	/*INSCRIPCION A PROGRAMA DE FORMACION*/
+	@Override
+	public void InscripcionaProgramaFormacion(Date FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception{
+		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
+		ProgramaFormacion programaformacion = mPF.buscarProgramaFormacion(pf);
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Estudiante est = mU.BuscarEstudiante(nickname);
+		if (est.BuscarInscripcionPF(programaformacion)) {
+			throw new InscripcionRepetidaPF_Exception("La inscripcion ya esta registrada");
+		}
+		InscripcionPF inscripcion = new InscripcionPF(FechaIns,est,programaformacion);
+		est.agregarInscripcionPF(inscripcion);
+		programaformacion.agregarInscripcion(inscripcion);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(est);
+		em.persist(programaformacion);
+		em.getTransaction().commit();	
+	}
+	
 	/*Agregar Curso Programa Formaciï¿½n*/
 	@Override
 	public void agregarCursoProgFormacion(String programaFormacion, String InstitutoCurso) throws ProgramaCursoRepetido_Exception {
@@ -258,6 +282,17 @@ public class ControladorCurso implements IControladorCurso {
 		em.getTransaction().begin();
 		em.persist(programa);
 		em.getTransaction().commit();
+	}
+	/*Alta Categoria*/
+	@Override
+	public void AltaCategoria(String nombreCategoria) throws CategoriaRepetida_Exception {
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		Categoria c = mC.buscarCategoria(nombreCategoria);
+		if (c != null) {
+			throw new CategoriaRepetida_Exception("La categoría " + nombreCategoria + " ya está registrada");
+		}
+		c = new Categoria(nombreCategoria);
+		mC.agregarCategoria(c);
 	}
 
 	

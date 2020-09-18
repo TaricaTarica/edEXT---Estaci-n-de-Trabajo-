@@ -14,6 +14,9 @@ import java.util.Date;
 public class Estudiante extends Usuario {
 	@OneToMany(mappedBy="estudiante",cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<InscripcionEd> inscripcionesEd = new ArrayList<>();
+	@OneToMany(mappedBy="estudiante",cascade=CascadeType.ALL,orphanRemoval=true) 
+	private List<InscripcionPF> inscripcionespf = new ArrayList<>(); 
+
 	
 	//constructores
 	public Estudiante() {
@@ -61,4 +64,24 @@ public class Estudiante extends Usuario {
         return ediciones;	
 	}
 	
+	public void agregarInscripcionPF(InscripcionPF inscripcion){
+		inscripcionespf.add(inscripcion);	
+	}
+	public boolean BuscarInscripcionPF(ProgramaFormacion pf) {;
+	boolean aretornar=false;
+		for(InscripcionPF i: inscripcionespf) {
+			if (i.getProgramaFormacion().equals(pf))
+				aretornar=true;
+		}
+		return aretornar;
+	}
+	public String[] obtenerProgramasE(){
+		String[] programas_ret = new String[this.inscripcionespf.size()];
+        int i=0;
+        for( InscripcionPF ipf: this.inscripcionespf) {
+        	programas_ret[i]=ipf.getProgramaFormacion().getNombre();
+        	i++;
+        }
+        return programas_ret;	
+	}
 }

@@ -28,9 +28,11 @@ public class Principal {
 	private ConsultaUsuario ConsultaUsuarioInternalFrame;
 	private ConsultaProgramaFormacion ConsultaProgramaFormacionInternalFrame;
 	private InscripcionaEdicionaCurso InscripcionaEdicionaCursoInternalFrame;
+	private InscripcionaProgramaFormacion InscripcionaProgramaFormacionInternalFrame;
 	private AgregarCursoProgFormacion agregarCursoProgFormacionInternalFrame;
 	private ConsultaEdicionCurso consultaEdicionCursoInternalFrame;
 	private ModificarUsuario modificarUsuarioInternalFrame;
+	private AltaCategoria altaCategoriaInternalFrame;
 
 
 	/**
@@ -44,7 +46,7 @@ public class Principal {
 					window.frame.setVisible(true);
 					JPanel p = new Fondo("/presentacion/edEXT_image2.jpg");
 					p.setLayout(new BorderLayout());
-					window.frame.add(p);
+					window.frame.getContentPane().add(p);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -173,6 +175,24 @@ public class Principal {
 		modificarUsuarioInternalFrame.setVisible(false);
 		frame.getContentPane().add(modificarUsuarioInternalFrame);
 		modificarUsuarioInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME INSCRIPCION A PROGRAMA DE FORMACION*/
+		InscripcionaProgramaFormacionInternalFrame = new InscripcionaProgramaFormacion(iconCur);
+		jInternalFrameSize = InscripcionaProgramaFormacionInternalFrame.getSize();
+		InscripcionaProgramaFormacionInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		InscripcionaProgramaFormacionInternalFrame.setVisible(false);
+		frame.getContentPane().add(InscripcionaProgramaFormacionInternalFrame);
+		InscripcionaProgramaFormacionInternalFrame.getContentPane().setLayout(null);
+		
+		/*FRAME ALTA CATEGORIA*/
+		altaCategoriaInternalFrame = new AltaCategoria(iconCur);
+		jInternalFrameSize = altaCategoriaInternalFrame.getSize();
+		altaCategoriaInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+			    (desktopSize.height- jInternalFrameSize.height)/2);
+		altaCategoriaInternalFrame.setVisible(false);
+		frame.getContentPane().add(altaCategoriaInternalFrame);
+		altaCategoriaInternalFrame.getContentPane().setLayout(null);
 
 	}
 
@@ -216,6 +236,14 @@ public class Principal {
 				altaCursoInternalFrame.setVisible(true);
 			}
 		});
+		
+		JMenuItem mntmAltaCategora = new JMenuItem("Alta Categor\u00EDa");
+		mntmAltaCategora.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				altaCategoriaInternalFrame.setVisible(true);
+			}
+		});
+		mnAltas.add(mntmAltaCategora);
 		mnAltas.add(mntmAltaCurso);
 		
 		JMenuItem mntmAltaEdicionCurso = new JMenuItem("Alta de Edición de Curso");
@@ -309,5 +337,14 @@ public class Principal {
 			}
 		});
 		mnInscripciones.add(mntmInscripcionEdicionCurso);
+		
+		JMenuItem mntmInscripcionPrograma = new JMenuItem("Inscripción a Programa de Formación");
+		mntmInscripcionPrograma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				InscripcionaProgramaFormacionInternalFrame.setVisible(true);
+				InscripcionaProgramaFormacionInternalFrame.comboBoxInitProgramas();
+			}
+		});
+		mnInscripciones.add(mntmInscripcionPrograma);
 	}
 }

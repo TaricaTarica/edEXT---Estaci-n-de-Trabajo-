@@ -31,7 +31,7 @@ public interface IControladorUsuario {
 	String[] listarEdicionesD(String strDocente);
 	String[] listarEdicionesE(String strEstudiante);
 	public String[] AtributosEdicion(String nombreUsuario,String nombreEdicion);
-
-	
+	String[] listarProgramasE(String strEstudiante);
+	public String[] AtributosPrograma(String nombrePrograma);
 
 }

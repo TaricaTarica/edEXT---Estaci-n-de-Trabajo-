@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import excepciones.EdicionRepatida_Exception;
+import excepciones.InscripcionRepetidaPF_Exception;
 import excepciones.InscripcionRepetida_Exception;
 import excepciones.InstitutoRepetido_Exception;
 import excepciones.ProgramaCursoRepetido_Exception;
+import excepciones.CategoriaRepetida_Exception;
 import excepciones.CrearProgramaFormacionRepetido_Exception;
 import excepciones.CursoRepetido_Exception;
 import datatypes.DtCurso;
@@ -53,6 +55,13 @@ public interface IControladorCurso {
 	public void InscripcionaEdiciondeCurso(String nombreInstituto, Date fecha,String es,String c,String e) throws InscripcionRepetida_Exception;
 	public void asociarEdicion(String strDocente, DtEdicion edicion, String strInstituto, String strCurso);
 	
+	/*Inscripcion a Programa de Formacion*/
+	public void InscripcionaProgramaFormacion(Date FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception;
+
+	/*Alta Categoría*/
+	void AltaCategoria(String nombreCategoria) throws CategoriaRepetida_Exception;
+	 
+	
 	/*MULTIUSO*/
 	public String[] listarInstitutos();
 	public String[] listarCursos(String strInstituto);
@@ -67,6 +76,8 @@ public interface IControladorCurso {
 	public String[] ListarEdicionesCurso(String nombreInstituto, String nombreCurso);
 	public String[] AtributosEdicion(String nombreInstituto, String nombreCurso, String nombreEdicion);
 	public String[] listarCursosP(String strPrograma);
+
+	
 
 
 

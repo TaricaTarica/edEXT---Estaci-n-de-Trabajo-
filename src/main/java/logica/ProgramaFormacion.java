@@ -26,6 +26,9 @@ public class ProgramaFormacion {
 	private LocalDate fechaAlta;
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Curso> cursos = new ArrayList<>();
+	@OneToMany(mappedBy="programaformacion",cascade=CascadeType.ALL,orphanRemoval=true) 
+	private List<InscripcionPF> inscripcionespf = new ArrayList<>(); 
+
 
 	//constructores
 	public ProgramaFormacion() {}
@@ -104,5 +107,10 @@ public class ProgramaFormacion {
 			}
 		}
 		return false;
+	}
+	
+	public void agregarInscripcion(InscripcionPF inscripcion){
+		
+		inscripcionespf.add(inscripcion);	
 	}
 }

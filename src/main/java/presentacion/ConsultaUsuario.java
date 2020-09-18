@@ -87,6 +87,11 @@ public class ConsultaUsuario extends JInternalFrame {
 		
 		
 		comboBoxProgramas = new JComboBox();
+		comboBoxProgramas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				seleccionarProgramaformacion(e);
+			}
+		});
 		comboBoxProgramas.setBounds(275, 94, 160, 19);
 		getContentPane().add(comboBoxProgramas);
 		
@@ -144,7 +149,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		btnSalir.setBounds(185, 261, 117, 25);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limpiarEdicion(textPane);
+				limpiarTexto(textPane);
 				limpiarCampos();
 				setVisible(false);
 			}
@@ -167,7 +172,8 @@ public class ConsultaUsuario extends JInternalFrame {
 		comboBoxEdiciones.setModel(modelEdiciones);
 	}
 	public void comboBoxInitProgramasE() {//FALTA  IMPLEMENTAR PORQUE NO HAY INSCRIPCION DE ESTUDIANTE A PROGRAMA
-		DefaultComboBoxModel<String> modelProgramas = new DefaultComboBoxModel<String>();
+		String strEstudiante = this.comboBoxUsuarios.getSelectedItem().toString();
+		DefaultComboBoxModel<String> modelProgramas = new DefaultComboBoxModel<String>(iconUsr.listarProgramasE(strEstudiante));
 		comboBoxProgramas.setModel(modelProgramas);
 	}
 	
@@ -206,19 +212,26 @@ public class ConsultaUsuario extends JInternalFrame {
 	}
 	// Printea la edicion de curso en el JTextPane
 	
-		public void seleccionarEdicionCurso(ActionEvent arg0) {
-			String nombreUsuario = comboBoxUsuarios.getSelectedItem().toString();
-			String nombreEdicion = comboBoxEdiciones.getSelectedItem().toString();
-			printEdicion(textPane, iconUsr.AtributosEdicion(nombreUsuario,nombreEdicion));
-		}
-		
-		public void printEdicion(JTextPane textPane, String[] arrayEdicion) {
-			//textPane.setDocument(new PlainDocument()); // Se crea un nuevo documento para limpiar el texto
-			//for (int i = 0; i < 6; i++) {
-				textPane.setText(arrayEdicion[0]+"\n"+arrayEdicion[1]+"\n"+arrayEdicion[2]+"\n"+arrayEdicion[3]+"\n"+arrayEdicion[4]+"\n"+arrayEdicion[5]);
-			//}
-		}
-		public void limpiarEdicion(JTextPane textPane) {
-				this.textPane.setText("");
-		}
+	public void seleccionarEdicionCurso(ActionEvent arg0) {
+		String nombreUsuario = comboBoxUsuarios.getSelectedItem().toString();
+		String nombreEdicion = comboBoxEdiciones.getSelectedItem().toString();
+		printEdicion(textPane, iconUsr.AtributosEdicion(nombreUsuario,nombreEdicion));
+	}
+	
+	public void printEdicion(JTextPane textPane, String[] arrayEdicion) {
+		textPane.setText(arrayEdicion[0]+"\n"+arrayEdicion[1]+"\n"+arrayEdicion[2]+"\n"+arrayEdicion[3]+"\n"+arrayEdicion[4]+"\n"+arrayEdicion[5]);
+	}
+	
+	public void seleccionarProgramaformacion(ActionEvent arg0) {
+		String nombrePrograma = comboBoxProgramas.getSelectedItem().toString();
+		printPrograma(textPane, iconUsr.AtributosPrograma(nombrePrograma));
+	}
+	
+	public void printPrograma(JTextPane textPane, String[] arrayPrograma) {
+		textPane.setText(arrayPrograma[0]+"\n"+arrayPrograma[1]+"\n"+arrayPrograma[2]+"\n"+arrayPrograma[3]+"\n"+arrayPrograma[4]);
+	}
+	
+	public void limpiarTexto(JTextPane textPane) {
+		this.textPane.setText("");
+	}
 }
