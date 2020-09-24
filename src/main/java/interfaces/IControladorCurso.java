@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 import excepciones.EdicionRepatida_Exception;
@@ -31,6 +32,7 @@ public interface IControladorCurso {
 	public void IngresarCurso(String nInstituto, String nombre, String desc, String duracion, int horas, int creditos, Date fechaR, String url);
 	public void ingresarPrevia(String NombrePrevia);
 	public void agregarPrevia(String nombrePrevia, String nombreInstituto, String nombreCurso);
+	public void agregarCategorias(String nombreCategoria, String nombreInstituto, String nombreCurso);
 	//public void AltaCurso();
 	public void AltaCurso(DtCurso c, String i) throws CursoRepetido_Exception;
 	
@@ -76,6 +78,14 @@ public interface IControladorCurso {
 	public String[] ListarEdicionesCurso(String nombreInstituto, String nombreCurso);
 	public String[] AtributosEdicion(String nombreInstituto, String nombreCurso, String nombreEdicion);
 	public String[] listarCursosP(String strPrograma);
+
+	public String[] listarCategorias();
+
+	public String[] listarCategoriasC(String nombreInstituto, String nombreCurso);
+
+	public ArrayList<String> listarCursosCategoriasP(String strPrograma);
+
+	
 
 	
 

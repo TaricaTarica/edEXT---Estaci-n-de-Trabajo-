@@ -113,4 +113,11 @@ public class ProgramaFormacion {
 		
 		inscripcionespf.add(inscripcion);	
 	}
+	public ArrayList<Curso> obtenerCursosP(){
+		ArrayList<Curso> lista = new ArrayList<>();
+		for(Curso c: cursos) {
+			lista.add(c);
+		}
+		return lista;
+	}
 }

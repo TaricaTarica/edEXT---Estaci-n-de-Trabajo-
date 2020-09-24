@@ -110,6 +110,22 @@ public class ControladorCurso implements IControladorCurso {
 		em.persist(previa);
 		em.getTransaction().commit();
 	}
+	@Override
+	public void agregarCategorias(String nombreCategoria, String nombreInstituto, String nombreCurso) {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto institutoCurso = mI.buscarInstituto(nombreInstituto);
+		Curso curso = institutoCurso.getCurso(nombreCurso);
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		Categoria categoria=mC.buscarCategoria(nombreCategoria);
+		curso.setCategorias(categoria);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(curso);
+		em.persist(categoria);
+		em.getTransaction().commit();
+	}
 	
 	@Override
 	/*public void AltaCurso() {
@@ -504,6 +520,59 @@ public class ControladorCurso implements IControladorCurso {
         	i++;
         }
         return previas_ret;		
+	}
+	@Override
+	public String[] listarCategorias(){
+		ManejadorCategoria mC  = ManejadorCategoria.getInstancia();
+		ArrayList<String> categorias;
+		categorias = mC.getNombreCategorias();
+		String[] categorias_ret = new String[categorias.size()];
+        int i=0;
+        for(String cat: categorias) {
+        	categorias_ret[i]=cat;
+        	i++;
+        }
+        return categorias_ret;
+	}
+	
+	@Override
+	public String[] listarCategoriasC(String nombreInstituto, String nombreCurso){
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto instituto = mI.buscarInstituto(nombreInstituto);
+		Curso curso = instituto.getCurso(nombreCurso);
+		ArrayList<String> categorias;
+		categorias = curso.getCategorias();
+		String[] categorias_ret = new String[categorias.size()];
+        int i=0;
+        for(String c: categorias) {
+        	categorias_ret[i]=c;
+        	i++;
+        }
+        return categorias_ret;		
+	}
+	@Override
+	public ArrayList<String> listarCursosCategoriasP(String strPrograma){
+		ManejadorProgramaFormacion mP = ManejadorProgramaFormacion.getInstancia();
+		ProgramaFormacion programa= mP.buscarProgramaFormacion(strPrograma);
+		ArrayList<Curso> cursosP;
+		cursosP = programa.obtenerCursosP();
+		
+		//CATEGORIAS DE CADA CURSO
+		ArrayList<String> categoriasC;
+		
+		//TODAS LAS CATEGORIAS 
+		ArrayList<String> categoriasP_ret = new ArrayList<>();
+		
+        for(Curso cur: cursosP) {
+        	categoriasC =cur.getCategorias();
+        	
+        	for(String cat: categoriasC) {
+        		if(!categoriasP_ret.contains(cat))
+        			categoriasP_ret.add(cat);
+        	}
+        	
+        }
+        return categoriasP_ret;
 	}
 
 	

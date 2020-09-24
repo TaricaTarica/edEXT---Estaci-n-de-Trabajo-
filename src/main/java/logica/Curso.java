@@ -33,7 +33,10 @@ public class Curso {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Curso> previas = new ArrayList<>();
 	
-	private ArrayList<String> programasAsociados = new ArrayList<>();
+	private ArrayList<String> programasAsociados = new ArrayList<>(); //tendría que ser igual a InscripcionED
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Categoria> categorias = new ArrayList<>();
 	
 	//constructores
 	public Curso() {
@@ -168,6 +171,25 @@ public class Curso {
 		ArrayList<String> lista = new ArrayList<>();
 		for(Curso p: previas) {
 			lista.add(p.getNombre());
+		}
+		return lista;
+	}
+	public Categoria getCategoria(Categoria nombre) {
+		Categoria retorno = null;
+		for(Categoria e: this.categorias) {
+			if(e.equals(nombre)) {
+				retorno = e;
+			} 
+		}
+		return retorno;
+	}
+	public void setCategorias(Categoria categoria){
+		this.categorias.add(categoria);
+	}
+	public ArrayList<String>  getCategorias(){
+		ArrayList<String> lista = new ArrayList<>();
+		for(Categoria c: categorias) {
+			lista.add(c.getNombre());
 		}
 		return lista;
 	}

@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 
 import interfaces.IControladorCurso;
+import logica.Curso;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -22,8 +24,11 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.ScrollPane;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class ConsultaProgramaFormacion extends JInternalFrame {
 
@@ -37,7 +42,9 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 	private JTextField textFieldFechaAlta;
 	private JComboBox<String> comboBoxProgramas;
 	private JList<String> listCursosP;
+	private JList<String> listCategoriasP;
 	private JScrollPane scrollPaneCursos;
+	private JScrollPane scrollPaneCategorias;
 
 
 
@@ -49,26 +56,27 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		
 		this.iconCur = iconCur;
 
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(null);
+		setBounds(100, 100, 561, 300);
 		
 		comboBoxProgramas = new JComboBox<String>();
+		comboBoxProgramas.setBounds(175, 22, 140, 20);
 		comboBoxProgramas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConsultaPrograma_ActionPerformed(e);
 				listCursosInit();
+				listCategoriasInit();
 			}
 		});
-		comboBoxProgramas.setBounds(209, 22, 174, 20);
+		getContentPane().setLayout(null);
 		getContentPane().add(comboBoxProgramas);
 		
 		JLabel lblProgramasFormacion = new JLabel("Programas de Formación");
+		lblProgramasFormacion.setBounds(32, 25, 133, 14);
 		lblProgramasFormacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProgramasFormacion.setBounds(32, 25, 167, 14);
 		getContentPane().add(lblProgramasFormacion);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(121, 65, 262, 20);
+		textFieldNombre.setBounds(121, 65, 195, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
@@ -77,7 +85,7 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		getContentPane().add(lblNombre);
 		
 		textFieldDescripcion = new JTextField();
-		textFieldDescripcion.setBounds(121, 96, 262, 20);
+		textFieldDescripcion.setBounds(121, 96, 195, 20);
 		getContentPane().add(textFieldDescripcion);
 		textFieldDescripcion.setColumns(10);
 		
@@ -86,17 +94,17 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		getContentPane().add(lblDescripcion);
 		
 		textFieldFechaInicio = new JTextField();
-		textFieldFechaInicio.setBounds(121, 127, 86, 20);
+		textFieldFechaInicio.setBounds(121, 127, 136, 20);
 		getContentPane().add(textFieldFechaInicio);
 		textFieldFechaInicio.setColumns(10);
 		
 		textFieldFechaFin = new JTextField();
-		textFieldFechaFin.setBounds(121, 158, 86, 20);
+		textFieldFechaFin.setBounds(121, 158, 136, 20);
 		getContentPane().add(textFieldFechaFin);
 		textFieldFechaFin.setColumns(10);
 		
 		textFieldFechaAlta = new JTextField();
-		textFieldFechaAlta.setBounds(121, 189, 86, 20);
+		textFieldFechaAlta.setBounds(121, 189, 136, 20);
 		getContentPane().add(textFieldFechaAlta);
 		textFieldFechaAlta.setColumns(10);
 		
@@ -113,13 +121,13 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		getContentPane().add(lblFechaAlta);
 		
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.setBounds(288, 224, 89, 23);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarCampos();
 				setVisible(false);
 			}
 		});
-		btnSalir.setBounds(168, 236, 89, 23);
 		getContentPane().add(btnSalir);
 		
 
@@ -129,12 +137,30 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		//getContentPane().add(listCursosP);
 		
 		JLabel lblCursos = new JLabel("Cursos");
-		lblCursos.setBounds(224, 130, 46, 14);
+		lblCursos.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCursos.setBounds(354, 37, 46, 14);
 		getContentPane().add(lblCursos);
 		
 		scrollPaneCursos = new JScrollPane();
-		scrollPaneCursos.setBounds(270, 127, 113, 82);
+		scrollPaneCursos.setBounds(410, 34, 97, 82);
 		getContentPane().add(scrollPaneCursos);
+		
+		listCategoriasP = new JList<String>();
+		listCategoriasP.setBorder(new LineBorder(new Color(0, 0, 0)));
+		listCategoriasP.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		listCategoriasP.setBounds(410, 127, 97, 82);
+		getContentPane().add(listCategoriasP);
+		
+		scrollPaneCategorias = new JScrollPane();
+		scrollPaneCategorias.setBounds(462, 127, 113, 82);
+		//getContentPane().add(scrollPaneCategorias);
+		
+		JLabel lblCategorias = new JLabel("Categorias");
+		lblCategorias.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCategorias.setBounds(330, 128, 70, 15);
+		getContentPane().add(lblCategorias);
+		
+	
 
 	}
 	
@@ -168,6 +194,19 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		this.listCursosP.setModel(listModel);
 		scrollPaneCursos.getViewport().setView(listCursosP);
 	}
+	
+	public void listCategoriasInit() {
+		ArrayList<String> categorias = iconCur.listarCursosCategoriasP(this.comboBoxProgramas.getSelectedItem().toString());
+		this.listCategoriasP.setListData(new String[0]);
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		for(String c: categorias) {
+			listModel.addElement(c);
+		}		
+				
+		this.listCategoriasP.setModel(listModel);
+		//scrollPaneCursos.getViewport().setView(listCategoriasP);
+	}
+	
 	public void limpiarCampos() {
 		this.textFieldNombre.setText("");
 		this.textFieldDescripcion.setText("");
@@ -178,5 +217,5 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 		this.scrollPaneCursos.getViewport().setView(this.listCursosP);
 		
 	}
-	
 }
+

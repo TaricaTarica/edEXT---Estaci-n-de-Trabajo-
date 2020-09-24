@@ -14,6 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -31,6 +32,7 @@ public abstract class Usuario {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Usuario> sigue = new ArrayList<>();
+	
 	
 	//constructores
 	public Usuario() {
@@ -84,8 +86,5 @@ public abstract class Usuario {
 		this.contrasenia = contrasenia;
 	}
 	
-	//operaciones
-	
-	//public abstract DtUsuario getinfoUsuario();	
 	
 }

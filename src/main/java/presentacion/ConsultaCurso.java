@@ -51,7 +51,10 @@ public class ConsultaCurso extends JInternalFrame {
 	private JTextField textFieldFechaAlta;
 	private JTextPane textPane;
 	private JList<String> listPrevias;
+	private JList<String> listCategorias;
 	private JScrollPane scrollPanePrevias;
+	private JScrollPane scrollPaneCategorias;
+
 
 
 	
@@ -64,7 +67,7 @@ public class ConsultaCurso extends JInternalFrame {
 		this.iconCur = iconCur;
 		
 		setTitle("Consulta de Curso");
-		setBounds(100, 100, 448, 404);
+		setBounds(100, 100, 611, 404);
 		
 		comboBoxInstitutos = new JComboBox<String>();
 		comboBoxInstitutos.setBounds(90, 26, 131, 20);
@@ -95,12 +98,13 @@ public class ConsultaCurso extends JInternalFrame {
 				comboBoxInitEdiciones();
 				comboBoxInitProgramas();
 				listPreviasInit();
+				listCategoriasInit();
 			}
 		});
 		getContentPane().add(comboBoxCursos);
 		
 		JButton btnSalir = new JButton("Salir");
-		btnSalir.setBounds(320, 323, 89, 23);
+		btnSalir.setBounds(239, 340, 89, 23);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarCampos();
@@ -176,35 +180,39 @@ public class ConsultaCurso extends JInternalFrame {
 		listPrevias.setBounds(304, 28, 105, 76);
 		//getContentPane().add(listPrevias);
 		
+		listCategorias = new JList<String>();
+		listCategorias.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		listCategorias.setBounds(471, 29, 118, 76);
+		
 		JLabel lblPrevias = new JLabel("Previas");
 		lblPrevias.setBounds(239, 29, 46, 14);
 		getContentPane().add(lblPrevias);
 		
 		comboBoxEdiciones = new JComboBox<String>();
+		comboBoxEdiciones.setBounds(336, 138, 152, 20);
 		comboBoxEdiciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				infoEdicion(arg0);
 			}
 		});
-		comboBoxEdiciones.setBounds(239, 138, 170, 20);
 		getContentPane().add(comboBoxEdiciones);
 		
 		
 		comboBoxProgramas = new JComboBox<String>();
+		comboBoxProgramas.setBounds(336, 183, 152, 20);
 		comboBoxProgramas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				infoPrograma(arg0);
 			}
 		});
-		comboBoxProgramas.setBounds(239, 183, 170, 20);
 		getContentPane().add(comboBoxProgramas);
 		
 		JLabel lblEdiciones = new JLabel("Ediciones de Curso");
-		lblEdiciones.setBounds(239, 123, 176, 14);
+		lblEdiciones.setBounds(336, 123, 176, 14);
 		getContentPane().add(lblEdiciones);
 		
 		JLabel lblNewLabel = new JLabel("Prog. de Formacion");
-		lblNewLabel.setBounds(239, 169, 119, 14);
+		lblNewLabel.setBounds(336, 169, 119, 14);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblFechaAlta = new JLabel("Fecha alta");
@@ -218,12 +226,20 @@ public class ConsultaCurso extends JInternalFrame {
 		textFieldFechaAlta.setColumns(10);
 		
 		textPane = new JTextPane();
-		textPane.setBounds(240, 215, 169, 97);
+		textPane.setBounds(313, 215, 199, 97);
 		getContentPane().add(textPane);
 		
 		scrollPanePrevias = new JScrollPane();
-		scrollPanePrevias.setBounds(291, 29, 118, 76);
+		scrollPanePrevias.setBounds(291, 26, 100, 76);
 		getContentPane().add(scrollPanePrevias);
+		
+		scrollPaneCategorias = new JScrollPane();
+		scrollPaneCategorias.setBounds(467, 26, 100, 76);
+		getContentPane().add(scrollPaneCategorias);
+		
+		JLabel lblCategorias = new JLabel("Categorias");
+		lblCategorias.setBounds(401, 29, 70, 15);
+		getContentPane().add(lblCategorias);
 		
 	}
 	
@@ -304,6 +320,19 @@ public class ConsultaCurso extends JInternalFrame {
 			scrollPanePrevias.getViewport().setView(listPrevias);
 			
 		}
+		public void listCategoriasInit() {
+			String[] categorias = iconCur.listarCategoriasC(this.comboBoxInstitutos.getSelectedItem().toString(), this.comboBoxCursos.getSelectedItem().toString());
+			this.listCategorias.setListData(new String[0]);
+			DefaultListModel<String> listModel = new DefaultListModel<String>();
+			for(String c: categorias) {
+				listModel.addElement(c);
+			}		
+					
+			this.listCategorias.setModel(listModel);
+			scrollPaneCategorias.getViewport().setView(listCategorias);
+			
+		}
+		
 		public void limpiarCampos() {
 			this.textFieldNombre.setText("");
 			this.textFieldDescripcion.setText("");
@@ -313,5 +342,4 @@ public class ConsultaCurso extends JInternalFrame {
 			this.textFieldUrl.setText("");
 			this.textFieldFechaAlta.setText("");
 		}
-			
 }
