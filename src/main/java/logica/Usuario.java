@@ -1,11 +1,22 @@
 package logica;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
@@ -17,6 +28,9 @@ public abstract class Usuario {
 	private String correo;
 	private LocalDate fechaNac;
 	private String contrasenia;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Usuario> sigue = new ArrayList<>();
 	
 	//constructores
 	public Usuario() {

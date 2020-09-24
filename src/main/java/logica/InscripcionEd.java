@@ -1,15 +1,18 @@
 package logica;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+
 import javax.persistence.ManyToOne;
 
-
+import datatypes.EstadoInscripcion;
 import persistencia.InscripcionEdID;
 
 @Entity
@@ -21,13 +24,17 @@ public class InscripcionEd {
 			insertable=false,
 			updatable=false
 	)
-	private Estudiante estudiante; //hay que cargar esto en la alta inscripcion
+	private Estudiante estudiante;
 	@Id
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(
+			insertable=false,
+			updatable=false
+	)
 	private Edicion edicion;
 	
 	private Date fecha;
+	private EstadoInscripcion estado;
 	
 	//constructores
 	public InscripcionEd() {
@@ -52,6 +59,12 @@ public class InscripcionEd {
 	}
 	public void setEdicion(Edicion edicion) {
 		this.edicion = edicion;
+	}
+	public EstadoInscripcion getEstado() {
+		return estado;
+	}
+	public void setEstadoInscripcion(EstadoInscripcion estado) {
+		this.estado = estado;
 	}
 	
 	

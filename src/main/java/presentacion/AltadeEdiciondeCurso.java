@@ -23,7 +23,6 @@ import javax.swing.ListSelectionModel;
 import datatypes.DtEdicion;
 //import datatypes.DtDocente;
 import interfaces.IControladorCurso;
-import logica.Docente;
 
 //import logica.Docente;
 import javax.swing.JButton;

@@ -2,10 +2,14 @@ package persistencia;
 
 import java.io.Serializable;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.JoinColumn;
+
 //No es una entidad, debe implementar serializable
 public class InscripcionEdID implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	
 	
 	private String estudiante;
 	private String edicion;
@@ -15,9 +19,6 @@ public class InscripcionEdID implements Serializable{
 		super();
 	}
 
-
-	//Tiene que implementar los getters y setters
-
 	public String getEstudiante() {
 		return estudiante;
 	}
@@ -25,6 +26,7 @@ public class InscripcionEdID implements Serializable{
 	public void setEstudiante(String estudiante) {
 		this.estudiante = estudiante;
 	}
+
 	public String getEdicion() {
 		return edicion;
 	}
@@ -32,14 +34,13 @@ public class InscripcionEdID implements Serializable{
 	public void setEdicion(String edicion) {
 		this.edicion = edicion;
 	}
-	
-	//Tiene  que tener los métodos hashCode y equals
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((estudiante == null) ? 0 : estudiante.hashCode());
 		result = prime * result + ((edicion == null) ? 0 : edicion.hashCode());
+		result = prime * result + ((estudiante == null) ? 0 : estudiante.hashCode());
 		return result;
 	}
 
@@ -64,5 +65,7 @@ public class InscripcionEdID implements Serializable{
 			return false;
 		return true;
 	}
+
 	
+
 }

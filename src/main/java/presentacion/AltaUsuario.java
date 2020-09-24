@@ -257,6 +257,8 @@ public class AltaUsuario extends JInternalFrame {
 			return false;
 		}
 		if(!contrasenia.equals(confirmarContrasenia)) {
+			JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error",
+	                JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		

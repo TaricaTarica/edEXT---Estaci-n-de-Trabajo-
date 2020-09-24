@@ -115,6 +115,14 @@ public class ManejadorUsuario {
 		return estudiante;
 		
 	}
+	public boolean existeCorreo(String correo) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		
+		boolean existe = !em.createQuery("SELECT correo FROM Usuario WHERE correo = :correo").setParameter("correo", correo).getResultList().isEmpty();
+		return existe;
+	}
 
 	
 }

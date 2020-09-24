@@ -28,7 +28,8 @@ public class ControladorUsuario implements IControladorUsuario {
 	public void confirmarAlta(DtUsuario u) throws UsuarioRepetido_Exception {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario nuevoUsr = mU.buscarUsuario(u.getNickname());
-		if(nuevoUsr != null)
+		boolean existeCorreo = mU.existeCorreo(u.getCorreo());
+		if(nuevoUsr != null || existeCorreo == true)
 			throw new UsuarioRepetido_Exception("El nickname "+ u.getNickname() +" y/o el correo " + u.getCorreo() +" ya estan registrados");
 		if(u instanceof DtEstudiante) {
 			nuevoUsr = new Estudiante(u.getNickname(),u.getNombre(),u.getApellido(),u.getCorreo(),u.getfechaNac(), u.getContrasenia());
