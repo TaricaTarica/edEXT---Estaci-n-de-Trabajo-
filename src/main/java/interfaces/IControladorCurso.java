@@ -9,12 +9,14 @@ import excepciones.InscripcionRepetidaPF_Exception;
 import excepciones.InscripcionRepetida_Exception;
 import excepciones.InstitutoRepetido_Exception;
 import excepciones.ProgramaCursoRepetido_Exception;
+import logica.InscripcionEd;
 import excepciones.CategoriaRepetida_Exception;
 import excepciones.CrearProgramaFormacionRepetido_Exception;
 import excepciones.CursoRepetido_Exception;
 import datatypes.DtCurso;
 import datatypes.DtEdicion;
 import datatypes.DtProgramaFormacion;
+import datatypes.EstadoInscripcion;
 import datatypes.DtCursoInfo;
 
 
@@ -42,6 +44,7 @@ public interface IControladorCurso {
 	
 	/*Consulta Curso*/
 	public DtCursoInfo ConsultaCurso(String strInstituto, String strCurso);
+	public DtCursoInfo ConsultaCursoCategoria(String nombreCategoria, String nombreCurso);
 	public String[] AtributosPrograma(String nombrePrograma);
 	public String[] listarPrevias(String nombreInstituto, String nombreCurso);
 
@@ -67,6 +70,7 @@ public interface IControladorCurso {
 	/*MULTIUSO*/
 	public String[] listarInstitutos();
 	public String[] listarCursos(String strInstituto);
+	public String[] listarCursosCategoria(String nombreCategoria);
 	public String[] listarEdiciones(String strInstituto, String strCurso);
 	public String[] listarProgramas();
 	public String[] listarProgramasAux(String strInstituto, String strCurso);
@@ -84,6 +88,10 @@ public interface IControladorCurso {
 	public String[] listarCategoriasC(String nombreInstituto, String nombreCurso);
 
 	public ArrayList<String> listarCursosCategoriasP(String strPrograma);
+
+	public void seleccionarestadoInscripcion(InscripcionEd ied, EstadoInscripcion estado);
+
+	public String obtenerInstitutoCurso(String nombreCurso);
 
 	
 

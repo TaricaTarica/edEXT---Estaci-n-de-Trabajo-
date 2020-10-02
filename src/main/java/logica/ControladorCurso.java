@@ -23,6 +23,7 @@ import persistencia.Conexion;
 import datatypes.DtCurso;
 import datatypes.DtEdicion;
 import datatypes.DtProgramaFormacion;
+import datatypes.EstadoInscripcion;
 import datatypes.DtCursoInfo;
 
 
@@ -116,8 +117,9 @@ public class ControladorCurso implements IControladorCurso {
 		Instituto institutoCurso = mI.buscarInstituto(nombreInstituto);
 		Curso curso = institutoCurso.getCurso(nombreCurso);
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
-		Categoria categoria=mC.buscarCategoria(nombreCategoria);
+		Categoria categoria = mC.buscarCategoria(nombreCategoria);
 		curso.setCategorias(categoria);
+		categoria.agregarCurso(curso);
 		
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
@@ -162,6 +164,26 @@ public class ControladorCurso implements IControladorCurso {
 		int cantCreditos = curso.getCantCreditos();
 		String url = curso.getUrl();
 		LocalDate fechaAlta = curso.getFechaAlta();
+		//Acá debo obtener la imagen
+		
+		DtCursoInfo retorno = new DtCursoInfo(nombre, descripcion, duracion, cantHoras, cantCreditos, fechaAlta, url);
+		
+		
+		return retorno;
+	}
+	@Override
+	public DtCursoInfo ConsultaCursoCategoria(String nombreCategoria, String nombreCurso) {
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		Categoria categoria = mC.buscarCategoria(nombreCategoria);
+		Curso curso = categoria.getCurso(nombreCurso);
+		String nombre = curso.getNombre();
+		String descripcion = curso.getDescripcion();
+		String duracion = curso.getDuracion();
+		int cantHoras = curso.getCantHoras();
+		int cantCreditos = curso.getCantCreditos();
+		String url = curso.getUrl();
+		LocalDate fechaAlta = curso.getFechaAlta();
+		//aca debo obtener la imagen
 		
 		DtCursoInfo retorno = new DtCursoInfo(nombre, descripcion, duracion, cantHoras, cantCreditos, fechaAlta, url);
 		
@@ -249,6 +271,18 @@ public class ControladorCurso implements IControladorCurso {
 		em.persist(edicion);
 		em.persist(docente);
 		em.getTransaction().commit();
+	}
+	
+	@Override
+	public void seleccionarestadoInscripcion(InscripcionEd ied, EstadoInscripcion estado) {
+		ied.setEstadoInscripcion(estado);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(ied);
+		em.getTransaction().commit();
+		
 	}
 	
 	/*INSCRIPCION A PROGRAMA DE FORMACION*/
@@ -340,6 +374,19 @@ public class ControladorCurso implements IControladorCurso {
         	i++;
         }
         return cursos_ret;		
+	}
+	public String[] listarCursosCategoria(String nombreCategoria) {
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		Categoria categoria = mC.buscarCategoria(nombreCategoria);
+		ArrayList <String> cursos;
+		cursos = categoria.obtenerCursos();
+		String[] cursos_ret = new String[cursos.size()];
+        int i=0;
+        for(String c: cursos) {
+        	cursos_ret[i]=c;
+        	i++;
+        }
+        return cursos_ret;	
 	}
 	
 	@Override
@@ -573,6 +620,18 @@ public class ControladorCurso implements IControladorCurso {
         	
         }
         return categoriasP_ret;
+	}
+	@Override
+	public String obtenerInstitutoCurso(String nombreCurso) {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		List<Instituto> institutos = mI.getInstitutos();
+		String nombreInstituto = new String();
+		for(Instituto i: institutos) {
+			 if(i.getCurso(nombreCurso) != null) {
+				 nombreInstituto = i.getNombre();
+			 }
+		}
+		return nombreInstituto;
 	}
 
 	

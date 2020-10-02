@@ -57,8 +57,7 @@ public class Categoria {
 			return lista;
 		}
 		
-		public void agregarCurso(DtCurso dtc) {
-			Curso c = new Curso(dtc);
+		public void agregarCurso(Curso c) {
 			cursos.add(c);
 			
 		}
