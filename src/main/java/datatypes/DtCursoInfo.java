@@ -13,6 +13,7 @@ public class DtCursoInfo {
 	private int creditos;
 	private LocalDate fechaAlta;
 	private String url;
+	private String img;
 	
 	private List<DtProgramaFormacion> programas = new ArrayList<>();
 	private List<DtEdicion> ediciones = new ArrayList<>();
@@ -72,5 +73,11 @@ public class DtCursoInfo {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 }

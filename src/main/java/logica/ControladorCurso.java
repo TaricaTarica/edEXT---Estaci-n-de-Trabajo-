@@ -164,10 +164,11 @@ public class ControladorCurso implements IControladorCurso {
 		int cantCreditos = curso.getCantCreditos();
 		String url = curso.getUrl();
 		LocalDate fechaAlta = curso.getFechaAlta();
-		//Acá debo obtener la imagen
+		String img = curso.getImg();
+		
 		
 		DtCursoInfo retorno = new DtCursoInfo(nombre, descripcion, duracion, cantHoras, cantCreditos, fechaAlta, url);
-		
+		retorno.setImg(img);
 		
 		return retorno;
 	}
@@ -183,10 +184,10 @@ public class ControladorCurso implements IControladorCurso {
 		int cantCreditos = curso.getCantCreditos();
 		String url = curso.getUrl();
 		LocalDate fechaAlta = curso.getFechaAlta();
-		//aca debo obtener la imagen
+		String img = curso.getImg();
 		
 		DtCursoInfo retorno = new DtCursoInfo(nombre, descripcion, duracion, cantHoras, cantCreditos, fechaAlta, url);
-		
+		retorno.setImg(img);
 		
 		return retorno;
 	}

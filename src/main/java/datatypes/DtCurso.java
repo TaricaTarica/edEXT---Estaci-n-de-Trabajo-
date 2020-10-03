@@ -10,6 +10,7 @@ public class DtCurso {
 	private int cantCreditos;
 	private LocalDate fechaAlta; 
 	private String url;
+	private String img;
 	
 	//constructores
 	public DtCurso() {}
@@ -66,6 +67,12 @@ public class DtCurso {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public String getImg() {
+		return this.img;
 	}
 	
 }

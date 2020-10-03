@@ -26,6 +26,7 @@ public class Curso {
 	private int cantCreditos;
 	private LocalDate fechaAlta;
 	private String url;
+	private String img;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Edicion> ediciones = new ArrayList<>();
@@ -64,6 +65,7 @@ public class Curso {
 		this.cantCreditos = dtc.getCantCreditos();
 		this.fechaAlta = dtc.getFechaAlta();
 		this.url = dtc.getUrl();
+		this.img = dtc.getImg();
 	}
 
 	//getters-setters
@@ -111,6 +113,12 @@ public class Curso {
 	}
 	public void setPrevia(Curso c) {
 		this.previas.add(c);
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public String getImg() {
+		return this.img;
 	}
 	
 	// Métodos para ediciones
