@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import datatypes.DtCurso;
 import persistencia.Conexion;
 
 public class ManejadorInstituto {
@@ -83,4 +84,5 @@ public class ManejadorInstituto {
 		List<Instituto> listInstitutos = (List<Instituto>) query.getResultList();
 		return listInstitutos;
 	}
+	
 }

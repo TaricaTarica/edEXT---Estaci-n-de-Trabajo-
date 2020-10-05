@@ -49,6 +49,7 @@ public class Instituto {
 	}
 	public Curso getCurso(String nombre) {
 		Curso retorno = new Curso();
+		retorno = null;
 		for(Curso c: this.cursos) {
 			if(c.getNombre().equals(nombre)) {
 				retorno = c;

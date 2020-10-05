@@ -626,7 +626,7 @@ public class ControladorCurso implements IControladorCurso {
 	public String obtenerInstitutoCurso(String nombreCurso) {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		List<Instituto> institutos = mI.getInstitutos();
-		String nombreInstituto = new String();
+		String nombreInstituto = null;
 		for(Instituto i: institutos) {
 			 if(i.getCurso(nombreCurso) != null) {
 				 nombreInstituto = i.getNombre();
