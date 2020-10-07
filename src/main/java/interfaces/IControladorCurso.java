@@ -16,6 +16,7 @@ import excepciones.CursoRepetido_Exception;
 import datatypes.DtCurso;
 import datatypes.DtEdicion;
 import datatypes.DtProgramaFormacion;
+import datatypes.DtinfoEdicion;
 import datatypes.EstadoInscripcion;
 import datatypes.DtCursoInfo;
 
@@ -54,6 +55,8 @@ public interface IControladorCurso {
 	
 	/*Alta de Edicion de Curso*/
 	public void AltadeEdiciondeCurso(DtEdicion e,String i,String c)throws EdicionRepatida_Exception;
+	public DtinfoEdicion ConsultaEdicion(String strInstituto, String strCurso,String strEdicion);
+	public DtinfoEdicion ConsultaEdicionCategoria(String nombreCategoria, String nombreCurso,String strEdicion);
 	//public Edicion obtenerEdicion(); // FALTA IMPLEMENTAR EN EL CONTROLADOR
 	
 	/*Inscripcion a Edicion de Curso*/
@@ -76,6 +79,7 @@ public interface IControladorCurso {
 	public String[] listarProgramasAux(String strInstituto, String strCurso);
 	public String[] listarDocentes(String Instituto);
 	public String[] listarEstudiantes();
+	public String[] listarEdicionesCategoria(String strCategoria, String strCurso);
 	
 	public String[] listarInstitutoCursos(); //Esta funci�n lista todos los cursos existentes en el sistema
 	public String[] listarProgFormacion();

@@ -23,6 +23,7 @@ import persistencia.Conexion;
 import datatypes.DtCurso;
 import datatypes.DtEdicion;
 import datatypes.DtProgramaFormacion;
+import datatypes.DtinfoEdicion;
 import datatypes.EstadoInscripcion;
 import datatypes.DtCursoInfo;
 
@@ -173,6 +174,24 @@ public class ControladorCurso implements IControladorCurso {
 		return retorno;
 	}
 	@Override
+	public DtinfoEdicion ConsultaEdicion(String strInstituto, String strCurso,String strEdicion) {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto instituto = mI.buscarInstituto(strInstituto);
+		Curso curso = instituto.getCurso(strCurso);
+		Edicion edicion=curso.getEdicion(strEdicion);
+		String nombre = edicion.getNombre();
+		int cupo = edicion.getCupo();
+		LocalDate fechaInicio = edicion.getFechaIni();
+		LocalDate fechaFin = edicion.getFechaFin();
+		LocalDate fechaPub = edicion.getFechaPub();
+		//Ac� debo obtener la imagen
+		
+		DtinfoEdicion retorno = new DtinfoEdicion(nombre,fechaInicio,fechaFin,cupo, fechaPub);
+		
+		
+		return retorno;
+	}
+	@Override
 	public DtCursoInfo ConsultaCursoCategoria(String nombreCategoria, String nombreCurso) {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 		Categoria categoria = mC.buscarCategoria(nombreCategoria);
@@ -191,9 +210,24 @@ public class ControladorCurso implements IControladorCurso {
 		
 		return retorno;
 	}
-	
-	
-	
+	@Override
+	public DtinfoEdicion ConsultaEdicionCategoria(String nombreCategoria, String nombreCurso,String strEdicion) {
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		Categoria categoria = mC.buscarCategoria(nombreCategoria);
+		Curso curso = categoria.getCurso(nombreCurso);
+		Edicion edicion=curso.getEdicion(strEdicion);
+		String nombre = edicion.getNombre();
+		int cupo = edicion.getCupo();
+		LocalDate fechaInicio = edicion.getFechaIni();
+		LocalDate fechaFin = edicion.getFechaFin();
+		LocalDate fechaPub = edicion.getFechaPub();
+		//Ac� debo obtener la imagen
+		
+		DtinfoEdicion retorno = new DtinfoEdicion(nombre,fechaInicio,fechaFin,cupo, fechaPub);
+		
+		
+		return retorno;
+	}
 	public DtProgramaFormacion ConsultaProgramaFormacion(String strPrograma) {
 		ManejadorProgramaFormacion mP = ManejadorProgramaFormacion.getInstancia();
 		ProgramaFormacion programa = mP.buscarProgramaFormacion(strPrograma);
@@ -308,7 +342,7 @@ public class ControladorCurso implements IControladorCurso {
 		em.getTransaction().commit();	
 	}
 	
-	/*Agregar Curso Programa Formaci�n*/
+	/*Agregar Curso Programa Formaciï¿½n*/
 	@Override
 	public void agregarCursoProgFormacion(String programaFormacion, String InstitutoCurso) throws ProgramaCursoRepetido_Exception {
 		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
@@ -340,7 +374,7 @@ public class ControladorCurso implements IControladorCurso {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 		Categoria c = mC.buscarCategoria(nombreCategoria);
 		if (c != null) {
-			throw new CategoriaRepetida_Exception("La categor�a " + nombreCategoria + " ya est� registrada");
+			throw new CategoriaRepetida_Exception("La categoría " + nombreCategoria + " ya está registrada");
 		}
 		c = new Categoria(nombreCategoria);
 		mC.agregarCategoria(c);
@@ -407,7 +441,23 @@ public class ControladorCurso implements IControladorCurso {
         }
         return ediciones_ret;		
 	}
-	
+	@Override
+	public String[] listarEdicionesCategoria(String strCategoria, String strCurso){
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		Categoria categoria = mC.buscarCategoria(strCategoria);
+		Curso curso = categoria.getCurso(strCurso);
+		
+		
+		ArrayList<String> ediciones;
+		ediciones = curso.obtenerEdiciones();		
+		String[] ediciones_ret = new String[ediciones.size()];
+        int i=0;
+        for(String ins: ediciones) {
+        	ediciones_ret[i]=ins;
+        	i++;
+        }
+        return ediciones_ret;		
+	}
 	@Override
 	public String[] listarProgramas(){
 		ManejadorProgramaFormacion mP = ManejadorProgramaFormacion.getInstancia();
