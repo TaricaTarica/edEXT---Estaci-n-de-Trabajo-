@@ -60,6 +60,12 @@ public class InscripcionEd {
 	public void setEdicion(Edicion edicion) {
 		this.edicion = edicion;
 	}
+	public Estudiante getEstudiante() {
+		return estudiante;
+	}
+	public void setEstudiante(Estudiante estudiante) {
+		this.estudiante = estudiante;
+	}
 	public EstadoInscripcion getEstado() {
 		return estado;
 	}

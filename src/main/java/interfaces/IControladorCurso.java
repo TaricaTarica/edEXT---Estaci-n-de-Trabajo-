@@ -3,6 +3,7 @@ package interfaces;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import excepciones.EdicionRepatida_Exception;
 import excepciones.InscripcionRepetidaPF_Exception;
@@ -15,6 +16,7 @@ import excepciones.CrearProgramaFormacionRepetido_Exception;
 import excepciones.CursoRepetido_Exception;
 import datatypes.DtCurso;
 import datatypes.DtEdicion;
+import datatypes.DtInscripcionEd;
 import datatypes.DtProgramaFormacion;
 import datatypes.DtinfoEdicion;
 import datatypes.EstadoInscripcion;
@@ -93,9 +95,11 @@ public interface IControladorCurso {
 
 	public ArrayList<String> listarCursosCategoriasP(String strPrograma);
 
-	public void seleccionarestadoInscripcion(InscripcionEd ied, EstadoInscripcion estado);
+	public void seleccionarestadoInscripcion(String nombreInstituto, String nombreCurso, String nombreEdicion, String nicknameEstudiante, String estado);
 
 	public String obtenerInstitutoCurso(String nombreCurso);
+
+	public List<DtInscripcionEd> obtenerInscripcionesEd(String nombreInstituto, String nombreCurso, String nombreEdicion);
 
 	
 

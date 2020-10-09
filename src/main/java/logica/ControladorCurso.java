@@ -22,6 +22,7 @@ import interfaces.IControladorCurso;
 import persistencia.Conexion;
 import datatypes.DtCurso;
 import datatypes.DtEdicion;
+import datatypes.DtInscripcionEd;
 import datatypes.DtProgramaFormacion;
 import datatypes.DtinfoEdicion;
 import datatypes.EstadoInscripcion;
@@ -309,13 +310,30 @@ public class ControladorCurso implements IControladorCurso {
 	}
 	
 	@Override
-	public void seleccionarestadoInscripcion(InscripcionEd ied, EstadoInscripcion estado) {
-		ied.setEstadoInscripcion(estado);
-		
+	public void seleccionarestadoInscripcion(String nombreInstituto, String nombreCurso, String nombreEdicion, String nicknameEstudiante, String estado) {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto instituto = mI.buscarInstituto(nombreInstituto);
+		Curso curso = instituto.getCurso(nombreCurso);
+		Edicion edicion = curso.getEdicion(nombreEdicion);
+		List<InscripcionEd> inscripciones = edicion.getInscripciones();
+		InscripcionEd retorno = new InscripcionEd();
+		for (InscripcionEd ied: inscripciones) {
+			if(ied.getEstudiante().getNickname().equals(nicknameEstudiante)) {
+				if(estado.equals("aceptar")) {
+					ied.setEstadoInscripcion(EstadoInscripcion.Aceptado);
+					retorno = ied;
+				}
+				else {
+					ied.setEstadoInscripcion(EstadoInscripcion.Rechazado);
+					retorno = ied;
+				}
+				
+			}
+		}
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
-		em.persist(ied);
+		em.persist(retorno);
 		em.getTransaction().commit();
 		
 	}
@@ -684,6 +702,22 @@ public class ControladorCurso implements IControladorCurso {
 		}
 		return nombreInstituto;
 	}
-
+	@Override
+	public List<DtInscripcionEd> obtenerInscripcionesEd(String nombreInstituto, String nombreCurso, String nombreEdicion){
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto instituto = mI.buscarInstituto(nombreInstituto);
+		Curso curso = instituto.getCurso(nombreCurso);
+		Edicion edicion = curso.getEdicion(nombreEdicion);
+		List<InscripcionEd> inscripciones = edicion.getInscripciones();
+		List<DtInscripcionEd> retorno = new ArrayList<>();
+		for(InscripcionEd ied: inscripciones) {
+			DtInscripcionEd dtied = new DtInscripcionEd(ied);
+			if(dtied.getEstado() == null) {
+				dtied.setEstado(EstadoInscripcion.Inscripto);
+			}
+			retorno.add(dtied);
+		}
+		return retorno;
+	}
 	
 }

@@ -105,5 +105,8 @@ public class Edicion {
 		
 		inscripciones.add(inscripcion);	
 	}
+	public List<InscripcionEd> getInscripciones(){
+		return inscripciones;
+	}
 
 }
