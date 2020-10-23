@@ -757,6 +757,35 @@ public class ControladorCurso implements IControladorCurso {
 	}
 	
 	@Override
+	public String getInstitutoDocente(String nickname) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(nickname);
+		String instituto = ((Docente) usr).getInstituto().getNombre();
+		return instituto;
+	}
+	@Override
+	public String[] listarInscripcionesAceptadas(String nombreInstituto,String nombreCurso,String nombreEdicion){
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto instituto=mI.buscarInstituto(nombreInstituto);
+		Curso curso=instituto.getCurso(nombreCurso);
+		Edicion edicion=curso.getEdicion(nombreEdicion);
+		List<InscripcionEd>inscripciones =edicion.getInscripciones();
+		String[] inscripciones_ret = new String[inscripciones.size()];
+        EstadoInscripcion est=EstadoInscripcion.Aceptado;
+        int i=0;
+        if(!inscripciones.isEmpty()) {
+		for(InscripcionEd ins: inscripciones) {
+        		if(ins.getEstado().equals(est)){
+        			inscripciones_ret[i]=ins.getEstudiante().getNickname();
+        			i++;
+        		}
+        }
+        return inscripciones_ret;
+        }else {
+        	return null;
+        }
+	}
+	@Override
 	public List<DtInscripcionEd> obtenerInscripcionesEd(String nombreInstituto, String nombreCurso, String nombreEdicion){
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto instituto = mI.buscarInstituto(nombreInstituto);
