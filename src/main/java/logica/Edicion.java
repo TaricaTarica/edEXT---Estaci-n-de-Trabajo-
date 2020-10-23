@@ -12,7 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import datatypes.DtEdicion;
-import datatypes.EstadoInscripcion;
 import persistencia.Conexion;
 
 @Entity
@@ -113,22 +112,5 @@ public class Edicion {
 			return null;
 		}
 	}
-	public String[] getInscripcionesAceptadas(){
-		String []inscripciones_ret = new String[inscripciones.size()];
-		int i=0;
-		if(!inscripciones.isEmpty()){
-			for(InscripcionEd ins:inscripciones){
-			    if(ins.getEstado().equals(EstadoInscripcion.Aceptado)){
-			        inscripciones_ret[i]=ins.getEstudiante().getNickname();
-			        i++; 
-			     } 
-			}
-			return inscripciones_ret;
-		}else {
-			return null;
-		}
-		
 
-	}
-	
 }

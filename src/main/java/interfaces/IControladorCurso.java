@@ -102,14 +102,6 @@ public interface IControladorCurso {
 	public String obtenerInstitutoCursoPrograma(String strPrograma, String strCurso);
 
 	public List<DtInscripcionEd> obtenerInscripcionesEd(String nombreInstituto, String nombreCurso, String nombreEdicion);
-<<<<<<< HEAD
-	
-	public String getInstitutoDocente(String nickname);
-	
-=======
-
-	public String[] listarInscripcionesAceptadas(String nombreInstituto,String nombreCurso,String nombreEdicion);
->>>>>>> 10e3253a8f2d09cca47eb5c714d3dec49d9c4250
 	
 	public String getInstitutoDocente(String nickname);
 
