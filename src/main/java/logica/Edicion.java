@@ -106,7 +106,11 @@ public class Edicion {
 		inscripciones.add(inscripcion);	
 	}
 	public List<InscripcionEd> getInscripciones(){
-		return inscripciones;
+		if(!inscripciones.isEmpty()){
+			return inscripciones;
+		}else {
+			return null;
+		}
 	}
 
 }

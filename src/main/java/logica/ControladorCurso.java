@@ -265,24 +265,34 @@ public class ControladorCurso implements IControladorCurso {
 	
 	/*INSCRIPCION A EDICION DE CURSO*/
 	@Override
-	public void InscripcionaEdiciondeCurso(String i,Date FechaIns,String nickname,String c,String e) throws InscripcionRepetida_Exception{
+	public void InscripcionaEdiciondeCurso(String i,Date FechaIns,String nickname,String c,String e,String estado) throws InscripcionRepetida_Exception{
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Estudiante est = mU.BuscarEstudiante(nickname);
+		Estudiante estu = mU.BuscarEstudiante(nickname);
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto instituto = mI.buscarInstituto(i);
 		Curso curso = instituto.getCurso(c);
 		Edicion edicion=curso.getEdicion(e);
-		if (est.BuscarInscripcion(edicion)) {
+		EstadoInscripcion est=null;
+		if (estado=="Inscripto") {
+			est = EstadoInscripcion.Inscripto;
+		}
+		else if (estado=="Aceptado") {
+			est = EstadoInscripcion.Aceptado;
+		}
+		else if (estado=="Rechazado") {
+			est = EstadoInscripcion.Rechazado;
+		}
+		if (estu.BuscarInscripcion(edicion)) {
 			throw new InscripcionRepetida_Exception("La inscripcion ya esta registrada");
 		}
-		InscripcionEd inscripcion = new InscripcionEd(FechaIns, edicion, est);
-		est.agregarInscripcion(inscripcion);
+		InscripcionEd inscripcion = new InscripcionEd(FechaIns, edicion, estu,est);
+		estu.agregarInscripcion(inscripcion);
 		edicion.agregarInscripcion(inscripcion);
 		
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
-		em.persist(est);
+		em.persist(estu);
 		em.persist(edicion);
 		em.getTransaction().commit();
 		
@@ -386,6 +396,27 @@ public class ControladorCurso implements IControladorCurso {
 		em.persist(programa);
 		em.getTransaction().commit();
 	}
+	@Override
+	public void agregarCursoProgFormacion2(String programaFormacion, String Curso, String nombreInstituto) throws ProgramaCursoRepetido_Exception {
+		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
+		ProgramaFormacion programa = mPF.buscarProgramaFormacion(programaFormacion);
+		
+		if (programa.existeCurso(Curso)) {
+			throw new ProgramaCursoRepetido_Exception("El curso "+ Curso +" ya pertenece al Programa de Formacion " + programaFormacion);
+		}
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto instituto = mI.buscarInstituto(nombreInstituto);
+		Curso curso = instituto.getCurso(Curso);
+		curso.asociarPrograma(programa.getNombre());
+		programa.setCurso(curso);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(programa);
+		em.getTransaction().commit();
+	}
+	
 	/*Alta Categoria*/
 	@Override
 	public void AltaCategoria(String nombreCategoria) throws CategoriaRepetida_Exception {
@@ -667,7 +698,7 @@ public class ControladorCurso implements IControladorCurso {
         return categorias_ret;		
 	}
 	@Override
-	public ArrayList<String> listarCursosCategoriasP(String strPrograma){
+	public String[] listarCursosCategoriasP(String strPrograma){
 		ManejadorProgramaFormacion mP = ManejadorProgramaFormacion.getInstancia();
 		ProgramaFormacion programa= mP.buscarProgramaFormacion(strPrograma);
 		ArrayList<Curso> cursosP;
@@ -677,18 +708,23 @@ public class ControladorCurso implements IControladorCurso {
 		ArrayList<String> categoriasC;
 		
 		//TODAS LAS CATEGORIAS 
-		ArrayList<String> categoriasP_ret = new ArrayList<>();
+		ArrayList<String> categoriasP = new ArrayList<>();
 		
         for(Curso cur: cursosP) {
         	categoriasC =cur.getCategorias();
         	
         	for(String cat: categoriasC) {
-        		if(!categoriasP_ret.contains(cat))
-        			categoriasP_ret.add(cat);
+        		if(!categoriasP.contains(cat))
+        			categoriasP.add(cat);
         	}
         	
         }
-        return categoriasP_ret;
+        String[] categorias_ret = new String[categoriasP.size()];
+        for (int j = 0; j < categoriasP.size(); j++) { 
+          categorias_ret[j] = categoriasP.get(j); 
+        } 
+        
+        return categorias_ret;
 	}
 	@Override
 	public String obtenerInstitutoCurso(String nombreCurso) {
@@ -701,6 +737,35 @@ public class ControladorCurso implements IControladorCurso {
 			 }
 		}
 		return nombreInstituto;
+	}
+	@Override
+	public String getInstitutoDocente(String nickname) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(nickname);
+		String instituto = ((Docente) usr).getInstituto().getNombre();
+		return instituto;
+	}
+	@Override
+	public String[] listarInscripcionesAceptadas(String nombreInstituto,String nombreCurso,String nombreEdicion){
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto instituto=mI.buscarInstituto(nombreInstituto);
+		Curso curso=instituto.getCurso(nombreCurso);
+		Edicion edicion=curso.getEdicion(nombreEdicion);
+		List<InscripcionEd>inscripciones =edicion.getInscripciones();
+		String[] inscripciones_ret = new String[inscripciones.size()];
+        EstadoInscripcion est=EstadoInscripcion.Aceptado;
+        int i=0;
+        if(!inscripciones.isEmpty()) {
+		for(InscripcionEd ins: inscripciones) {
+        		if(ins.getEstado().equals(est)){
+        			inscripciones_ret[i]=ins.getEstudiante().getNickname();
+        			i++;
+        		}
+        }
+        return inscripciones_ret;
+        }else {
+        	return null;
+        }
 	}
 	@Override
 	public List<DtInscripcionEd> obtenerInscripcionesEd(String nombreInstituto, String nombreCurso, String nombreEdicion){

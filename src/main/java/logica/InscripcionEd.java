@@ -40,11 +40,12 @@ public class InscripcionEd {
 	public InscripcionEd() {
 		super();
 	}
-	public InscripcionEd(Date fecha, Edicion edicion, Estudiante estudiante) {
+	public InscripcionEd(Date fecha, Edicion edicion, Estudiante estudiante,EstadoInscripcion estado) {
 
 		this.fecha = fecha;
 		this.edicion = edicion;
 		this.estudiante = estudiante;
+		this.estado = estado;
 	}
 	
 	//getters-setters

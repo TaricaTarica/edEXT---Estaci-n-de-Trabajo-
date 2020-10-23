@@ -43,6 +43,7 @@ public interface IControladorCurso {
 	
 	/*Agregar Curso Programa Formaciï¿½n*/
 	public void agregarCursoProgFormacion(String programaFormacion, String curso) throws ProgramaCursoRepetido_Exception;
+	public void agregarCursoProgFormacion2(String programaFormacion, String curso, String nombreInstituto) throws ProgramaCursoRepetido_Exception;
 	
 	
 	/*Consulta Curso*/
@@ -62,13 +63,13 @@ public interface IControladorCurso {
 	//public Edicion obtenerEdicion(); // FALTA IMPLEMENTAR EN EL CONTROLADOR
 	
 	/*Inscripcion a Edicion de Curso*/
-	public void InscripcionaEdiciondeCurso(String nombreInstituto, Date fecha,String es,String c,String e) throws InscripcionRepetida_Exception;
+	public void InscripcionaEdiciondeCurso(String i,Date FechaIns,String nickname,String c,String e,String estado) throws InscripcionRepetida_Exception;
 	public void asociarEdicion(String strDocente, DtEdicion edicion, String strInstituto, String strCurso);
 	
 	/*Inscripcion a Programa de Formacion*/
 	public void InscripcionaProgramaFormacion(Date FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception;
 
-	/*Alta Categoría*/
+	/*Alta Categorï¿½a*/
 	void AltaCategoria(String nombreCategoria) throws CategoriaRepetida_Exception;
 	 
 	
@@ -93,7 +94,7 @@ public interface IControladorCurso {
 
 	public String[] listarCategoriasC(String nombreInstituto, String nombreCurso);
 
-	public ArrayList<String> listarCursosCategoriasP(String strPrograma);
+	public String[] listarCursosCategoriasP(String strPrograma);
 
 	public void seleccionarestadoInscripcion(String nombreInstituto, String nombreCurso, String nombreEdicion, String nicknameEstudiante, String estado);
 
@@ -101,7 +102,9 @@ public interface IControladorCurso {
 
 	public List<DtInscripcionEd> obtenerInscripcionesEd(String nombreInstituto, String nombreCurso, String nombreEdicion);
 
+	public String[] listarInscripcionesAceptadas(String nombreInstituto,String nombreCurso,String nombreEdicion);
 	
+	public String getInstitutoDocente(String nickname);
 
 	
 
