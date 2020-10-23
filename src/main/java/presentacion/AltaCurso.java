@@ -213,6 +213,7 @@ public class AltaCurso extends JInternalFrame {
 		String duracion = this.textFieldDuracion.getText();
 		String cantHoras = this.textFieldCantHoras.getText();
 		String url = this.textFieldUrl.getText();
+		String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
 		
 		//OBTENER LAS PREVIAS
 		List<String> previas = (List<String>) this.listPrevias.getSelectedValuesList();
@@ -229,10 +230,8 @@ public class AltaCurso extends JInternalFrame {
 			LocalDate fechaAlta = fechaAltaD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
 
 		
-			DtCurso curso = new DtCurso(nombre, descripcion, duracion, h, c, fechaAlta, url);
-			
-			String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
-			
+			DtCurso curso = new DtCurso(nombre, descripcion, duracion, h, c, fechaAlta, url, instituto);
+						
 			try {
 				iconCur.AltaCurso(curso, instituto);
 				JOptionPane.showMessageDialog(this, "Curso creado con exito", "Alta exitosa", JOptionPane.INFORMATION_MESSAGE);

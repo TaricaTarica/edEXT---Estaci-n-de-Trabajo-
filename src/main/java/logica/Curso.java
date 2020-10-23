@@ -27,6 +27,7 @@ public class Curso {
 	private LocalDate fechaAlta;
 	private String url;
 	private String img;
+	private String instituto;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Edicion> ediciones = new ArrayList<>();
@@ -34,7 +35,7 @@ public class Curso {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Curso> previas = new ArrayList<>();
 	
-	private ArrayList<String> programasAsociados = new ArrayList<>(); //tendría que ser igual a InscripcionED
+	private ArrayList<String> programasAsociados = new ArrayList<>(); //tendrï¿½a que ser igual a InscripcionED
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Categoria> categorias = new ArrayList<>();
@@ -65,7 +66,7 @@ public class Curso {
 		this.cantCreditos = dtc.getCantCreditos();
 		this.fechaAlta = dtc.getFechaAlta();
 		this.url = dtc.getUrl();
-		this.img = dtc.getImg();
+		this.instituto = dtc.getInstituto();
 	}
 
 	//getters-setters
@@ -119,6 +120,13 @@ public class Curso {
 	}
 	public String getImg() {
 		return this.img;
+	}
+	
+	public void setInstituto(String instituto) {
+		this.instituto = instituto;
+	}
+	public String getInstituto() {
+		return this.instituto;
 	}
 	
 	// MÃ©todos para ediciones

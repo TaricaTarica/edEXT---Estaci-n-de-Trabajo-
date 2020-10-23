@@ -11,11 +11,12 @@ public class DtCurso {
 	private LocalDate fechaAlta; 
 	private String url;
 	private String img;
+	private String instituto;
 	
 	//constructores
 	public DtCurso() {}
 	public DtCurso(String nombre, String descripcion, String duracion, int cantHoras, int cantCreditos, LocalDate fechaAlta,
-			String url) {
+			String url, String instituto) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
@@ -23,6 +24,7 @@ public class DtCurso {
 		this.cantCreditos = cantCreditos;
 		this.fechaAlta = fechaAlta;
 		this.url = url;
+		this.instituto = instituto;
 	}
 	
 	//getters-setters
@@ -74,5 +76,7 @@ public class DtCurso {
 	public String getImg() {
 		return this.img;
 	}
-	
+	public String getInstituto() {
+		return this.instituto;
+	}
 }
