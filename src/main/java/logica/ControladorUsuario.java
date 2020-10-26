@@ -105,7 +105,14 @@ public class ControladorUsuario implements IControladorUsuario {
 		Usuario usr = mU.buscarUsuario(nickname);
 		return usr.getApellido();
 	}
-	
+	@Override
+	public String getContraseniaUsuario(String nickname) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(nickname);
+		return usr.getContrasenia();
+
+	}
+
 	@Override
 	public LocalDate getFechaUsuario(String nickname) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -114,12 +121,14 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 	
 	@Override
-	public void modificarUsuario(String nickname, String nombre, String apellido, LocalDate fechaN) {
+	public void modificarUsuario(String nickname, String nombre, String apellido, LocalDate fechaN,String contrasenia) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario usr = mU.buscarUsuario(nickname);
 		usr.setNombre(nombre);
 		usr.setApellido(apellido);
 		usr.setFechaNac(fechaN);
+		usr.setContrasenia(contrasenia);
+
 		
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
@@ -217,5 +226,35 @@ public class ControladorUsuario implements IControladorUsuario {
 	    atributos_pf_curso_ret[3] = "Fecha de fin: "+ programa.getFechaFin();
 		atributos_pf_curso_ret[4] = "Fecha de Alta: " + programa.getFechaAlta();
 		return atributos_pf_curso_ret;
+	}
+	@Override
+	public Instituto GetInstituto(String strDocente) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(strDocente);
+		Instituto instituto=((Docente) usr).getInstituto();
+        return instituto;	 
+	}
+	@Override
+	public String GetCurso(String strEdicion,List<Curso> Cursos) {
+		String curso=null;
+        for(Curso cur: Cursos) {
+			 if(cur.getEdicion(strEdicion) != null) {
+				 curso = cur.getNombre();
+			 }
+		}
+        return curso;	 
+	}
+	@Override
+	public String[] listarEdicionesEst(String strEstudiante) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(strEstudiante);
+		String[] ediciones_ret = ((Estudiante) usr).obtenerEdicionesEst();
+        return ediciones_ret;	 
+	}
+	public Edicion ObtenerEdicion(String strEdicion,String strEstudiante) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(strEstudiante);
+		Edicion ed = ((Estudiante) usr).ObtenerEdicion(strEdicion);
+        return ed;	 
 	}
 }

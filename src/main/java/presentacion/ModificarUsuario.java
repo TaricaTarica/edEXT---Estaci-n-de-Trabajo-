@@ -26,6 +26,7 @@ public class ModificarUsuario extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
+	private JTextField textFieldContrasenia;
 	private JComboBox<String> comboBoxUsuario;
 	private JDateChooser dateChooserFechaNac;
 
@@ -76,6 +77,16 @@ public class ModificarUsuario extends JInternalFrame {
 		getContentPane().add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
+		JLabel lblContrasenia = new JLabel("Contrasenia");
+		lblContrasenia.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblContrasenia.setBounds(109, 148, 46, 14);
+		getContentPane().add(lblContrasenia);
+		
+		textFieldContrasenia = new JTextField();
+		textFieldContrasenia.setBounds(165, 136, 173, 20);
+		getContentPane().add(textFieldContrasenia);
+		textFieldContrasenia.setColumns(10);
+		
 		JLabel lblFecha = new JLabel("Fecha de Nacimiento");
 		lblFecha.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblFecha.setBounds(51, 130, 105, 14);
@@ -116,6 +127,7 @@ public class ModificarUsuario extends JInternalFrame {
 	public void seleccionarUsuario_actionPerformed(ActionEvent e) {
 		this.textFieldNombre.setText(iconUsr.getNombreUsuario(comboBoxUsuario.getSelectedItem().toString()));
 		this.textFieldApellido.setText(iconUsr.getApellidoUsuario(comboBoxUsuario.getSelectedItem().toString()));		
+		this.textFieldContrasenia.setText(iconUsr.getContraseniaUsuario(comboBoxUsuario.getSelectedItem().toString()));		
 		LocalDate fecha = iconUsr.getFechaUsuario(comboBoxUsuario.getSelectedItem().toString());		
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		Date date = Date.from(fecha.atStartOfDay(defaultZoneId).toInstant());
@@ -126,6 +138,9 @@ public class ModificarUsuario extends JInternalFrame {
 			String nickname = this.comboBoxUsuario.getSelectedItem().toString();
 			String nombre = this.textFieldNombre.getText();
 			String apellido = this.textFieldApellido.getText();
+			String contrasenia = this.textFieldContrasenia.getText();
+
+
 
 			//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
 			Date fechaNacD = new Date();
@@ -134,7 +149,7 @@ public class ModificarUsuario extends JInternalFrame {
 
 		
 
-			iconUsr.modificarUsuario(nickname, nombre, apellido, fechaNac);
+			iconUsr.modificarUsuario(nickname, nombre, apellido, fechaNac,contrasenia);
 			JOptionPane.showMessageDialog(this, "Usuario modificado con exito", "Modificacion exitosa", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
@@ -143,7 +158,8 @@ public class ModificarUsuario extends JInternalFrame {
 		int comboBoxUsuario = this.comboBoxUsuario.getItemCount();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
-		if(nombre.isEmpty() || apellido.isEmpty() || apellido.isEmpty() || comboBoxUsuario == 0 || fechaNacD ==  null) {
+		String contrasenia = this.textFieldContrasenia.getText();
+		if(nombre.isEmpty() || apellido.isEmpty() || contrasenia.isEmpty() || comboBoxUsuario == 0 || fechaNacD ==  null) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Error",
 	                JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -152,6 +168,7 @@ public class ModificarUsuario extends JInternalFrame {
 	}
 
 	private void limpiarCampos() {
+		this.textFieldContrasenia.setText("");
 		this.textFieldApellido.setText("");
 		this.textFieldNombre.setText("");
 		this.dateChooserFechaNac.setCalendar(null);

@@ -2,8 +2,12 @@ package interfaces;
 
 
 import excepciones.UsuarioRepetido_Exception;
+import logica.Curso;
+import logica.Edicion;
+import logica.Instituto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import datatypes.DtUsuario;
 
@@ -21,8 +25,9 @@ public interface IControladorUsuario {
 	/*Modificar Usuario*/
 	public String getNombreUsuario(String nickname);
 	public String getApellidoUsuario(String nickname);
+	public String getContraseniaUsuario(String nickname);
 	public LocalDate getFechaUsuario(String nickname);
-	public void modificarUsuario(String nickname, String nombre, String apellido, LocalDate fechaN);
+	public void modificarUsuario(String nickname, String nombre, String apellido, LocalDate fechaN,String constrasenia);
 
 	/*MULTIUSO*/
 	public String[] listarInstitutos();
@@ -33,5 +38,10 @@ public interface IControladorUsuario {
 	public String[] AtributosEdicion(String nombreUsuario,String nombreEdicion);
 	String[] listarProgramasE(String strEstudiante);
 	public String[] AtributosPrograma(String nombrePrograma);
+	public Instituto GetInstituto(String strDocente);
+	public String GetCurso(String strEdicion,List<Curso> Curso);
+	public String[] listarEdicionesEst(String strEstudiante);
+	public Edicion ObtenerEdicion(String strEdicion,String strEstudiante);
+
 
 }

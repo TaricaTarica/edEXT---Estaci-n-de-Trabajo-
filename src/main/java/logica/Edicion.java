@@ -112,5 +112,12 @@ public class Edicion {
 			return null;
 		}
 	}
+	public String nombresDocente() {
+		String retorno = new String();
+		for(Docente doc: this.docentes) {
+			retorno = doc.getNickname();
+		}
+		return retorno;
+	}
 
 }
