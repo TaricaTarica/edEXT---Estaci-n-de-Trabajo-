@@ -257,4 +257,16 @@ public class ControladorUsuario implements IControladorUsuario {
 		Edicion ed = ((Estudiante) usr).ObtenerEdicion(strEdicion);
         return ed;	 
 	}
+	
+	public boolean existeUsuario (String nickname) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(nickname);
+		if(usr!=null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 }
