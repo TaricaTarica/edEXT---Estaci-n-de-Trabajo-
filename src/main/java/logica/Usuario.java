@@ -33,6 +33,9 @@ public abstract class Usuario {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Usuario> sigue = new ArrayList<>();
 	
+	//@ManyToMany(cascade = CascadeType.ALL)
+	//private List<Usuario> seguidores= new ArrayList<>();
+
 	
 	//constructores
 	public Usuario() {
@@ -86,6 +89,34 @@ public abstract class Usuario {
 		this.contrasenia = contrasenia;
 	}
 	
-	
+	public List<Usuario> getSigue() {
+		return sigue;
+	}
+	/*public List<Usuario> getSeguidores() {
+		return seguidores;
+	}*/
+	public void addSigue(Usuario u) {
+		this.sigue.add(u);
+	}
+	/*public void addSeguidores(Usuario u) {
+		this.seguidores.add(u);
+	}*/
+	public void borrarSigue(Usuario seguido) {
+		int i = 0;
+		for(Usuario u: this.sigue) {
+			if(u.getNickname().equals(seguido.getNickname()))
+				this.sigue.remove(i);
+			i++;
+		}
+	}
+	/*public void borrarSeguidor(Usuario usuario) {
+		int i = 0;
+		for(Usuario u: this.seguidores) {
+			if(u.getNickname().equals(usuario.getNickname()))
+				this.seguidores.remove(i);
+			i++;
+		}
+	}*/
+
 	
 }

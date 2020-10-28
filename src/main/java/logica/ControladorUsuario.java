@@ -268,5 +268,79 @@ public class ControladorUsuario implements IControladorUsuario {
 			return false;
 		}
 	}
+	
+	@Override
+	public void seguirUsuario(String nickname, String aSeguir) {
+		/*Agrega al segundo a la lista de seguidos del primero y al primero a la lista de seguidores del segundo*/
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usuario = mU.buscarUsuario(nickname);
+		Usuario seguido = mU.buscarUsuario(aSeguir);
+		usuario.addSigue(seguido);
+		//seguido.addSeguidores(usuario);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(usuario);
+		//em.persist(seguido);
+		em.getTransaction().commit();
+	}
+	@Override
+	public boolean esSeguidor(String nickname, String aComprobar) {
+		/*Retorna true si el primero sigue al segundo*/
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usuario = mU.buscarUsuario(nickname);
+		List<Usuario> sigue = usuario.getSigue();
+		boolean retorno = false;
+		for(Usuario u: sigue) {
+			if(u.getNickname().equals(aComprobar)) {
+				retorno = true;
+			}
+		}
+		return retorno;
+	}
+	/*@Override
+	public void dejarSeguir(String nickname, String dejarSeguir) {*/
+		/*elimina al segundo de la lista de seguidos del primero y al primero de la lista de seguidores del segundo*/
+		/*ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usuario = mU.buscarUsuario(nickname);
+		Usuario seguido = mU.buscarUsuario(dejarSeguir);
+		List<Usuario> usuarioSigue = usuario.getSigue();
+		List<Usuario> seguidoSeguidores = seguido.getSeguidores();
+		for (Usuario u: usuarioSigue) {
+			if(u.getNickname().equals(dejarSeguir)) {
+				usuario.borrarSigue(seguido);
+			}
+		}
+		for (Usuario u: seguidoSeguidores) {
+			if(u.getNickname().equals(nickname)) {
+				seguido.borrarSeguidor(usuario);
+			}
+		}
+	}*/
+	/*@Override
+	public List<DtUsuario> obtenerSeguidores(String nickname){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.buscarUsuario(nickname);
+		List<Usuario> seguidores = u.getSeguidores();
+		List<DtUsuario> seguidoresRetorno = new ArrayList<>();
+		for(Usuario usr: seguidores) {
+			DtUsuario dtu = new DtUsuario(usr.getNickname(), usr.getNombre(), usr.getApellido(), usr.getCorreo(), usr.getfechaNac(), usr.getContrasenia());
+			seguidoresRetorno.add(dtu);
+		}
+		return seguidoresRetorno;
+	}*/
+	@Override
+	public List<DtUsuario> obtenerSeguidos(String nickname){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.buscarUsuario(nickname);
+		List<Usuario> seguidos = u.getSigue();
+		List<DtUsuario> seguidosRetorno = new ArrayList<>();
+		for(Usuario usr: seguidos) {
+			DtUsuario dtu = new DtUsuario(usr.getNickname(), usr.getNombre(), usr.getApellido(), usr.getCorreo(), usr.getfechaNac(), usr.getContrasenia());
+			seguidosRetorno.add(dtu);
+		}
+		return seguidosRetorno;
+	}
 
 }
