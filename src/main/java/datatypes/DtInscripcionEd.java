@@ -1,5 +1,6 @@
 package datatypes;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import logica.InscripcionEd;
@@ -7,10 +8,10 @@ import logica.InscripcionEd;
 public class DtInscripcionEd {
 	private String nombreEdicion;
 	private String nicknameEstudiante;
-	private Date fecha;
+	private LocalDate fecha;
 	private EstadoInscripcion estado;
 	
-	public DtInscripcionEd(String nombreEdicion, String nicknameEstudiante, Date fecha) {
+	public DtInscripcionEd(String nombreEdicion, String nicknameEstudiante, LocalDate fecha) {
 		this.nombreEdicion = nombreEdicion;
 		this.nicknameEstudiante = nicknameEstudiante;
 		this.fecha = fecha;
@@ -43,11 +44,11 @@ public class DtInscripcionEd {
 		this.nicknameEstudiante = nicknameEstudiante;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 

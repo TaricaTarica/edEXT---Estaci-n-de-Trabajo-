@@ -63,11 +63,11 @@ public interface IControladorCurso {
 	//public Edicion obtenerEdicion(); // FALTA IMPLEMENTAR EN EL CONTROLADOR
 	
 	/*Inscripcion a Edicion de Curso*/
-	public void InscripcionaEdiciondeCurso(String i,Date FechaIns,String nickname,String c,String e,String estado) throws InscripcionRepetida_Exception;
+	public void InscripcionaEdiciondeCurso(String i,LocalDate FechaIns,String nickname,String c,String e,String estado) throws InscripcionRepetida_Exception;
 	public void asociarEdicion(String strDocente, DtEdicion edicion, String strInstituto, String strCurso);
 	
 	/*Inscripcion a Programa de Formacion*/
-	public void InscripcionaProgramaFormacion(Date FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception;
+	public void InscripcionaProgramaFormacion(LocalDate FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception;
 
 	/*Alta Categor�a*/
 	void AltaCategoria(String nombreCategoria) throws CategoriaRepetida_Exception;

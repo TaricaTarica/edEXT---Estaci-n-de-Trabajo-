@@ -165,9 +165,13 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 				//estado = EstadoInscripcion.Rechazado;
 				estado="Rechazado";
 			}
-			Date fechaIns = new Date();
-			fechaIns = this.dateChooserFechadeInscripcion.getDate();
 			
+			
+			//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
+			Date fechaInsD = new Date();
+			fechaInsD = this.dateChooserFechadeInscripcion.getDate();
+			LocalDate fechaIns = fechaInsD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+
 			try{
 				this.iconCur.InscripcionaEdiciondeCurso(instituto,fechaIns,estudiante,curso,edicion,estado);
 				JOptionPane.showMessageDialog(this, "Inscripcion creada con exito", "Inscripcion exitosa", JOptionPane.INFORMATION_MESSAGE);

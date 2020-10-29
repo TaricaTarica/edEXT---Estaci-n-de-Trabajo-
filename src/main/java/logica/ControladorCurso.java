@@ -265,7 +265,7 @@ public class ControladorCurso implements IControladorCurso {
 	
 	/*INSCRIPCION A EDICION DE CURSO*/
 	@Override
-	public void InscripcionaEdiciondeCurso(String i,Date FechaIns,String nickname,String c,String e,String estado) throws InscripcionRepetida_Exception{
+	public void InscripcionaEdiciondeCurso(String i,LocalDate FechaIns,String nickname,String c,String e,String estado) throws InscripcionRepetida_Exception{
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Estudiante estu = mU.BuscarEstudiante(nickname);
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
@@ -350,7 +350,7 @@ public class ControladorCurso implements IControladorCurso {
 	
 	/*INSCRIPCION A PROGRAMA DE FORMACION*/
 	@Override
-	public void InscripcionaProgramaFormacion(Date FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception{
+	public void InscripcionaProgramaFormacion(LocalDate FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception{
 		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
 		ProgramaFormacion programaformacion = mPF.buscarProgramaFormacion(pf);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
