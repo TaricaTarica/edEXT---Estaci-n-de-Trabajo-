@@ -275,14 +275,14 @@ public class ControladorUsuario implements IControladorUsuario {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario usuario = mU.buscarUsuario(nickname);
 		Usuario seguido = mU.buscarUsuario(aSeguir);
-		usuario.addSigue(seguido);
-		//seguido.addSeguidores(usuario);
+		usuario.seguirUsuario(seguido);
+		seguido.agregarSeguidor(usuario);
 		
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
 		em.persist(usuario);
-		//em.persist(seguido);
+		em.persist(seguido);
 		em.getTransaction().commit();
 	}
 	@Override
@@ -290,7 +290,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		/*Retorna true si el primero sigue al segundo*/
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario usuario = mU.buscarUsuario(nickname);
-		List<Usuario> sigue = usuario.getSigue();
+		List<Usuario> sigue = usuario.getSeguidos();
 		boolean retorno = false;
 		for(Usuario u: sigue) {
 			if(u.getNickname().equals(aComprobar)) {
@@ -299,26 +299,26 @@ public class ControladorUsuario implements IControladorUsuario {
 		}
 		return retorno;
 	}
-	/*@Override
-	public void dejarSeguir(String nickname, String dejarSeguir) {*/
+	@Override
+	public void dejarSeguir(String nickname, String dejarSeguir) {
 		/*elimina al segundo de la lista de seguidos del primero y al primero de la lista de seguidores del segundo*/
-		/*ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario usuario = mU.buscarUsuario(nickname);
 		Usuario seguido = mU.buscarUsuario(dejarSeguir);
-		List<Usuario> usuarioSigue = usuario.getSigue();
+		List<Usuario> usuarioSigue = usuario.getSeguidores();
 		List<Usuario> seguidoSeguidores = seguido.getSeguidores();
 		for (Usuario u: usuarioSigue) {
 			if(u.getNickname().equals(dejarSeguir)) {
-				usuario.borrarSigue(seguido);
+				usuario.dejarSeguirUsuario(seguido);
 			}
 		}
 		for (Usuario u: seguidoSeguidores) {
 			if(u.getNickname().equals(nickname)) {
-				seguido.borrarSeguidor(usuario);
+				seguido.quitarSeguidor(usuario);
 			}
 		}
-	}*/
-	/*@Override
+	}
+	@Override
 	public List<DtUsuario> obtenerSeguidores(String nickname){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.buscarUsuario(nickname);
@@ -329,12 +329,12 @@ public class ControladorUsuario implements IControladorUsuario {
 			seguidoresRetorno.add(dtu);
 		}
 		return seguidoresRetorno;
-	}*/
+	}
 	@Override
 	public List<DtUsuario> obtenerSeguidos(String nickname){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.buscarUsuario(nickname);
-		List<Usuario> seguidos = u.getSigue();
+		List<Usuario> seguidos = u.getSeguidos();
 		List<DtUsuario> seguidosRetorno = new ArrayList<>();
 		for(Usuario usr: seguidos) {
 			DtUsuario dtu = new DtUsuario(usr.getNickname(), usr.getNombre(), usr.getApellido(), usr.getCorreo(), usr.getfechaNac(), usr.getContrasenia());

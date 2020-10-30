@@ -32,8 +32,8 @@ public interface IControladorUsuario {
 	/*SEGUIR/DEJAR SEGUIR USUARIO*/
 	public void seguirUsuario(String nickname, String aSeguir);
 	public boolean esSeguidor(String nickname, String aComprobar);
-	//public void dejarSeguir(String nickname, String dejarSeguir);
-	//public List<DtUsuario> obtenerSeguidores(String nickname);
+	public void dejarSeguir(String nickname, String dejarSeguir);
+	public List<DtUsuario> obtenerSeguidores(String nickname);
 	public List<DtUsuario> obtenerSeguidos(String nickname);
 
 	/*MULTIUSO*/

@@ -24,6 +24,7 @@ import javax.persistence.Table;
 public abstract class Usuario {
 	@Id
 	private String nickname;
+	
 	private String nombre;
 	private String apellido;
 	private String correo;
@@ -31,10 +32,10 @@ public abstract class Usuario {
 	private String contrasenia;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Usuario> sigue = new ArrayList<>();
+	private List<Usuario> seguidos = new ArrayList<Usuario>();
 	
-	//@ManyToMany(cascade = CascadeType.ALL)
-	//private List<Usuario> seguidores= new ArrayList<>();
+	@ManyToMany(mappedBy = "seguidos")
+	private List<Usuario> seguidores = new ArrayList<Usuario>();
 
 	
 	//constructores
@@ -89,34 +90,45 @@ public abstract class Usuario {
 		this.contrasenia = contrasenia;
 	}
 	
-	public List<Usuario> getSigue() {
-		return sigue;
+	public List<Usuario> getSeguidos() {
+		return seguidos;
 	}
-	/*public List<Usuario> getSeguidores() {
+
+	public void setSeguidos(List<Usuario> seguidos) {
+		this.seguidos = seguidos;
+	}
+	
+	public List<Usuario> getSeguidores() {
 		return seguidores;
-	}*/
-	public void addSigue(Usuario u) {
-		this.sigue.add(u);
 	}
-	/*public void addSeguidores(Usuario u) {
-		this.seguidores.add(u);
-	}*/
-	public void borrarSigue(Usuario seguido) {
-		int i = 0;
-		for(Usuario u: this.sigue) {
-			if(u.getNickname().equals(seguido.getNickname()))
-				this.sigue.remove(i);
-			i++;
+
+	public void setSeguidores(List<Usuario> seguidores) {
+		this.seguidores = seguidores;
+	}
+	
+	//Modificar los seguidos
+	public void seguirUsuario(Usuario u) {
+		if (!this.seguidos.contains(u)) {
+			this.seguidos.add(u);
+			u.agregarSeguidor(this);
 		}
 	}
-	/*public void borrarSeguidor(Usuario usuario) {
-		int i = 0;
-		for(Usuario u: this.seguidores) {
-			if(u.getNickname().equals(usuario.getNickname()))
-				this.seguidores.remove(i);
-			i++;
+	
+	public void dejarSeguirUsuario(Usuario u) {
+		this.seguidos.remove(u);
+		u.quitarSeguidor(this);
+	}
+	
+	//Modificar los seguidores
+	public void agregarSeguidor(Usuario u) {
+		if (!this.seguidores.contains(u)) {
+			this.seguidores.add(u);			
 		}
-	}*/
+
+	}
+	public void quitarSeguidor(Usuario u) {
+		this.seguidores.remove(u);
+	}
 
 	
 }
