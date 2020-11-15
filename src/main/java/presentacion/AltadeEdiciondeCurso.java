@@ -212,18 +212,24 @@ public class AltadeEdiciondeCurso extends JInternalFrame {
 			//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
 			Date fechaIniD = new Date();
 			fechaIniD = this.dateChooserFechaInicio.getDate();
-			LocalDate fechaIni = fechaIniD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
+			LocalDate fechaIni = fechaIniD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			
+			Calendar fechaCalendarIni = GregorianCalendar.from(fechaIni.atStartOfDay(ZoneId.systemDefault()));
 			
 			Date fechaFinD = new Date();
 			fechaFinD = this.dateChooserFechaFin.getDate();
 			LocalDate fechaFin = fechaFinD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
 			
+			Calendar fechaCalendarFin = GregorianCalendar.from(fechaFin.atStartOfDay(ZoneId.systemDefault()));
+			
 			Date fechaPubD = new Date();
 			fechaPubD = this.dateChooserFechaPub.getDate();
 			LocalDate fechaPub = fechaPubD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			
+			Calendar fechaCalendarPub = GregorianCalendar.from(fechaPub.atStartOfDay(ZoneId.systemDefault()));
+			
 			//CREACION DEL DT EDICION. INSTITUTO Y CURSO
-			DtEdicion edicion = new DtEdicion(nombre,fechaIni,fechaFin,c,fechaPub); //COMO TRABAJAR EL DTDOCENTE(LISTA DE DOCENTES)
+			DtEdicion edicion = new DtEdicion(nombre,fechaCalendarIni,fechaCalendarFin,c,fechaCalendarPub); //COMO TRABAJAR EL DTDOCENTE(LISTA DE DOCENTES)
 			String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
 			String curso = this.comboBoxCursos.getSelectedItem().toString();
 				try{

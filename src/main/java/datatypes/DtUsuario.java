@@ -1,19 +1,22 @@
 package datatypes;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.util.Calendar;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtUsuario {
 	private String nickname;
 	private String nombre;
 	private String apellido;
 	private String correo;
-	private LocalDate fechaNac;
+	private Calendar fechaNac;
 	private String contrasenia;
 	
 	//constructores
 		public DtUsuario() {}
-		public DtUsuario(String nickname, String nombre, String apellido, String correo, LocalDate fechaNac, String contrasenia) {
+		public DtUsuario(final String nickname, final String nombre, final String apellido, final String correo, final Calendar fechaNac, final String contrasenia) {
 			super();
 			this.nickname = nickname;
 			this.nombre = nombre;
@@ -48,10 +51,10 @@ public class DtUsuario {
 		public void setCorreo(String correo) {
 			this.correo = correo;
 		}
-		public LocalDate getfechaNac() {
+		public Calendar getfechaNac() {
 			return fechaNac;
 		}
-		public void setFechaNac(LocalDate fechaNac) {
+		public void setFechaNac(Calendar fechaNac) {
 			this.fechaNac = fechaNac;
 		}
 		public String getContrasenia() {

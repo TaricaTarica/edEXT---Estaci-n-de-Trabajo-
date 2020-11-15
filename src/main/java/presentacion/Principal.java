@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 import interfaces.Fabrica;
 import interfaces.IControladorUsuario;
+import publicadores.ControladorCursoPublish;
+import publicadores.ControladorUsuarioPublish;
 import interfaces.IControladorCurso;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -59,6 +61,11 @@ public class Principal {
 	 */
 	public Principal() {
 		initialize();
+		
+		ControladorUsuarioPublish cup = new ControladorUsuarioPublish();
+		cup.publicar();
+		ControladorCursoPublish ccp = new ControladorCursoPublish();
+		ccp.publicar();
 		
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControladorUsuario iconUsr = fabrica.getIControladorUsuario();

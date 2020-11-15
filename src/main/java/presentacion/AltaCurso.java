@@ -20,7 +20,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
@@ -213,6 +215,7 @@ public class AltaCurso extends JInternalFrame {
 		String duracion = this.textFieldDuracion.getText();
 		String cantHoras = this.textFieldCantHoras.getText();
 		String url = this.textFieldUrl.getText();
+		String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
 		
 		//OBTENER LAS PREVIAS
 		List<String> previas = (List<String>) this.listPrevias.getSelectedValuesList();
@@ -226,13 +229,11 @@ public class AltaCurso extends JInternalFrame {
 			//OBTENGO LA FECHAS DATE Y LA CONVIERTO A LOCALDATE
 			Date fechaAltaD = new Date();
 			fechaAltaD = this.dateChooserFechaAlta.getDate();
-			LocalDate fechaAlta = fechaAltaD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
-
-		
-			DtCurso curso = new DtCurso(nombre, descripcion, duracion, h, c, fechaAlta, url);
+			LocalDate fechaAlta = fechaAltaD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+			Calendar fechaCalendar = GregorianCalendar.from(fechaAlta.atStartOfDay(ZoneId.systemDefault()));
 			
-			String instituto = this.comboBoxInstitutos.getSelectedItem().toString();
-			
+			DtCurso curso = new DtCurso(nombre, descripcion, duracion, h, c, fechaCalendar, url, instituto);
+						
 			try {
 				iconCur.AltaCurso(curso, instituto);
 				JOptionPane.showMessageDialog(this, "Curso creado con exito", "Alta exitosa", JOptionPane.INFORMATION_MESSAGE);

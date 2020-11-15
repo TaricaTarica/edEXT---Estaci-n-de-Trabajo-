@@ -2,20 +2,25 @@ package datatypes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtinfoEdicion {
 	private String nombre;
-	private LocalDate fechaInicio;
-	private LocalDate fechaFin;
+	private Calendar fechaInicio;
+	private Calendar fechaFin;
 	private int cupo;
-	private LocalDate fechaPub;
+	private Calendar fechaPub;
 	
 	
 	//constructores
 	public DtinfoEdicion() {}
-	public DtinfoEdicion(String nombre, LocalDate fechaIni, LocalDate fechaFin, int cupo, LocalDate fechaPub) {
+	public DtinfoEdicion(final String nombre, final Calendar fechaIni, final Calendar fechaFin, final int cupo, final Calendar fechaPub) {
 		this.nombre = nombre;
 		this.fechaInicio = fechaIni;
 		this.fechaFin = fechaFin;
@@ -36,22 +41,22 @@ public class DtinfoEdicion {
 	public void setCupo(int cupo) {
 		this.cupo = cupo;
 	}
-	public LocalDate getfechaInicio() {
+	public Calendar getfechaInicio() {
 		return fechaInicio;
 	}
-	public void setFechaInicio(LocalDate fechaInicio) {
+	public void setFechaInicio(Calendar fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
-	public LocalDate getfechaFin() {
+	public Calendar getfechaFin() {
 		return fechaFin;
 	}
-	public void setFechaFin(LocalDate fechaFin) {
+	public void setFechaFin(Calendar fechaFin) {
 		this.fechaFin = fechaFin;
 	}
-	public LocalDate getFechaPub() {
+	public Calendar getFechaPub() {
 		return fechaPub;
 	}
-	public void setFechaPub(LocalDate fechaPub) {
+	public void setFechaPub(Calendar fechaPub) {
 		this.fechaPub = fechaPub;
 	}
 }

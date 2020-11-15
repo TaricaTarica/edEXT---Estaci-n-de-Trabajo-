@@ -1,17 +1,20 @@
 package datatypes;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtCursoInfo {
 	private String nombre;
 	private String descripcion;
 	private String duracion;
 	private int cantHoras;
 	private int creditos;
-	private LocalDate fechaAlta;
+	private Calendar fechaAlta;
 	private String url;
 	private String img;
 	
@@ -20,8 +23,8 @@ public class DtCursoInfo {
 	
 	//constructores
 	public DtCursoInfo() {}
-	public DtCursoInfo(String nombre, String descripcion, String duracion, int cantHoras, int creditos, LocalDate fechaAlta,
-			String url) {
+	public DtCursoInfo(final String nombre,final String descripcion, final String duracion, final int cantHoras, final int creditos, final Calendar fechaAlta,
+			final String url) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
@@ -62,10 +65,10 @@ public class DtCursoInfo {
 	public void setCreditos(int creditos) {
 		this.creditos = creditos;
 	}
-	public LocalDate getFechaAlta() {
+	public Calendar getFechaAlta() {
 		return fechaAlta;
 	}
-	public void setFechaAlta(LocalDate fechaAlta) {
+	public void setFechaAlta(Calendar fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
 	public String getUrl() {

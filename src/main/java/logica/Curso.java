@@ -5,6 +5,7 @@ import datatypes.DtEdicion;
 import persistencia.Conexion;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 @Entity
 public class Curso {
@@ -27,6 +29,7 @@ public class Curso {
 	private LocalDate fechaAlta;
 	private String url;
 	private String img;
+	private String instituto;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Edicion> ediciones = new ArrayList<>();
@@ -34,7 +37,7 @@ public class Curso {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Curso> previas = new ArrayList<>();
 	
-	private ArrayList<String> programasAsociados = new ArrayList<>(); //tendría que ser igual a InscripcionED
+	private ArrayList<String> programasAsociados = new ArrayList<>(); //tendrï¿½a que ser igual a InscripcionED
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Categoria> categorias = new ArrayList<>();
@@ -61,11 +64,13 @@ public class Curso {
 		this.nombre = dtc.getNombre();
 		this.descripcion = dtc.getDescripcion();
 		this.duracion = dtc.getDuracion();
-		this.cantHoras = dtc.getCantHoras();
-		this.cantCreditos = dtc.getCantCreditos();
-		this.fechaAlta = dtc.getFechaAlta();
+		this.cantHoras = dtc.gethoras();
+		this.cantCreditos = dtc.getcreditos();
+		Calendar calendar = dtc.getFechaAlta();
+		LocalDate fechaLocalDate = LocalDateTime.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId()).toLocalDate();
+		this.fechaAlta = fechaLocalDate;
 		this.url = dtc.getUrl();
-		this.img = dtc.getImg();
+		this.instituto = dtc.getnombreInst();
 	}
 
 	//getters-setters
@@ -119,6 +124,13 @@ public class Curso {
 	}
 	public String getImg() {
 		return this.img;
+	}
+	
+	public void setInstituto(String instituto) {
+		this.instituto = instituto;
+	}
+	public String getInstituto() {
+		return this.instituto;
 	}
 	
 	// MÃ©todos para ediciones

@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import com.toedter.calendar.JDateChooser;
 
+import datatypes.EstadoInscripcion;
 import excepciones.EdicionRepatida_Exception;
 import excepciones.InscripcionRepetida_Exception;
 
@@ -33,7 +34,7 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 	private JComboBox<String> comboBoxEdiciones;
 	private JComboBox<String> comboBoxEstudiantes;
 	private JDateChooser dateChooserFechadeInscripcion;
-
+	private JComboBox<String> comboBoxEnum;
 
 	private static final long serialVersionUID = 1L;
 
@@ -70,6 +71,11 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 		lblEstudiantes.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEstudiantes.setBounds(40, 126, 120, 15);
 		getContentPane().add(lblEstudiantes);
+		
+		JLabel lblEstados = new JLabel("Estados");
+		lblEstados.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEstados.setBounds(40, 196, 120, 15);
+		getContentPane().add(lblEstados);
 		
 		JLabel lblFecha = new JLabel("Fecha de Inscripcion");
 		lblFecha.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -110,6 +116,13 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 		comboBoxEstudiantes.setBounds(174, 121, 173, 24);
 		getContentPane().add(comboBoxEstudiantes);
 		
+		comboBoxEnum = new JComboBox<String>();
+		comboBoxEnum.setBounds(174, 191, 193, 24);
+		comboBoxEnum.addItem("Inscripto");
+		comboBoxEnum.addItem("Aceptado");
+		comboBoxEnum.addItem("Rechazado");
+		getContentPane().add(comboBoxEnum);
+		
 		dateChooserFechadeInscripcion = new JDateChooser();
 		dateChooserFechadeInscripcion.setBounds(174, 161, 173, 19);
 		getContentPane().add(dateChooserFechadeInscripcion);
@@ -139,11 +152,28 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 			String curso = this.comboBoxCursos.getSelectedItem().toString();
 			String edicion = this.comboBoxEdiciones.getSelectedItem().toString();
 			String estudiante = this.comboBoxEstudiantes.getSelectedItem().toString();
-			Date fechaIns = new Date();
-			fechaIns = this.dateChooserFechadeInscripcion.getDate();
+			String estado = null;
+			if (comboBoxEnum.getSelectedItem()=="Inscripto") {
+				//estado = EstadoInscripcion.Inscripto;
+				estado="Inscripto";
+			}
+			else if (comboBoxEnum.getSelectedItem()=="Aceptado") {
+				//estado = EstadoInscripcion.Aceptado;
+				estado="Aceptado";
+			}
+			else if (comboBoxEnum.getSelectedItem()=="Rechazado") {
+				//estado = EstadoInscripcion.Rechazado;
+				estado="Rechazado";
+			}
 			
+			
+			//OBTENGO LAS FECHAS DATE Y LAS CONVIERTO A LOCALDATE
+			Date fechaInsD = new Date();
+			fechaInsD = this.dateChooserFechadeInscripcion.getDate();
+			LocalDate fechaIns = fechaInsD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	
+
 			try{
-				this.iconCur.InscripcionaEdiciondeCurso(instituto,fechaIns,estudiante,curso,edicion);
+				this.iconCur.InscripcionaEdiciondeCurso(instituto,fechaIns,estudiante,curso,edicion,estado);
 				JOptionPane.showMessageDialog(this, "Inscripcion creada con exito", "Inscripcion exitosa", JOptionPane.INFORMATION_MESSAGE);
 			}
 			catch(InscripcionRepetida_Exception ex){
@@ -191,5 +221,6 @@ public class InscripcionaEdicionaCurso extends JInternalFrame {
 		}
 		return true;
 	}
+	
 
 }

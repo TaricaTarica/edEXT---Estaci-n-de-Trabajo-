@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 //import java.awt.EventQueue;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
@@ -128,9 +130,12 @@ public class CrearProgramadeFormacion extends JInternalFrame {
 			fechaAltaD = this.dateChooserFechaAlta.getDate();
 			LocalDate fechaAlta = fechaAltaD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			
+			Calendar fechaCalendarIni = GregorianCalendar.from(fechaIni.atStartOfDay(ZoneId.systemDefault()));
+			Calendar fechaCalendarFin = GregorianCalendar.from(fechaFin.atStartOfDay(ZoneId.systemDefault()));
+			Calendar fechaCalendarAlta = GregorianCalendar.from(fechaAlta.atStartOfDay(ZoneId.systemDefault()));
 			
 			//CREACION DEL DT PROGRAMA
-			DtProgramaFormacion pf = new DtProgramaFormacion(nombre,Descripcion,fechaIni,fechaFin,fechaAlta); 
+			DtProgramaFormacion pf = new DtProgramaFormacion(nombre,Descripcion,fechaCalendarIni,fechaCalendarFin,fechaCalendarAlta); 
 			try {
 				this.iconCur.AltaCrearProgramadeFormacion(pf);
 				JOptionPane.showMessageDialog(this, "Programa creado con exito", "Alta exitosa",

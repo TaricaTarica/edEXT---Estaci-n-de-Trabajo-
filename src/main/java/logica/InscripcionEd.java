@@ -33,25 +33,26 @@ public class InscripcionEd {
 	)
 	private Edicion edicion;
 	
-	private Date fecha;
+	private LocalDate fecha;
 	private EstadoInscripcion estado;
 	
 	//constructores
 	public InscripcionEd() {
 		super();
 	}
-	public InscripcionEd(Date fecha, Edicion edicion, Estudiante estudiante) {
+	public InscripcionEd(LocalDate fecha, Edicion edicion, Estudiante estudiante,EstadoInscripcion estado) {
 
 		this.fecha = fecha;
 		this.edicion = edicion;
 		this.estudiante = estudiante;
+		this.estado = estado;
 	}
 	
 	//getters-setters
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 	public Edicion getEdicion() {

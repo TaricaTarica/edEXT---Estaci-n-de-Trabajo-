@@ -1,7 +1,9 @@
 package logica;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -44,10 +46,16 @@ public class Edicion {
 	public Edicion(DtEdicion dte) {
 		super();
 		this.nombre = dte.getNombre();
-		this.fechaIni = dte.getFechaIni();
-		this.fechaFin = dte.getFechaFin();
+		Calendar calendarIni = dte.getFechaIni();
+		LocalDate fechaLocalDateIni = LocalDateTime.ofInstant(calendarIni.toInstant(), calendarIni.getTimeZone().toZoneId()).toLocalDate();
+		this.fechaIni = fechaLocalDateIni;
+		Calendar calendarFin = dte.getFechaFin();
+		LocalDate fechaLocalDateFin = LocalDateTime.ofInstant(calendarFin.toInstant(), calendarFin.getTimeZone().toZoneId()).toLocalDate();
+		this.fechaFin = fechaLocalDateFin;
 		this.cupo = dte.getCupo();
-		this.fechaPub = dte.getFechaPub();
+		Calendar calendarPub = dte.getFechaPub();
+		LocalDate fechaLocalDatePub = LocalDateTime.ofInstant(calendarPub.toInstant(), calendarPub.getTimeZone().toZoneId()).toLocalDate();
+		this.fechaPub = fechaLocalDatePub;
 	}
 	
 	//getters-setters
@@ -106,7 +114,18 @@ public class Edicion {
 		inscripciones.add(inscripcion);	
 	}
 	public List<InscripcionEd> getInscripciones(){
-		return inscripciones;
+		if(!inscripciones.isEmpty()){
+			return inscripciones;
+		}else {
+			return null;
+		}
+	}
+	public String nombresDocente() {
+		String retorno = new String();
+		for(Docente doc: this.docentes) {
+			retorno = doc.getNickname();
+		}
+		return retorno;
 	}
 
 }

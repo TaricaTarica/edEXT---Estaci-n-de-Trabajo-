@@ -27,13 +27,13 @@ public class InscripcionPF {
 	@JoinColumn
 	private ProgramaFormacion programaformacion;
 	
-	private Date fecha;
+	private LocalDate fecha;
 	
 	//constructores
 	public InscripcionPF() {
 		super();
 	}
-	public InscripcionPF(Date fecha,Estudiante estudiante,ProgramaFormacion programaformacion){
+	public InscripcionPF(LocalDate fecha,Estudiante estudiante,ProgramaFormacion programaformacion){
 
 		this.fecha = fecha;
 		this.programaformacion = programaformacion;
@@ -41,10 +41,10 @@ public class InscripcionPF {
 	}
 	
 	//getters-setters
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 	public ProgramaFormacion getProgramaFormacion() {

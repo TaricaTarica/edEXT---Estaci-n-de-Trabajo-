@@ -1,6 +1,7 @@
 package logica;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import datatypes.DtCurso;
 import datatypes.DtProgramaFormacion;
@@ -36,9 +38,15 @@ public class ProgramaFormacion {
 		super();
 		this.nombre =dpf.getNombre() ;
 		this.descripcion = dpf.getDescripcion();
-		this.fechaInicio = dpf.getFechaInicio();
-		this.fechaFin = dpf.getFechaFin();
-		this.fechaAlta = dpf.getFechaAlta();
+		Calendar calendarInicio = dpf.getFechaInicio();
+		LocalDate fechaLocalDateInicio = LocalDateTime.ofInstant(calendarInicio.toInstant(), calendarInicio.getTimeZone().toZoneId()).toLocalDate();
+		this.fechaInicio = fechaLocalDateInicio;
+		Calendar calendarFin = dpf.getFechaFin();
+		LocalDate fechaLocalDateFin = LocalDateTime.ofInstant(calendarFin.toInstant(), calendarFin.getTimeZone().toZoneId()).toLocalDate();
+		this.fechaFin = fechaLocalDateFin;
+		Calendar calendarAlta = dpf.getFechaAlta();
+		LocalDate fechaLocalDateAlta = LocalDateTime.ofInstant(calendarAlta.toInstant(), calendarAlta.getTimeZone().toZoneId()).toLocalDate();
+		this.fechaAlta = fechaLocalDateAlta;
 	}
 	
 	//getters-setters

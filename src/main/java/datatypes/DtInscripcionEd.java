@@ -1,16 +1,24 @@
 package datatypes;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import logica.InscripcionEd;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtInscripcionEd {
 	private String nombreEdicion;
 	private String nicknameEstudiante;
-	private Date fecha;
+	private Calendar fecha;
 	private EstadoInscripcion estado;
 	
-	public DtInscripcionEd(String nombreEdicion, String nicknameEstudiante, Date fecha) {
+	public DtInscripcionEd(final String nombreEdicion, final String nicknameEstudiante, final Calendar fecha) {
 		this.nombreEdicion = nombreEdicion;
 		this.nicknameEstudiante = nicknameEstudiante;
 		this.fecha = fecha;
@@ -23,7 +31,8 @@ public class DtInscripcionEd {
 	public DtInscripcionEd(InscripcionEd ied) {
 		this.nombreEdicion = ied.getEdicion().getNombre();
 		this.nicknameEstudiante = ied.getEstudiante().getNickname();
-		this.fecha = ied.getFecha();
+		Calendar fechaCalendar = GregorianCalendar.from(ied.getFecha().atStartOfDay(ZoneId.systemDefault()));
+		this.fecha = fechaCalendar;
 		this.estado = ied.getEstado();
 	}
 
@@ -43,11 +52,11 @@ public class DtInscripcionEd {
 		this.nicknameEstudiante = nicknameEstudiante;
 	}
 
-	public Date getFecha() {
+	public Calendar getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(Calendar fecha) {
 		this.fecha = fecha;
 	}
 

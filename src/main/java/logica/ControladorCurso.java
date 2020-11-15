@@ -1,11 +1,15 @@
 package logica;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import excepciones.InstitutoRepetido_Exception;
 import excepciones.EdicionRepatida_Exception;
@@ -168,8 +172,9 @@ public class ControladorCurso implements IControladorCurso {
 		LocalDate fechaAlta = curso.getFechaAlta();
 		String img = curso.getImg();
 		
+		Calendar fechaCalendar = GregorianCalendar.from(fechaAlta.atStartOfDay(ZoneId.systemDefault()));
 		
-		DtCursoInfo retorno = new DtCursoInfo(nombre, descripcion, duracion, cantHoras, cantCreditos, fechaAlta, url);
+		DtCursoInfo retorno = new DtCursoInfo(nombre, descripcion, duracion, cantHoras, cantCreditos, fechaCalendar, url);
 		retorno.setImg(img);
 		
 		return retorno;
@@ -186,8 +191,11 @@ public class ControladorCurso implements IControladorCurso {
 		LocalDate fechaFin = edicion.getFechaFin();
 		LocalDate fechaPub = edicion.getFechaPub();
 		//Ac� debo obtener la imagen
+		Calendar fechaCalendarInicio = GregorianCalendar.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()));
+		Calendar fechaCalendarFin = GregorianCalendar.from(fechaFin.atStartOfDay(ZoneId.systemDefault()));
+		Calendar fechaCalendarPub = GregorianCalendar.from(fechaPub.atStartOfDay(ZoneId.systemDefault()));
 		
-		DtinfoEdicion retorno = new DtinfoEdicion(nombre,fechaInicio,fechaFin,cupo, fechaPub);
+		DtinfoEdicion retorno = new DtinfoEdicion(nombre,fechaCalendarInicio,fechaCalendarFin,cupo, fechaCalendarPub);
 		
 		
 		return retorno;
@@ -206,7 +214,9 @@ public class ControladorCurso implements IControladorCurso {
 		LocalDate fechaAlta = curso.getFechaAlta();
 		String img = curso.getImg();
 		
-		DtCursoInfo retorno = new DtCursoInfo(nombre, descripcion, duracion, cantHoras, cantCreditos, fechaAlta, url);
+		Calendar fechaCalendar = GregorianCalendar.from(fechaAlta.atStartOfDay(ZoneId.systemDefault()));
+		
+		DtCursoInfo retorno = new DtCursoInfo(nombre, descripcion, duracion, cantHoras, cantCreditos, fechaCalendar, url);
 		retorno.setImg(img);
 		
 		return retorno;
@@ -224,7 +234,11 @@ public class ControladorCurso implements IControladorCurso {
 		LocalDate fechaPub = edicion.getFechaPub();
 		//Ac� debo obtener la imagen
 		
-		DtinfoEdicion retorno = new DtinfoEdicion(nombre,fechaInicio,fechaFin,cupo, fechaPub);
+		Calendar fechaCalendarInicio = GregorianCalendar.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()));
+		Calendar fechaCalendarFin = GregorianCalendar.from(fechaFin.atStartOfDay(ZoneId.systemDefault()));
+		Calendar fechaCalendarPub = GregorianCalendar.from(fechaPub.atStartOfDay(ZoneId.systemDefault()));
+		
+		DtinfoEdicion retorno = new DtinfoEdicion(nombre,fechaCalendarInicio,fechaCalendarFin,cupo, fechaCalendarPub);
 		
 		
 		return retorno;
@@ -239,7 +253,11 @@ public class ControladorCurso implements IControladorCurso {
 		LocalDate fechaFin = programa.getFechaFin();
 		LocalDate fechaAlta = programa.getFechaAlta();
 		
-		DtProgramaFormacion retorno = new DtProgramaFormacion(nombre, descripcion, fechaInicio, fechaFin, fechaAlta);
+		Calendar fechaCalendarInicio = GregorianCalendar.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()));
+		Calendar fechaCalendarFin = GregorianCalendar.from(fechaFin.atStartOfDay(ZoneId.systemDefault()));
+		Calendar fechaCalendarAlta = GregorianCalendar.from(fechaAlta.atStartOfDay(ZoneId.systemDefault()));
+		
+		DtProgramaFormacion retorno = new DtProgramaFormacion(nombre, descripcion, fechaCalendarInicio, fechaCalendarFin, fechaCalendarAlta);
 		
 		return retorno;
 	}
@@ -265,24 +283,34 @@ public class ControladorCurso implements IControladorCurso {
 	
 	/*INSCRIPCION A EDICION DE CURSO*/
 	@Override
-	public void InscripcionaEdiciondeCurso(String i,Date FechaIns,String nickname,String c,String e) throws InscripcionRepetida_Exception{
+	public void InscripcionaEdiciondeCurso(String i,LocalDate FechaIns,String nickname,String c,String e,String estado) throws InscripcionRepetida_Exception{
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Estudiante est = mU.BuscarEstudiante(nickname);
+		Estudiante estu = mU.BuscarEstudiante(nickname);
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto instituto = mI.buscarInstituto(i);
 		Curso curso = instituto.getCurso(c);
 		Edicion edicion=curso.getEdicion(e);
-		if (est.BuscarInscripcion(edicion)) {
+		EstadoInscripcion est=null;
+		if (estado=="Inscripto") {
+			est = EstadoInscripcion.Inscripto;
+		}
+		else if (estado=="Aceptado") {
+			est = EstadoInscripcion.Aceptado;
+		}
+		else if (estado=="Rechazado") {
+			est = EstadoInscripcion.Rechazado;
+		}
+		if (estu.BuscarInscripcion(edicion)) {
 			throw new InscripcionRepetida_Exception("La inscripcion ya esta registrada");
 		}
-		InscripcionEd inscripcion = new InscripcionEd(FechaIns, edicion, est);
-		est.agregarInscripcion(inscripcion);
+		InscripcionEd inscripcion = new InscripcionEd(FechaIns, edicion, estu,est);
+		estu.agregarInscripcion(inscripcion);
 		edicion.agregarInscripcion(inscripcion);
 		
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
-		em.persist(est);
+		em.persist(estu);
 		em.persist(edicion);
 		em.getTransaction().commit();
 		
@@ -340,7 +368,7 @@ public class ControladorCurso implements IControladorCurso {
 	
 	/*INSCRIPCION A PROGRAMA DE FORMACION*/
 	@Override
-	public void InscripcionaProgramaFormacion(Date FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception{
+	public void InscripcionaProgramaFormacion(LocalDate FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception{
 		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
 		ProgramaFormacion programaformacion = mPF.buscarProgramaFormacion(pf);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -386,6 +414,27 @@ public class ControladorCurso implements IControladorCurso {
 		em.persist(programa);
 		em.getTransaction().commit();
 	}
+	@Override
+	public void agregarCursoProgFormacion2(String programaFormacion, String Curso, String nombreInstituto) throws ProgramaCursoRepetido_Exception {
+		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
+		ProgramaFormacion programa = mPF.buscarProgramaFormacion(programaFormacion);
+		
+		if (programa.existeCurso(Curso)) {
+			throw new ProgramaCursoRepetido_Exception("El curso "+ Curso +" ya pertenece al Programa de Formacion " + programaFormacion);
+		}
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto instituto = mI.buscarInstituto(nombreInstituto);
+		Curso curso = instituto.getCurso(Curso);
+		curso.asociarPrograma(programa.getNombre());
+		programa.setCurso(curso);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(programa);
+		em.getTransaction().commit();
+	}
+	
 	/*Alta Categoria*/
 	@Override
 	public void AltaCategoria(String nombreCategoria) throws CategoriaRepetida_Exception {
@@ -667,7 +716,7 @@ public class ControladorCurso implements IControladorCurso {
         return categorias_ret;		
 	}
 	@Override
-	public ArrayList<String> listarCursosCategoriasP(String strPrograma){
+	public String[] listarCursosCategoriasP(String strPrograma){
 		ManejadorProgramaFormacion mP = ManejadorProgramaFormacion.getInstancia();
 		ProgramaFormacion programa= mP.buscarProgramaFormacion(strPrograma);
 		ArrayList<Curso> cursosP;
@@ -677,18 +726,23 @@ public class ControladorCurso implements IControladorCurso {
 		ArrayList<String> categoriasC;
 		
 		//TODAS LAS CATEGORIAS 
-		ArrayList<String> categoriasP_ret = new ArrayList<>();
+		ArrayList<String> categoriasP = new ArrayList<>();
 		
         for(Curso cur: cursosP) {
         	categoriasC =cur.getCategorias();
         	
         	for(String cat: categoriasC) {
-        		if(!categoriasP_ret.contains(cat))
-        			categoriasP_ret.add(cat);
+        		if(!categoriasP.contains(cat))
+        			categoriasP.add(cat);
         	}
         	
         }
-        return categoriasP_ret;
+        String[] categorias_ret = new String[categoriasP.size()];
+        for (int j = 0; j < categoriasP.size(); j++) { 
+          categorias_ret[j] = categoriasP.get(j); 
+        } 
+        
+        return categorias_ret;
 	}
 	@Override
 	public String obtenerInstitutoCurso(String nombreCurso) {
@@ -702,6 +756,24 @@ public class ControladorCurso implements IControladorCurso {
 		}
 		return nombreInstituto;
 	}
+	
+	@Override
+	public String obtenerInstitutoCursoPrograma(String strPrograma, String strCurso) {
+		ManejadorProgramaFormacion mPF = ManejadorProgramaFormacion.getInstancia();
+		ProgramaFormacion programa = mPF.buscarProgramaFormacion(strPrograma);
+		Curso curso = programa.getCurso(strCurso);
+		String instituto = curso.getInstituto();
+		return instituto;
+	}
+	
+	@Override
+	public String getInstitutoDocente(String nickname) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario usr = mU.buscarUsuario(nickname);
+		String instituto = ((Docente) usr).getInstituto().getNombre();
+		return instituto;
+	}
+
 	@Override
 	public List<DtInscripcionEd> obtenerInscripcionesEd(String nombreInstituto, String nombreCurso, String nombreEdicion){
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
@@ -716,6 +788,33 @@ public class ControladorCurso implements IControladorCurso {
 				dtied.setEstado(EstadoInscripcion.Inscripto);
 			}
 			retorno.add(dtied);
+		}
+		return retorno;
+	}
+	@Override
+	public List<DtCurso> busquedaCurso(String busqueda){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		DtCurso dtc = new DtCurso();
+		List<Curso> listCursos = new ArrayList<>();
+		List<DtCurso> retorno = new ArrayList<>();
+		if(!busqueda.isEmpty()){
+			Query query = em.createQuery("select c from Curso c where nombre LIKE '%"+busqueda+"%'");
+			listCursos = (List<Curso>) query.getResultList();
+			for(Curso c: listCursos) {
+				Calendar fechaCalendar = GregorianCalendar.from(c.getFechaAlta().atStartOfDay(ZoneId.systemDefault()));
+				dtc = new DtCurso(c.getNombre(), c.getDescripcion(), c.getDuracion(), c.getCantHoras(), c.getCantCreditos(), fechaCalendar, c.getUrl(), c.getInstituto());
+				retorno.add(dtc);	
+			}
+		}
+		else{
+			Query query = em.createQuery("select c from Curso c");
+			listCursos = (List<Curso>) query.getResultList();
+			for(Curso c: listCursos) {
+				Calendar fechaCalendar = GregorianCalendar.from(c.getFechaAlta().atStartOfDay(ZoneId.systemDefault()));
+				dtc = new DtCurso(c.getNombre(), c.getDescripcion(), c.getDuracion(), c.getCantHoras(), c.getCantCreditos(), fechaCalendar, c.getUrl(), c.getInstituto());
+				retorno.add(dtc);	
+			}
 		}
 		return retorno;
 	}

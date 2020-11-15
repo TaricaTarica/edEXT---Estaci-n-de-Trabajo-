@@ -105,8 +105,11 @@ public class InscripcionaProgramaFormacion extends JInternalFrame {
 		if(comprobarCampos()) {
 			String programaformacion = this.comboBoxProgramas.getSelectedItem().toString();
 			String estudiante = this.comboBoxEstudiantes.getSelectedItem().toString();
-			Date fechaIns = new Date();
-			fechaIns = this.dateChooserFechadeInscripcion.getDate();
+			Date fechaInsD = new Date();
+			
+			//FECHAS DATE LAS CONVIERTO A LOCALDATE
+			LocalDate fechaIns = fechaInsD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			
 			try{
 				this.iconCur.InscripcionaProgramaFormacion(fechaIns,estudiante,programaformacion);
 				JOptionPane.showMessageDialog(this, "Inscripcion creada con exito", "Inscripcion exitosa", JOptionPane.INFORMATION_MESSAGE);

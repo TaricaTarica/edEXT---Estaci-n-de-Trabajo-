@@ -1,6 +1,8 @@
 package presentacion;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.time.*;
@@ -206,14 +208,16 @@ public class AltaUsuario extends JInternalFrame {
 			fechaNacD = this.dateChooserFechaNac.getDate();
 			LocalDate fechaNac = fechaNacD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
 			
+			Calendar fechaCalendar = GregorianCalendar.from(fechaNac.atStartOfDay(ZoneId.systemDefault()));
+			
 			DtUsuario usr = null;
 			
 			if (rdbtnDocente.isSelected()) {
 				String nInstituto = this.comboBoxInstitutos.getSelectedItem().toString();
 				iconUsr.ingresarInstitutoDocente(nInstituto);
-				usr = new DtDocente(nickname, nombre, apellido, correo, fechaNac, contrasenia);
+				usr = new DtDocente(nickname, nombre, apellido, correo, fechaCalendar, contrasenia);
 			}else if(rdbtnEstudiante.isSelected()) {
-				usr = new DtEstudiante(nickname, nombre, apellido, correo, fechaNac, contrasenia);
+				usr = new DtEstudiante(nickname, nombre, apellido, correo, fechaCalendar, contrasenia);
 			}
 			try {
 				iconUsr.confirmarAlta(usr);

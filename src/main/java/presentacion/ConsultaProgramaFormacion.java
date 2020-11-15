@@ -196,7 +196,7 @@ public class ConsultaProgramaFormacion extends JInternalFrame {
 	}
 	
 	public void listCategoriasInit() {
-		ArrayList<String> categorias = iconCur.listarCursosCategoriasP(this.comboBoxProgramas.getSelectedItem().toString());
+	    String [] categorias = iconCur.listarCursosCategoriasP(this.comboBoxProgramas.getSelectedItem().toString());
 		this.listCategoriasP.setListData(new String[0]);
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		for(String c: categorias) {

@@ -24,6 +24,7 @@ import javax.persistence.Table;
 public abstract class Usuario {
 	@Id
 	private String nickname;
+	
 	private String nombre;
 	private String apellido;
 	private String correo;
@@ -31,8 +32,11 @@ public abstract class Usuario {
 	private String contrasenia;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Usuario> sigue = new ArrayList<>();
+	private List<Usuario> seguidos = new ArrayList<Usuario>();
 	
+	@ManyToMany(mappedBy = "seguidos")
+	private List<Usuario> seguidores = new ArrayList<Usuario>();
+
 	
 	//constructores
 	public Usuario() {
@@ -86,5 +90,45 @@ public abstract class Usuario {
 		this.contrasenia = contrasenia;
 	}
 	
+	public List<Usuario> getSeguidos() {
+		return seguidos;
+	}
+
+	public void setSeguidos(List<Usuario> seguidos) {
+		this.seguidos = seguidos;
+	}
+	
+	public List<Usuario> getSeguidores() {
+		return seguidores;
+	}
+
+	public void setSeguidores(List<Usuario> seguidores) {
+		this.seguidores = seguidores;
+	}
+	
+	//Modificar los seguidos
+	public void seguirUsuario(Usuario u) {
+		if (!this.seguidos.contains(u)) {
+			this.seguidos.add(u);
+			u.agregarSeguidor(this);
+		}
+	}
+	
+	public void dejarSeguirUsuario(Usuario u) {
+		this.seguidos.remove(u);
+		u.quitarSeguidor(this);
+	}
+	
+	//Modificar los seguidores
+	public void agregarSeguidor(Usuario u) {
+		if (!this.seguidores.contains(u)) {
+			this.seguidores.add(u);			
+		}
+
+	}
+	public void quitarSeguidor(Usuario u) {
+		this.seguidores.remove(u);
+	}
+
 	
 }

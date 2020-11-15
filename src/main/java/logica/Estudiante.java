@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import datatypes.EstadoInscripcion;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,5 +85,28 @@ public class Estudiante extends Usuario {
         	i++;
         }
         return programas_ret;	
+	}
+	public String[] obtenerEdicionesEst(){
+		String[] ediciones_ret = new String[this.inscripcionesEd.size()];
+        int i=0;
+        EstadoInscripcion inscripto=EstadoInscripcion.Inscripto;
+        EstadoInscripcion aceptado=EstadoInscripcion.Aceptado;
+        for( InscripcionEd ied: this.inscripcionesEd) {
+        	if(ied.getEstado().equals(inscripto)|| ied.getEstado().equals(aceptado)) {
+        	ediciones_ret[i]=ied.getEdicion().getNombre();
+        	i++;
+        	}
+        }
+        return ediciones_ret;	
+	}
+	public Edicion ObtenerEdicion(String strEdicion) {
+		Edicion e=new Edicion();
+        int i=0;
+        for( InscripcionEd ied: this.inscripcionesEd) {
+        	if(ied.getEdicion().getNombre().equals(strEdicion)) {
+        		e=ied.getEdicion();
+        	}	
+        }
+        return e;		 
 	}
 }
