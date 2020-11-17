@@ -55,6 +55,8 @@ public interface IControladorUsuario {
 	public String[] listarEdicionesEst(String strEstudiante);
 	public Edicion ObtenerEdicion(String strEdicion,String strEstudiante);
 	public boolean existeUsuario(String nickname);
+	public List<Curso> getCursos(Instituto ins);
+	public String nombresDocente(Edicion ed);
 	
 	
 

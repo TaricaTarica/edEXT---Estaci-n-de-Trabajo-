@@ -134,8 +134,9 @@ public class ControladorCursoPublish {
 		icon.seleccionarestadoInscripcion(nombreInstituto, nombreCurso, nombreEdicion, nicknameEstudiante, estado);
 	}	
 	@WebMethod
-	public void InscripcionaProgramaFormacion(LocalDate FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception{
-		icon.InscripcionaProgramaFormacion(FechaIns, nickname, pf);
+	public void InscripcionaProgramaFormacion(Calendar FechaIns,String nickname,String pf) throws InscripcionRepetidaPF_Exception{
+		LocalDate fechaLocalDate = LocalDateTime.ofInstant(FechaIns.toInstant(), FechaIns.getTimeZone().toZoneId()).toLocalDate();
+		icon.InscripcionaProgramaFormacion(fechaLocalDate, nickname, pf);
 	}	
 	@WebMethod
 	public void agregarCursoProgFormacion(String programaFormacion, String InstitutoCurso) throws ProgramaCursoRepetido_Exception {

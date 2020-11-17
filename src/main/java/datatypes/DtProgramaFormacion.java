@@ -26,6 +26,7 @@ public class DtProgramaFormacion {
 	//private List<Curso> cursos = new ArrayList<>();
 
 	//constructores
+	public DtProgramaFormacion(){}
 	public DtProgramaFormacion(final String nombre, final String descripcion, final Calendar fechaInicio,final Calendar fechaFin, final Calendar fechaAlta) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;

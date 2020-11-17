@@ -3,7 +3,9 @@ package publicadores;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -100,8 +102,9 @@ public class ControladorUsuarioPublish {
 		return iconUsr.getFechaUsuario(nickname);
 	}*/
 	@WebMethod
-	public void modificarUsuario(String nickname, String nombre, String apellido, LocalDate fechaN,String contrasenia) {
-		iconUsr.modificarUsuario(nickname, nombre, apellido, fechaN, contrasenia);
+	public void modificarUsuario(String nickname, String nombre, String apellido, Calendar fechaN,String contrasenia) {
+		LocalDate fechaLocalDate = LocalDateTime.ofInstant(fechaN.toInstant(), fechaN.getTimeZone().toZoneId()).toLocalDate();
+		iconUsr.modificarUsuario(nickname, nombre, apellido, fechaLocalDate, contrasenia);
 	}
 	@WebMethod
 	public String[] listarEdicionesD(String strDocente) {
@@ -185,6 +188,19 @@ public class ControladorUsuarioPublish {
 	public void confirmarAltaDocente(DtDocente u) throws UsuarioRepetido_Exception{
 		iconUsr.confirmarAltaDocente(u);
 	}
-
-
+	@WebMethod
+	public String nombresDocente(Edicion ed) {
+		return iconUsr.nombresDocente(ed);
+	}
+	@WebMethod
+	public Curso[] getCursos(Instituto ins){
+		List<Curso> dtc = iconUsr.getCursos(ins);
+		int i = 0;
+        Curso[] ret = new Curso[dtc.size()];
+        for(Curso c : dtc) {
+            ret[i]=c;
+            i++;
+        }
+        return ret;
+	}
 }

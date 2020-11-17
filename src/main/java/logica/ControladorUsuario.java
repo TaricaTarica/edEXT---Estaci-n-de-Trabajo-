@@ -387,6 +387,18 @@ public class ControladorUsuario implements IControladorUsuario {
 		}
 		return seguidosRetorno;
 	}
+	@Override
+	public String nombresDocente(Edicion ed) {
+		String retorno = new String();
+		retorno=ed.nombresDocentes();
+		return retorno;
+	}
+	@Override
+	public List<Curso> getCursos(Instituto ins){
+		List<Curso> cursosRetorno = new ArrayList<>();
+		cursosRetorno=ins.getCursos();
+		return cursosRetorno;
+	}
 	
 
 }
