@@ -111,8 +111,7 @@ public class ControladorUsuario implements IControladorUsuario {
 	@Override
 	public String[] listarInstitutos(){
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		ArrayList<String> institutos;
-		institutos = mI.getNombreInstitutos();
+		ArrayList<String> institutos = mI.getNombreInstitutos();
 		String[] institutos_ret = new String[institutos.size()];
         int i=0;
         for(String ins: institutos) {
@@ -124,8 +123,7 @@ public class ControladorUsuario implements IControladorUsuario {
 	
 	public String[] listarUsuarios(){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		ArrayList<String> usuarios;
-		usuarios = mU.getNombreUsuarios();
+		ArrayList<String> usuarios = mU.getNombreUsuarios();
 		String[] usuarios_ret = new String[usuarios.size()];
         int u=0;
         for(String usu: usuarios) {
@@ -348,18 +346,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario usuario = mU.buscarUsuario(nickname);
 		Usuario seguido = mU.buscarUsuario(dejarSeguir);
-		List<Usuario> usuarioSigue = usuario.getSeguidores();
-		List<Usuario> seguidoSeguidores = seguido.getSeguidores();
-		for (Usuario u: usuarioSigue) {
-			if(u.getNickname().equals(dejarSeguir)) {
-				usuario.dejarSeguirUsuario(seguido);
-			}
-		}
-		for (Usuario u: seguidoSeguidores) {
-			if(u.getNickname().equals(nickname)) {
-				seguido.quitarSeguidor(usuario);
-			}
-		}
+		usuario.dejarSeguirUsuario(seguido);
 	}
 	@Override
 	public List<DtUsuario> obtenerSeguidores(String nickname){
